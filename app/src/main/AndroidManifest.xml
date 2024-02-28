@@ -14,9 +14,15 @@
         android:theme="@style/Theme.Nightlearn"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpActivity"
-            android:exported="true">
+            android:name=".LogInActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
