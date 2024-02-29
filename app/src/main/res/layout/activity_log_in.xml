@@ -41,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="5dp">
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +102,7 @@
 
 
         <LinearLayout
-            android:id="@+id/btnLogInContinue"
+            android:id="@+id/LogInContinue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -136,8 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutLogIn"
-        app:layout_constraintVertical_bias="0.071" />
-
+        app:layout_constraintVertical_bias="0.047" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@
 
         <item name="android:editTextColor">#585858</item>
         <item name="android:colorControlNormal">#585858</item>
+
         <!-- <item name="android:buttonCornerRadius">30dp</item> -->
 
         <!-- Customize your theme here. -->
