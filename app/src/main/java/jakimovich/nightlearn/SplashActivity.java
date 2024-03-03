@@ -20,12 +20,19 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null){
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                UserService.getUserById(currentUser.getUid()).addOnCompleteListener(task -> {
+                    if(UserService.myUser == null){
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                    } else {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    }
+                });
             } else {
                 startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
             }
             finish();
-        }, 500);
+        }, 1000);
 
     }
 }

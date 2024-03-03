@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.concurrent.TimeUnit;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText etName, etLastname, etNickname, etEmail, etPassword, etRepeatPassword;
@@ -49,15 +51,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void signUp(){
+    private void signUp() {
 
+        String nickname = etNickname.getText().toString();
         String name = etName.getText().toString();
         String lastname = etLastname.getText().toString();
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
         String repeatPassword = etRepeatPassword.getText().toString();
 
-        if(name.isEmpty() || lastname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
+        if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -70,9 +73,11 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+
+
+
             } else {
-                Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

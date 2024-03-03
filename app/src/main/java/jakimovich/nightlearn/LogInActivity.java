@@ -56,6 +56,7 @@ public class LogInActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "User has been signed in successfully", Toast.LENGTH_SHORT).show();
+                UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(LogInActivity.this, MainActivity.class));
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
