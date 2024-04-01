@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menuHome"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+    />
+
+    <item android:id="@+id/menuLearnsets"
+        android:title="Learnsets"
+        android:icon="@drawable/ic_learnsets"
+        />
+
+    <item android:id="@+id/menuAlarms"
+        android:title="Alarms"
+        android:icon="@drawable/ic_alarm"
+        />
+
+    <item android:id="@+id/menuProfile"
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        />
+</menu>

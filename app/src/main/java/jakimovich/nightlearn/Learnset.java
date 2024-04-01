@@ -1,0 +1,70 @@
+package jakimovich.nightlearn;
+
+import java.util.ArrayList;
+
+public class Learnset {
+
+    private String name;
+    private ArrayList<Learncard> learncards = new ArrayList<>();
+    private int cardsInTotal = 0;
+    private int progress;
+    private Quiz quizSettings;
+
+    public Learnset(String name, Quiz quizSettings) {
+        this.name = name;
+        this.learncards = learncards;
+        this.quizSettings = quizSettings;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCardsInTotal() {
+        return cardsInTotal;
+    }
+
+    public int cardsLearned() {
+        int learned = 0;
+        for (Learncard learncard : learncards){
+            if (learncard.getLearned())
+                learned++;
+        }
+        return learned;
+    }
+
+    public int cardsSeen(){
+        int seen = 0;
+        for (Learncard learncard : learncards){
+            if (learncard.getTimesSeen() > 0){
+                seen++;
+            }
+        }
+        return seen;
+    }
+
+    public int getProgress(){
+        return cardsLearned() * 100 / cardsInTotal;
+    }
+
+    public ArrayList<Learncard> getLearncards() {
+        return learncards;
+    }
+
+    public void addLearncard(Learncard learncard){
+        learncards.add(learncard);
+        cardsInTotal++;
+    }
+    public void deleteLearncard(int n){
+        learncards.remove(n);
+        cardsInTotal--;
+    }
+
+    public void setQuizSettings(Quiz quizSettings) {
+        this.quizSettings = quizSettings;
+    }
+}

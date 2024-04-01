@@ -3,7 +3,7 @@
     <style name="Theme.Nightlearn" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#D9D9D9</item>
-        <item name="colorPrimaryVariant">#585858</item>
+        <item name="colorPrimaryVariant">#D9D9D9</item>
         <item name="colorOnPrimary">#585858</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#0000EE</item>
@@ -22,5 +22,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="BottomNavigationTextStyle">
+        <item name="android:textSize">16dp</item>
+
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_in_animation</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 </resources>
