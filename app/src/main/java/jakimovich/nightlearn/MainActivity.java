@@ -76,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+        floatingActionButton.bringToFront();
 
-        floatingActionButton.setOnClickListener(v -> signOut());
+        floatingActionButton.setOnClickListener(v -> {
+            signOut();
+        });
 
     }
 
