@@ -76,15 +76,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-        floatingActionButton.bringToFront();
 
-        floatingActionButton.setOnClickListener(v -> {
-            signOut();
-        });
+        floatingActionButton.bringToFront();
 
     }
 
-    public void signOut() {
+    public void signOut(View v) {
         FirebaseAuth.getInstance().signOut();
         UserService.myUser = null;
         startActivity(new Intent(MainActivity.this, SplashActivity.class));

@@ -30,7 +30,6 @@ public class SignUpActivity extends AppCompatActivity {
     EditText etName, etLastname, etNickname, etEmail, etPassword, etRepeatPassword;
     TextView tvGoLogIn, tvBntContinue;
     LinearLayout btnContinue;
-
     Button btnContinueGuest;
 
     @Override
