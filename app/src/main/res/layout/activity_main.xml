@@ -15,7 +15,7 @@
         app:backgroundTint="#D9D9D9"
         app:fabSize="normal"
         app:layout_anchor="@id/bottomAppBar"
-        android:onClick="signOut"
+        android:onClick="showAlertDialog"
         app:maxImageSize="40dp"
         app:tint="#838383" />
 

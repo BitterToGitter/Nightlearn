@@ -12,11 +12,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-    private void showAlertDialog() {
+    public void showAlertDialog(View vi) {
 
         LinearLayout alertDialogMenu = findViewById(R.id.llAlertDialogMenu);
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.alert_dialog_menu, alertDialogMenu);
@@ -125,8 +128,11 @@ public class MainActivity extends AppCompatActivity {
         tvCreateLearnset.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateLearnset));
         tvCreateAlarm.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateAlarm));
 
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        //alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        Window window = alertDialog.getWindow();
+
+        window.setBackgroundDrawable(new ColorDrawable(0));
+        window.getAttributes().windowAnimations = R.style.DialogAnimation;
+        window.setGravity(Gravity.BOTTOM);
 
         alertDialog.show();
 
