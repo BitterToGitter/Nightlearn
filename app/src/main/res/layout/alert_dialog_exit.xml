@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayoutAlertDialogExit"
+        android:id="@+id/llOptionsAlertMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -17,6 +17,7 @@
             android:padding="15dp">
 
             <TextView
+                android:id="@+id/tvOptionsAlertDialogMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -38,7 +39,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/linearLayoutAlertExitAccept"
+                android:id="@+id/llOptionsAlertAccept"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -46,7 +47,7 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tvAlertExitAccept"
+                    android:id="@+id/tvOptionsAlertDialogAccept"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -64,7 +65,7 @@
                 />
 
             <LinearLayout
-                android:id="@+id/linearLayoutAlertExitDecline"
+                android:id="@+id/llOptionsAlertDecline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -72,11 +73,11 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tvAlertExitDecline"
+                    android:id="@+id/tvOptionsAlertDialogDecline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Nope \n Back to learn"
+                    android:text="Nope \n Back to study"
                     android:textSize="20dp" />
 
             </LinearLayout>

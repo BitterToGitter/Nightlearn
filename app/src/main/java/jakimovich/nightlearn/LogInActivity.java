@@ -1,5 +1,7 @@
 package jakimovich.nightlearn;
 
+import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -121,44 +123,14 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(new Intent(LogInActivity.this, AuthorInfo.class));
                 return true;
             case R.id.optionExit:
-                showAlertDialog();
+                String message = "Are you sure you want to exit?";
+                String accept = "Yeah \\n Let's get out";
+                String decline = "Nope \\n Back to study";
+                showOptionsAlertDialog(this, null, message, accept, decline, this::finishAffinity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void showAlertDialog(){
-
-        LinearLayout alertDialogExit = findViewById(R.id.linearLayoutAlertDialogExit);
-        View view = LayoutInflater.from(LogInActivity.this).inflate(R.layout.alert_dialog_exit, alertDialogExit);
-        LinearLayout alertExitAccept = view.findViewById(R.id.linearLayoutAlertExitAccept);
-        LinearLayout alertExitDecline = view.findViewById(R.id.linearLayoutAlertExitDecline);
-        TextView tvExitAccept = view.findViewById(R.id.tvAlertExitAccept);
-        TextView tvExitDecline = view.findViewById(R.id.tvAlertExitDecline);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(LogInActivity.this);
-        builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
-
-        alertExitAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvExitAccept));
-        alertExitDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvExitDecline));
-        alertExitAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finishAffinity();
-            }
-        });
-        alertExitDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        alertDialog.show();
-
     }
 
     private void guestEnter(){

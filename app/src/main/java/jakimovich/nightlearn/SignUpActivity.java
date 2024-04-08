@@ -1,5 +1,8 @@
 package jakimovich.nightlearn;
 
+import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
+import static jakimovich.nightlearn.MethodsHelper.onTouch;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +27,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity  {
 
     Toolbar toolbar;
     EditText etName, etLastname, etNickname, etEmail, etPassword, etRepeatPassword;
@@ -94,19 +97,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private boolean onTouch(View v, MotionEvent event, TextView textView) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                textView.setTextColor(Color.parseColor("#8B8B8B"));
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                textView.setTextColor(Color.parseColor("#585858"));
-                break;
-        }
-        return false;
-    }
-
     private void createLinkedText(TextView textView){
         SpannableString spannableString = new SpannableString("Already have an account? Log in!");
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -133,45 +123,16 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(SignUpActivity.this, AuthorInfo.class));
                 return true;
             case R.id.optionExit:
-                showAlertDialog();
+                String message = "Are you sure you want to exit?";
+                String accept = "Yeah \\n Let's get out";
+                String decline = "Nope \\n Back to study";
+                showOptionsAlertDialog(this, null, message, accept, decline, this::finishAffinity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void showAlertDialog(){
-
-        LinearLayout alertDialogExit = findViewById(R.id.linearLayoutAlertDialogExit);
-        View view = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.alert_dialog_exit, alertDialogExit);
-        LinearLayout alertExitAccept = view.findViewById(R.id.linearLayoutAlertExitAccept);
-        LinearLayout alertExitDecline = view.findViewById(R.id.linearLayoutAlertExitDecline);
-        TextView tvExitAccept = view.findViewById(R.id.tvAlertExitAccept);
-        TextView tvExitDecline = view.findViewById(R.id.tvAlertExitDecline);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-        builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
-
-        alertExitAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvExitAccept));
-        alertExitDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvExitDecline));
-        alertExitAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finishAffinity();
-            }
-        });
-        alertExitDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        alertDialog.show();
-
-    }
 
     private void guestEnter(){
 
@@ -188,4 +149,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+
 }

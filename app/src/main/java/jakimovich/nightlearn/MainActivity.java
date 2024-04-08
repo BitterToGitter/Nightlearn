@@ -1,5 +1,8 @@
 package jakimovich.nightlearn;
 
+import static jakimovich.nightlearn.AlertDialogHelper.showMenuAlertDialog;
+import static jakimovich.nightlearn.MethodsHelper.onTouch;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,16 +83,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        floatingActionButton.bringToFront();
-
-    }
-
-    public void signOut(View v) {
-        FirebaseAuth.getInstance().signOut();
-        UserService.myUser = null;
-        startActivity(new Intent(MainActivity.this, SplashActivity.class));
-        if (FirebaseAuth.getInstance().getCurrentUser() == null){
-        Toast.makeText(this, "User has been signed out successfully", Toast.LENGTH_SHORT).show();}
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -98,43 +91,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayoutMain, fragment);
         fragmentTransaction.commit();
     }
-
-    private boolean onTouch(View v, MotionEvent event, TextView textView) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                textView.setTextColor(Color.parseColor("#8B8B8B"));
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                textView.setTextColor(Color.parseColor("#D9D9D9"));
-                break;
-        }
-        return false;
-    }
     public void showAlertDialog(View vi) {
-
-        LinearLayout alertDialogMenu = findViewById(R.id.llAlertDialogMenu);
-        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.alert_dialog_menu, alertDialogMenu);
-
-        TextView tvCreateLearnsetsFolder = view.findViewById(R.id.tvCreateLearnsetsFolder);
-        TextView tvCreateLearnset = view.findViewById(R.id.tvCreateLearnset);
-        TextView tvCreateAlarm = view.findViewById(R.id.tvCreateAlarm);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setView(view);
-        final AlertDialog alertDialog = builder.create();
-
-        tvCreateLearnsetsFolder.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateLearnsetsFolder));
-        tvCreateLearnset.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateLearnset));
-        tvCreateAlarm.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateAlarm));
-
-        Window window = alertDialog.getWindow();
-
-        window.setBackgroundDrawable(new ColorDrawable(0));
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
-        window.setGravity(Gravity.BOTTOM);
-
-        alertDialog.show();
-
+        showMenuAlertDialog(this, vi);
     }
 }

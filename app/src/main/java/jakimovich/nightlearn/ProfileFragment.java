@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,9 @@ public class ProfileFragment extends Fragment {
 
     ImageView imageViewProfile;
     TextView profileName, profileLastname;
+    Button btnSignOut;
     ImageButton ibEditName, ibEditLastname;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,10 +45,15 @@ public class ProfileFragment extends Fragment {
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
-        setProfilePhoto(imageViewProfile);
+
+        btnSignOut = view.findViewById(R.id.btnProfileSignOut);
+        btnSignOut.setOnClickListener((getContext) -> MethodsHelper.signOut(getContext()));
 
         profileName.setText(UserService.myUser.getName());
         profileLastname.setText(UserService.myUser.getLastname());
+
+        setProfilePhoto(imageViewProfile);
+
 
     }
 
