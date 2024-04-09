@@ -4,11 +4,15 @@ import static androidx.core.app.ActivityCompat.finishAffinity;
 import static jakimovich.nightlearn.MethodsHelper.onTouch;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,10 +20,11 @@ import androidx.appcompat.app.AlertDialog;
 
 public class AlertDialogHelper {
 
-    public static void showMenuAlertDialog(Activity activity, View vi) {
+    public static void showMenuAlertDialog(Activity activity) {
+
         activity.getApplicationContext();
-        LinearLayout alertDialogMenu = vi.findViewById(R.id.llAlertDialogMenu);
-        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_menu, alertDialogMenu);
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_menu, null);
 
         TextView tvCreateLearnsetsFolder = view.findViewById(R.id.tvCreateLearnsetsFolder);
         TextView tvCreateLearnset = view.findViewById(R.id.tvCreateLearnset);
@@ -42,11 +47,13 @@ public class AlertDialogHelper {
         alertDialog.show();
     }
 
-    public static void showOptionsAlertDialog(Activity activity, View vi, String message, String accept, String decline,AlertAcceptClickListener acceptListener )
+    public static void showOptionsAlertDialog(Activity activity, String message, String accept, String decline, AlertAcceptClickListener acceptListener )
     {
+
         activity.getApplicationContext();
-        LinearLayout alertDialogExit = vi.findViewById(R.id.llOptionsAlertMessage);
-        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_exit, alertDialogExit);
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.options_alert_dialog, null);
+
         LinearLayout alertAccept = view.findViewById(R.id.llOptionsAlertAccept);
         LinearLayout alertDecline = view.findViewById(R.id.llOptionsAlertDecline);
         TextView tvMessage = view.findViewById(R.id.tvOptionsAlertDialogMessage);
@@ -63,21 +70,56 @@ public class AlertDialogHelper {
 
         alertAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvAccept));
         alertDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvDecline));
-        alertAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                acceptListener.onAlertAcceptClicked();
-            }
-        });
-        alertDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+
+        alertAccept.setOnClickListener(v -> acceptListener.onAlertAcceptClicked());
+
+        alertDecline.setOnClickListener(v -> alertDialog.dismiss());
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.show();
+    }
+
+    public static void showEditAlertDialog(Activity activity, String message, String editTextHint, String accept, String decline, AlertEnteredTextListener listener){
+        activity.getApplicationContext();
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_edit, null);
+
+        LinearLayout alertAccept = view.findViewById(R.id.llAlertEditAccept);
+        LinearLayout alertDecline = view.findViewById(R.id.llAlertEditDecline);
+
+        TextView tvMessage = view.findViewById(R.id.tvAlertEditMessage);
+        TextView tvAccept = view.findViewById(R.id.tvAlertEditAccept);
+        TextView tvDecline = view.findViewById(R.id.tvAlertEditDecline);
+
+        EditText editText = view.findViewById(R.id.alertEditEditText);
+
+        if(message != null){tvMessage.setText(message);}
+        if(accept != null){tvAccept.setText(accept);}
+        if(decline != null){tvDecline.setText(decline);}
+        if(editTextHint != null){editText.setHint(editTextHint);}
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        alertAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvAccept));
+        alertDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvDecline));
+
+        alertAccept.setOnClickListener(v -> {
+                String output = editText.getText().toString();
+                if (!output.isEmpty()) {
+                    listener.onTextEntered(output);
+                    alertDialog.dismiss();
+                }
+                alertDialog.dismiss();
+        });
+
+        alertDecline.setOnClickListener(v -> alertDialog.dismiss());
+
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.show();
+
     }
 }
 

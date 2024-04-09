@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llAlertDialogType"
+    android:id="@+id/llAlertDialogEdit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="30dp"
@@ -16,7 +16,7 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/tvAlertTypeTitle"
+            android:id="@+id/tvAlertEditMessage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -26,11 +26,13 @@
             android:textSize="23dp" />
 
         <EditText
-            android:id="@+id/alertTypeEditText"
+            android:id="@+id/alertEditEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="Enter here..."
+            android:textColorHint="#585858"
+            android:textColor="#585858"
 
             />
 
@@ -47,7 +49,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/llAlertTypeAccept"
+            android:id="@+id/llAlertEditAccept"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,7 +57,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/tvAlertTypeAccept"
+                android:id="@+id/tvAlertEditAccept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -73,7 +75,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/llAlertTypeDecline"
+            android:id="@+id/llAlertEditDecline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -81,7 +83,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/tvAlertTypeDecline"
+                android:id="@+id/tvAlertEditDecline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

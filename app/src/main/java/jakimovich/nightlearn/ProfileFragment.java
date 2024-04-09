@@ -1,5 +1,11 @@
 package jakimovich.nightlearn;
 
+import static jakimovich.nightlearn.AlertDialogHelper.showEditAlertDialog;
+import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
+import static jakimovich.nightlearn.MethodsHelper.signOut;
+import static jakimovich.nightlearn.MethodsHelper.updateUserLastname;
+import static jakimovich.nightlearn.MethodsHelper.updateUserName;
+
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 
@@ -24,7 +30,7 @@ public class ProfileFragment extends Fragment {
 
     ImageView imageViewProfile;
     TextView profileName, profileLastname;
-    Button btnSignOut;
+    Button btnSignOut, btnExit, btnDeleteAccount;
     ImageButton ibEditName, ibEditLastname;
 
     @Override
@@ -39,18 +45,27 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         profileName = view.findViewById(R.id.tvProfileName);
+        profileName.setText(UserService.myUser.getName());
+
         profileLastname = view.findViewById(R.id.tvProfileLastname);
+        profileLastname.setText(UserService.myUser.getLastname());
 
         ibEditName = view.findViewById(R.id.ibEditName);
+        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName ));
+
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
+        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
 
-        btnSignOut = view.findViewById(R.id.btnProfileSignOut);
-        btnSignOut.setOnClickListener((getContext) -> MethodsHelper.signOut(getContext()));
+        btnExit = view.findViewById(R.id.btnProfileExit);
+        btnExit.setOnClickListener((t) -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
 
-        profileName.setText(UserService.myUser.getName());
-        profileLastname.setText(UserService.myUser.getLastname());
+        btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
+
+        btnSignOut = view.findViewById(R.id.btnProfileSignOut);
+        btnSignOut.setOnClickListener(v -> signOut(getContext()));
+
 
         setProfilePhoto(imageViewProfile);
 
@@ -69,6 +84,18 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void finishAffinity() {
+        if (getActivity() != null) {
+            getActivity().finishAffinity();
+        }
+    }
+
+    private void updateProfileUserName(String name){
+        updateUserName(getContext(), name);
+    }
+    private void updateProfileUserLastname(String lastname){
+        updateUserLastname(getContext(), lastname);
+    }
     private void editProfileName(){
 
     }

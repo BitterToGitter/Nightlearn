@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayoutMain, fragment);
         fragmentTransaction.commit();
     }
-    public void showAlertDialog(View vi) {
-        showMenuAlertDialog(this, vi);
+    public void showAlertDialogForMain(View v) {
+        showMenuAlertDialog(this);
     }
 }

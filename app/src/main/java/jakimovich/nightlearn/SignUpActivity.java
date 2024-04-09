@@ -124,15 +124,14 @@ public class SignUpActivity extends AppCompatActivity  {
                 return true;
             case R.id.optionExit:
                 String message = "Are you sure you want to exit?";
-                String accept = "Yeah \\n Let's get out";
-                String decline = "Nope \\n Back to study";
-                showOptionsAlertDialog(this, null, message, accept, decline, this::finishAffinity);
+                String accept = "Yeah \n Let's get out";
+                String decline = "Nope \n Back to study";
+                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void guestEnter(){
 
