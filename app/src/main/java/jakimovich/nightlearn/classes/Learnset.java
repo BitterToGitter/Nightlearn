@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.classes;
 
 import java.util.ArrayList;
 

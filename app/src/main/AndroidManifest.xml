@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Nightlearn"
         tools:targetApi="31">
         <activity
-            android:name=".AuthorInfo"
+            android:name=".AuthorInfoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

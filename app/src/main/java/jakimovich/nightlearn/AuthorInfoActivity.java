@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AuthorInfo extends AppCompatActivity {
+public class AuthorInfoActivity extends AppCompatActivity {
 
     Button btnBack;
 

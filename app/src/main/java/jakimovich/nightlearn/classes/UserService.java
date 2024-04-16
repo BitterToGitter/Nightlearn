@@ -1,7 +1,6 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.classes;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,8 +9,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class UserService {
-    static UserProfile myUser;
-    static Task<Void> setMyUser(UserProfile user){
+    public static UserProfile myUser;
+    public static Task<Void> setMyUser(UserProfile user){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -32,7 +31,7 @@ public class UserService {
 
     }
 
-    static Task<UserProfile> getUserById (String userId){
+    public static Task<UserProfile> getUserById(String userId){
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("users/" + userId);

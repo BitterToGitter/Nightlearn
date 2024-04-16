@@ -1,41 +1,24 @@
 package jakimovich.nightlearn;
 
-import static jakimovich.nightlearn.AlertDialogHelper.showMenuAlertDialog;
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showMenuAlertDialog;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.Firebase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import jakimovich.nightlearn.databinding.ActivityMainBinding;
+import jakimovich.nightlearn.fragments.AlarmsFragment;
+import jakimovich.nightlearn.fragments.HomeFragment;
+import jakimovich.nightlearn.fragments.LearnsetsFragment;
+import jakimovich.nightlearn.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 

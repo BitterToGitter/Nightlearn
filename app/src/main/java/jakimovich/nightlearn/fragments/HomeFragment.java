@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.classes.UserService;
 
 public class HomeFragment extends Fragment {
 

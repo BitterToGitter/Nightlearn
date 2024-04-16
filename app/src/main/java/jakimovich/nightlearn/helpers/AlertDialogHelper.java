@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.helpers;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+
+import jakimovich.nightlearn.interfaces.AlertAcceptClickListener;
+import jakimovich.nightlearn.interfaces.AlertEnteredTextListener;
+import jakimovich.nightlearn.R;
 
 public class AlertDialogHelper {
 

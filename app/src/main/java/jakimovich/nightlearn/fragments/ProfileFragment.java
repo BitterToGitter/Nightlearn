@@ -1,10 +1,8 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.fragments;
 
-import static jakimovich.nightlearn.AlertDialogHelper.showEditAlertDialog;
-import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
-import static jakimovich.nightlearn.MethodsHelper.signOut;
-import static jakimovich.nightlearn.MethodsHelper.updateUserLastname;
-import static jakimovich.nightlearn.MethodsHelper.updateUserName;
+import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
+import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
+import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
 
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
@@ -25,6 +23,10 @@ import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
 import java.io.InputStream;
+
+import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.AlertDialogHelper;
 
 public class ProfileFragment extends Fragment {
 
@@ -51,15 +53,15 @@ public class ProfileFragment extends Fragment {
         profileLastname.setText(UserService.myUser.getLastname());
 
         ibEditName = view.findViewById(R.id.ibEditName);
-        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName ));
+        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName ));
 
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
+        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
 
         btnExit = view.findViewById(R.id.btnProfileExit);
-        btnExit.setOnClickListener((t) -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
+        btnExit.setOnClickListener((t) -> AlertDialogHelper.showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
 
         btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 

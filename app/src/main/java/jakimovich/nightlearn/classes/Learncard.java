@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.classes;
 
 public class Learncard {
     private String definition;

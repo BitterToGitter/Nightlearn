@@ -1,21 +1,16 @@
 package jakimovich.nightlearn;
 
-import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ClickableSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import jakimovich.nightlearn.classes.UserService;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -104,7 +101,7 @@ public class LogInActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.optionAuthor:
-                startActivity(new Intent(LogInActivity.this, AuthorInfo.class));
+                startActivity(new Intent(LogInActivity.this, AuthorInfoActivity.class));
                 return true;
             case R.id.optionExit:
                 String message = "Are you sure you want to exit?";

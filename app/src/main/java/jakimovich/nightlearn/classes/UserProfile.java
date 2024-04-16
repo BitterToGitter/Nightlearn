@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.classes;
 
 public class UserProfile {
     private String nickname;
