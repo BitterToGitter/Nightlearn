@@ -1,17 +1,11 @@
 package jakimovich.nightlearn;
 
-import static androidx.core.app.ActivityCompat.finishAffinity;
-import static jakimovich.nightlearn.MethodsHelper.onTouch;
-
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,10 +28,6 @@ public class AlertDialogHelper {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        tvCreateLearnsetsFolder.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateLearnsetsFolder));
-        tvCreateLearnset.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateLearnset));
-        tvCreateAlarm.setOnTouchListener((v, event) -> onTouch(v, event, tvCreateAlarm));
-
         Window window = alertDialog.getWindow();
 
         window.setBackgroundDrawable(new ColorDrawable(0));
@@ -52,7 +42,7 @@ public class AlertDialogHelper {
 
         activity.getApplicationContext();
 
-        View view = LayoutInflater.from(activity).inflate(R.layout.options_alert_dialog, null);
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_options, null);
 
         LinearLayout alertAccept = view.findViewById(R.id.llOptionsAlertAccept);
         LinearLayout alertDecline = view.findViewById(R.id.llOptionsAlertDecline);
@@ -68,8 +58,8 @@ public class AlertDialogHelper {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        alertAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvAccept));
-        alertDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvDecline));
+        //alertAccept.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvAccept));
+        //alertDecline.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvDecline));
 
         alertAccept.setOnClickListener(v -> acceptListener.onAlertAcceptClicked());
 
@@ -102,8 +92,8 @@ public class AlertDialogHelper {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        alertAccept.setOnTouchListener((v, event) -> onTouch(v, event, tvAccept));
-        alertDecline.setOnTouchListener((v, event) -> onTouch(v, event, tvDecline));
+        //alertAccept.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvAccept));
+        //alertDecline.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvDecline));
 
         alertAccept.setOnClickListener(v -> {
                 String output = editText.getText().toString();

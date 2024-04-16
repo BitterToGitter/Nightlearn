@@ -1,7 +1,6 @@
 package jakimovich.nightlearn;
 
 import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +53,7 @@ public class LogInActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.logInToolbar);
 
 
-        btnContinue.setOnTouchListener((v, event) -> onTouch(v, event, tvBntContinue));
+        //btnContinue.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvBntContinue));
         btnContinue.setOnClickListener(v -> logIn());
 
         createLinkedText(tvGoSignUp);
@@ -83,19 +82,6 @@ public class LogInActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private boolean onTouch(View v, MotionEvent event, TextView textView) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                textView.setTextColor(Color.parseColor("#8B8B8B"));
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                textView.setTextColor(Color.parseColor("#585858"));
-                break;
-        }
-        return false;
     }
 
     private void createLinkedText(TextView textView){

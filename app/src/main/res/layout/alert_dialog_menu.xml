@@ -14,12 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create a new lernsets folder"
-        android:textColor="#D9D9D9"
+        android:textColor="@color/bottom_menu_textcolor_focused"
         android:gravity="center"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
+        android:focusable="true"
         />
 
     <View
@@ -32,12 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create a new learnset"
-        android:textColor="#D9D9D9"
+        android:textColor="@color/bottom_menu_textcolor_focused"
         android:gravity="center"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
+        android:focusable="true"
 
         />
 
@@ -51,12 +53,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create a new alarm"
-        android:textColor="#D9D9D9"
+        android:textColor="@color/bottom_menu_textcolor_focused"
         android:gravity="center"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
+        android:focusable="true"
         />
 
 

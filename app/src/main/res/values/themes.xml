@@ -16,22 +16,20 @@
 
         <item name="android:editTextColor">#585858</item>
         <item name="android:colorControlNormal">#585858</item>
-
-        <!-- <item name="android:buttonCornerRadius">30dp</item> -->
+        <item name="android:textColorLink">#0000EE</item>
 
         <!-- Customize your theme here. -->
+
     </style>
 
     <style name="BottomNavigationTextStyle">
         <item name="android:textSize">16dp</item>
-
     </style>
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_in_animation</item>
         <item name="android:windowExitAnimation">@anim/dialog_slide_out_animation</item>
         <item name="android:layout_marginHorizontal">0dp</item>
-
     </style>
 
 </resources>

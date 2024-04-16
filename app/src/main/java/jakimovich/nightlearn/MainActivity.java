@@ -1,7 +1,6 @@
 package jakimovich.nightlearn;
 
 import static jakimovich.nightlearn.AlertDialogHelper.showMenuAlertDialog;
-import static jakimovich.nightlearn.MethodsHelper.onTouch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;

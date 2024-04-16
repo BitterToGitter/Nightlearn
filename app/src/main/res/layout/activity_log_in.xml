@@ -144,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Continue"
+                android:textColor="@color/alert_dialog_textcolor_focused"
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
@@ -159,7 +160,6 @@
         android:gravity="center"
         android:text="Don’t have an account yet? Sign up!"
         android:textColor="@color/white"
-        android:textColorLink="#0000EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

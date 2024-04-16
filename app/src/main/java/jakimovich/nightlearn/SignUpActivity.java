@@ -1,7 +1,6 @@
 package jakimovich.nightlearn;
 
 import static jakimovich.nightlearn.AlertDialogHelper.showOptionsAlertDialog;
-import static jakimovich.nightlearn.MethodsHelper.onTouch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -57,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity  {
         toolbar = findViewById(R.id.signUpToolbar);
         setSupportActionBar(toolbar);
 
-        btnContinue.setOnTouchListener((v, event) -> onTouch(v, event, tvBntContinue));
+        //btnContinue.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvBntContinue));
         btnContinue.setOnClickListener(v -> signUp());
 
         createLinkedText(tvGoLogIn);

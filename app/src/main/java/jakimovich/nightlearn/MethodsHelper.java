@@ -17,16 +17,19 @@ import com.google.firebase.firestore.auth.User;
 
 public class MethodsHelper {
     public static boolean onTouch(View v, MotionEvent event, TextView textView) {
+
+        int color = textView.getCurrentTextColor();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 textView.setTextColor(Color.parseColor("#8B8B8B"));
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                textView.setTextColor(Color.parseColor("#585858"));
+                textView.setTextColor(color);
                 break;
         }
-        return false;
+        return true;
     }
 
     public static void signOut(Context context) {
