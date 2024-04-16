@@ -56,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity  {
         toolbar = findViewById(R.id.signUpToolbar);
         setSupportActionBar(toolbar);
 
-        //btnContinue.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvBntContinue));
         btnContinue.setOnClickListener(v -> signUp());
 
         createLinkedText(tvGoLogIn);

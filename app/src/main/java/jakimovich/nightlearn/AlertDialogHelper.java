@@ -58,9 +58,6 @@ public class AlertDialogHelper {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        //alertAccept.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvAccept));
-        //alertDecline.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvDecline));
-
         alertAccept.setOnClickListener(v -> acceptListener.onAlertAcceptClicked());
 
         alertDecline.setOnClickListener(v -> alertDialog.dismiss());
@@ -91,9 +88,6 @@ public class AlertDialogHelper {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
-
-        //alertAccept.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvAccept));
-        //alertDecline.setOnFocusChangeListener((v, hasFocus) -> onTouch(v, hasFocus, tvDecline));
 
         alertAccept.setOnClickListener(v -> {
                 String output = editText.getText().toString();
