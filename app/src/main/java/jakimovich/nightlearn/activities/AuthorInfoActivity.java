@@ -1,10 +1,12 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import jakimovich.nightlearn.R;
 
 public class AuthorInfoActivity extends AppCompatActivity {
 

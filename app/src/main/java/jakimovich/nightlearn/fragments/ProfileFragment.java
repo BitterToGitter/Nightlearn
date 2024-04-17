@@ -1,5 +1,6 @@
 package jakimovich.nightlearn.fragments;
 
+import static jakimovich.nightlearn.helpers.MethodsHelper.refreshFragment;
 import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
@@ -10,6 +11,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,12 +60,12 @@ public class ProfileFragment extends Fragment {
         ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName ));
 
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
+        ibEditLastname.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
 
         btnExit = view.findViewById(R.id.btnProfileExit);
-        btnExit.setOnClickListener((t) -> AlertDialogHelper.showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
+        btnExit.setOnClickListener((v) -> AlertDialogHelper.showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
 
         btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 
@@ -88,12 +92,15 @@ public class ProfileFragment extends Fragment {
 
     private void finishAffinity() {
         if (getActivity() != null) {
-            getActivity().finishAffinity();
+            getActivity().finishAffinity(); //TODO: Actually exit the app
         }
     }
 
     private void updateProfileUserName(String name){
         updateUserName(getContext(), name);
+        //TODO: Figure out how to refresh fragments
+        Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("profile");
+        refreshFragment(getContext(), fragment);
     }
     private void updateProfileUserLastname(String lastname){
         updateUserLastname(getContext(), lastname);

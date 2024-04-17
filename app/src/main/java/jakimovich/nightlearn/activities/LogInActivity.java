@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
 import androidx.annotation.NonNull;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserService;
 
 public class LogInActivity extends AppCompatActivity {
@@ -55,7 +56,6 @@ public class LogInActivity extends AppCompatActivity {
 
         btnContinueGuest.setOnClickListener(v -> guestEnter());
 
-
     }
 
     private void logIn(){
@@ -84,7 +84,7 @@ public class LogInActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                startActivity(new Intent(LogInActivity.this, SignUpActivity.class));
+                startActivity(new Intent(LogInActivity.this, SignUpActivity.class)); //TODO: Actually get BACK to signUp
             }
         };
         spannableString.setSpan(clickableSpan, 27, 35, 0);

@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showMenuAlertDialog;
 
@@ -14,6 +14,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.databinding.ActivityMainBinding;
 import jakimovich.nightlearn.fragments.AlarmsFragment;
 import jakimovich.nightlearn.fragments.HomeFragment;
@@ -42,24 +43,24 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationView.setBackground(null);
 
-        replaceFragment(new HomeFragment());
+        replaceFragment(new HomeFragment(), "home");
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.menuHome:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(new HomeFragment(), "home");
                     break;
 
                 case R.id.menuLearnsets:
-                    replaceFragment(new LearnsetsFragment());
+                    replaceFragment(new LearnsetsFragment(), "learnsets");
                     break;
 
                 case R.id.menuAlarms:
-                    replaceFragment(new AlarmsFragment());
+                    replaceFragment(new AlarmsFragment(), "alarms");
                     break;
 
                 case R.id.menuProfile:
-                    replaceFragment(new ProfileFragment());
+                    replaceFragment(new ProfileFragment(), "profile");
                     break;
             }
             return true;
@@ -67,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String fragmentTag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutMain, fragment);
+        fragmentTransaction.replace(R.id.frameLayoutMain, fragment, fragmentTag);
         fragmentTransaction.commit();
     }
     public void showAlertDialogForMain(View v) {

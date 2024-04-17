@@ -1,4 +1,4 @@
-package jakimovich.nightlearn;
+package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
 
@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserProfile;
 import jakimovich.nightlearn.classes.UserService;
 
@@ -122,11 +123,12 @@ public class SignUpActivity extends AppCompatActivity  {
                 String message = "Are you sure you want to exit?";
                 String accept = "Yeah \n Let's get out";
                 String decline = "Nope \n Back to study";
-                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity);
+                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity); //TODO: Actually exit the app
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        //TODO: to work on a optionsMenu design or to apply custom layout
     }
 
     private void guestEnter(){
@@ -143,6 +145,6 @@ public class SignUpActivity extends AppCompatActivity  {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    } //TODO: To find some normal way to enter as a guest
 
 }

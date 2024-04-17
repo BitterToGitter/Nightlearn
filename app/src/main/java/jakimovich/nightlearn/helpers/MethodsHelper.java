@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import jakimovich.nightlearn.SplashActivity;
+import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.UserService;
 
 public class MethodsHelper {
@@ -20,6 +23,8 @@ public class MethodsHelper {
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
             Toast.makeText(context, "User has been signed out successfully", Toast.LENGTH_SHORT).show();
             context.startActivity(intent);}
+        //TODO: Not using startActivity, it ruins the next sign ins. Maybe its better to use Sign up activity as smth like splash? Or just get BACK to splash.
+
     }
 
     public static void updateUserName(Context context, String name){
@@ -44,10 +49,18 @@ public class MethodsHelper {
         DatabaseReference ref = database.getReference("users/" + userId).child("lastname");
         ref.setValue(lastname);
 
-        UserService.myUser.setName(lastname);
+        UserService.myUser.setLastname(lastname);
 
         Toast.makeText(context, "Your lastname has been updated", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public static void refreshFragment(Context context, Fragment currentFragment){
+        if (currentFragment != null) {
+            FragmentTransaction ft = currentFragment.getParentFragmentManager().beginTransaction();
+            ft.detach(currentFragment).attach(currentFragment).commit();
+        }
+        Toast.makeText(context, "Problem", Toast.LENGTH_SHORT).show();
     }
 
 }
