@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     BottomAppBar bac;
     ActivityMainBinding binding;
-
     FloatingActionButton floatingActionButton;
 
     @Override
@@ -68,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment, String fragmentTag) {
+    public void replaceFragment(Fragment fragment, String fragmentTag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutMain, fragment, fragmentTag);
         fragmentTransaction.commit();
     }
+
     public void showAlertDialogForMain(View v) {
         showMenuAlertDialog(this);
     }
+
 }

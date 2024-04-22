@@ -1,5 +1,6 @@
 package jakimovich.nightlearn.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -16,13 +17,13 @@ import jakimovich.nightlearn.classes.UserService;
 
 public class MethodsHelper {
 
-    public static void signOut(Context context) {
+    public static void signOut(Context context, Activity activity) {
         FirebaseAuth.getInstance().signOut();
         UserService.myUser = null;
-        Intent intent = new Intent(context, SplashActivity.class);
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
             Toast.makeText(context, "User has been signed out successfully", Toast.LENGTH_SHORT).show();
-            context.startActivity(intent);}
+            activity.finish();
+        }
         //TODO: Not using startActivity, it ruins the next sign ins. Maybe its better to use Sign up activity as smth like splash? Or just get BACK to splash.
 
     }
@@ -53,14 +54,6 @@ public class MethodsHelper {
 
         Toast.makeText(context, "Your lastname has been updated", Toast.LENGTH_SHORT).show();
 
-    }
-
-    public static void refreshFragment(Context context, Fragment currentFragment){
-        if (currentFragment != null) {
-            FragmentTransaction ft = currentFragment.getParentFragmentManager().beginTransaction();
-            ft.detach(currentFragment).attach(currentFragment).commit();
-        }
-        Toast.makeText(context, "Problem", Toast.LENGTH_SHORT).show();
     }
 
 }

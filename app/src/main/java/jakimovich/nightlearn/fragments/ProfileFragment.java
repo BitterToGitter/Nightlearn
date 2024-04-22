@@ -1,6 +1,5 @@
 package jakimovich.nightlearn.fragments;
 
-import static jakimovich.nightlearn.helpers.MethodsHelper.refreshFragment;
 import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
@@ -29,6 +28,7 @@ import com.caverock.androidsvg.SVGParseException;
 import java.io.InputStream;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 
@@ -57,10 +57,10 @@ public class ProfileFragment extends Fragment {
         profileLastname.setText(UserService.myUser.getLastname());
 
         ibEditName = view.findViewById(R.id.ibEditName);
-        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName ));
+        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName));
 
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditLastname.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname ));
+        ibEditLastname.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname));
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
 
@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
         btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 
         btnSignOut = view.findViewById(R.id.btnProfileSignOut);
-        btnSignOut.setOnClickListener(v -> signOut(getContext()));
+        btnSignOut.setOnClickListener(v -> signOut(getContext(), getActivity()));
 
 
         setProfilePhoto(imageViewProfile);
@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void setProfilePhoto(ImageView imageView){
+    private void setProfilePhoto(ImageView imageView) {
         try {
             InputStream inputStream = getResources().openRawResource(R.raw.profile);
             SVG svg = SVG.getFromInputStream(inputStream);
@@ -91,23 +91,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void finishAffinity() {
-        if (getActivity() != null) {
-            getActivity().finishAffinity(); //TODO: Actually exit the app
-        }
+            getActivity().finishAffinity();
+            onStop();//TODO: Actually exit the app
+
     }
 
-    private void updateProfileUserName(String name){
+    private void updateProfileUserName(String name) {
         updateUserName(getContext(), name);
-        //TODO: Figure out how to refresh fragments
-        Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("profile");
-        refreshFragment(getContext(), fragment);
+        ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
-    private void updateProfileUserLastname(String lastname){
+
+    private void updateProfileUserLastname(String lastname) {
         updateUserLastname(getContext(), lastname);
+        ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
-    private void editProfileName(){
-
-    }
-
 }
 

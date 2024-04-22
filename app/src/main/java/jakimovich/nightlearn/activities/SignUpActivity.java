@@ -99,7 +99,13 @@ public class SignUpActivity extends AppCompatActivity  {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
+                Intent intent = getIntent();
+                if(intent != null){
+                    if(intent.hasExtra("fromLogIn")){
+                        finish();
+                    }
+                    else {startActivity(new Intent(SignUpActivity.this, LogInActivity.class).putExtra("fromSignUp", true));} //TODO: Actually get BACK to signUp
+                }
             }
         };
         spannableString.setSpan(clickableSpan, 25, 32, 0);
