@@ -87,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity  {
                 UserService.setMyUser(new UserProfile(nickname, name, lastname, eMail, password));
                 Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
+                finish();
             } else {
                 Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -104,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity  {
                     if(intent.hasExtra("fromLogIn")){
                         finish();
                     }
-                    else {startActivity(new Intent(SignUpActivity.this, LogInActivity.class).putExtra("fromSignUp", true));} //TODO: Actually get BACK to signUp
+                    else {startActivity(new Intent(SignUpActivity.this, LogInActivity.class).putExtra("fromSignUp", true));} //TODO: Not to get back to signUp from Profile fragment
                 }
             }
         };
@@ -129,7 +130,10 @@ public class SignUpActivity extends AppCompatActivity  {
                 String message = "Are you sure you want to exit?";
                 String accept = "Yeah \n Let's get out";
                 String decline = "Nope \n Back to study";
-                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity); //TODO: Actually exit the app
+                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity);
+
+                //TODO: Didn't find a way for closing app windows of smartphone itself
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -147,6 +151,7 @@ public class SignUpActivity extends AppCompatActivity  {
                 Toast.makeText(this, "You entered as a guest", Toast.LENGTH_SHORT).show();
                 UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
+                finish();
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }

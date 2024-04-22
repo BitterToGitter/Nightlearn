@@ -22,9 +22,10 @@ public class MethodsHelper {
         UserService.myUser = null;
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
             Toast.makeText(context, "User has been signed out successfully", Toast.LENGTH_SHORT).show();
+            activity.startActivity(new Intent(activity, SplashActivity.class));
             activity.finish();
         }
-        //TODO: Not using startActivity, it ruins the next sign ins. Maybe its better to use Sign up activity as smth like splash? Or just get BACK to splash.
+        //TODO: Save the data before Signing out
 
     }
 

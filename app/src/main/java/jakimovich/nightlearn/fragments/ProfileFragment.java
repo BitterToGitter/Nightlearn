@@ -1,9 +1,13 @@
 package jakimovich.nightlearn.fragments;
 
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showEditAlertDialog;
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
 import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 
@@ -14,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +36,7 @@ import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
+import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class ProfileFragment extends Fragment {
 
@@ -57,20 +63,20 @@ public class ProfileFragment extends Fragment {
         profileLastname.setText(UserService.myUser.getLastname());
 
         ibEditName = view.findViewById(R.id.ibEditName);
-        ibEditName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateProfileUserName));
+        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Name", "Type here...", "Update", "Cancel", this::updateUserName));
 
         ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditLastname.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateProfileUserLastname));
+        ibEditLastname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Enter your Lastname", "Type here...", "Update", "Cancel", this::updateUserLastname));
 
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
 
         btnExit = view.findViewById(R.id.btnProfileExit);
-        btnExit.setOnClickListener((v) -> AlertDialogHelper.showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
+        btnExit.setOnClickListener((v) -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
 
         btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 
         btnSignOut = view.findViewById(R.id.btnProfileSignOut);
-        btnSignOut.setOnClickListener(v -> signOut(getContext(), getActivity()));
+        btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", this::signOut));
 
 
         setProfilePhoto(imageViewProfile);
@@ -92,17 +98,21 @@ public class ProfileFragment extends Fragment {
 
     private void finishAffinity() {
             getActivity().finishAffinity();
-            onStop();//TODO: Actually exit the app
-
+            onStop();
+            //TODO: Didn't find a way for closing app windows of smartphone itself
     }
 
-    private void updateProfileUserName(String name) {
-        updateUserName(getContext(), name);
+    private void signOut(){
+        MethodsHelper.signOut(getContext(), getActivity());
+    }
+
+    private void updateUserName(String name) {
+        MethodsHelper.updateUserName(getContext(), name);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 
-    private void updateProfileUserLastname(String lastname) {
-        updateUserLastname(getContext(), lastname);
+    private void updateUserLastname(String lastname) {
+        MethodsHelper.updateUserLastname(getContext(), lastname);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 }
