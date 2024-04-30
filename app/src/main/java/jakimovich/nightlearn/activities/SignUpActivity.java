@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity  {
         if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || eMail.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
-        }
+        } //TODO Add input check
 
         if(!password.equals(repeatPassword)){
             Toast.makeText(this, "Passwords don't match to each other", Toast.LENGTH_SHORT).show();
@@ -105,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity  {
                     if(intent.hasExtra("fromLogIn")){
                         finish();
                     }
-                    else {startActivity(new Intent(SignUpActivity.this, LogInActivity.class).putExtra("fromSignUp", true));} //TODO: Not to get back to signUp from Profile fragment
+                    else {startActivity(new Intent(SignUpActivity.this, LogInActivity.class).putExtra("fromSignUp", true));}
                 }
             }
         };

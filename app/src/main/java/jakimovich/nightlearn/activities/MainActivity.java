@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,8 @@ import jakimovich.nightlearn.fragments.AlarmsFragment;
 import jakimovich.nightlearn.fragments.HomeFragment;
 import jakimovich.nightlearn.fragments.LearnsetsFragment;
 import jakimovich.nightlearn.fragments.ProfileFragment;
+import jakimovich.nightlearn.helpers.AlertDialogHelper;
+import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
     }
 
     public void replaceFragment(Fragment fragment, String fragmentTag) {
@@ -77,5 +79,6 @@ public class MainActivity extends AppCompatActivity {
     public void showAlertDialogForMain(View v) {
         showMenuAlertDialog(this);
     }
+
 
 }

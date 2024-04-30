@@ -98,7 +98,6 @@ public class ProfileFragment extends Fragment {
 
     private void finishAffinity() {
             getActivity().finishAffinity();
-            onStop();
             //TODO: Didn't find a way for closing app windows of smartphone itself
     }
 

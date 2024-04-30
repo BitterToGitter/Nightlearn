@@ -29,7 +29,6 @@ public class LogInActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     TextView tvBntContinue, tvGoSignUp;
     LinearLayout btnContinue;
-
     Button btnContinueGuest;
 
 
@@ -49,6 +48,7 @@ public class LogInActivity extends AppCompatActivity {
         btnContinueGuest = findViewById(R.id.btnLogInGuest);
 
         toolbar = findViewById(R.id.logInToolbar);
+        setSupportActionBar(toolbar);
 
         btnContinue.setOnClickListener(v -> logIn());
 
@@ -66,14 +66,14 @@ public class LogInActivity extends AppCompatActivity {
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
-        }
+        } //TODO Add input check
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "User has been signed in successfully", Toast.LENGTH_SHORT).show();
                 UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
-                finish();
+                finishAffinity();
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -90,7 +90,7 @@ public class LogInActivity extends AppCompatActivity {
                     if(intent.hasExtra("fromSignUp")){
                         finish();
                     }
-                    else {startActivity(new Intent(LogInActivity.this, SignUpActivity.class).putExtra("fromLogIn", true));} //TODO: Not to get back to signUp from Profile fragment
+                    else {startActivity(new Intent(LogInActivity.this, SignUpActivity.class).putExtra("fromLogIn", true));}
                 }
             }
         };
@@ -131,7 +131,7 @@ public class LogInActivity extends AppCompatActivity {
                 Toast.makeText(this, "You entered as a guest", Toast.LENGTH_SHORT).show();
                 UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
-                finish();
+                finishAffinity();
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
