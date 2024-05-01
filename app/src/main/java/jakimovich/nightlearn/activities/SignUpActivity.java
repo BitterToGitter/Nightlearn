@@ -1,42 +1,37 @@
 package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
-import static jakimovich.nightlearn.helpers.InputChecker.gmailCheck;
-import static jakimovich.nightlearn.helpers.InputChecker.lastnameCheck;
-import static jakimovich.nightlearn.helpers.InputChecker.nameCheck;
-import static jakimovich.nightlearn.helpers.InputChecker.nicknameCheck;
-import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
+import static jakimovich.nightlearn.helpers.InputValidator.isValidName;
+import static jakimovich.nightlearn.helpers.InputValidator.isValidNickname;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ClickableSpan;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
+
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserProfile;
-import jakimovich.nightlearn.helpers.UserService;
-import jakimovich.nightlearn.helpers.AlertDialogHelper;
-import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.classes.UserService;
 
 public class SignUpActivity extends AppCompatActivity  {
 
-    ImageView ivOptionsMenuBtn;
+    Toolbar toolbar;
     EditText etName, etLastname, etNickname, etEmail, etPassword, etRepeatPassword;
     TextView tvGoLogIn, tvBntContinue;
     LinearLayout btnContinue;
@@ -61,9 +56,8 @@ public class SignUpActivity extends AppCompatActivity  {
 
         btnContinueGuest = findViewById(R.id.btnSignUpGuest);
 
-        ivOptionsMenuBtn = findViewById(R.id.signUpOptionsMenuBtn);
-        ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
-        ivOptionsMenuBtn.setOnClickListener(v -> showPopupWindow(v));
+        toolbar = findViewById(R.id.signUpToolbar);
+        setSupportActionBar(toolbar);
 
         btnContinue.setOnClickListener(v -> signUp());
 
@@ -75,38 +69,35 @@ public class SignUpActivity extends AppCompatActivity  {
 
     private void signUp() {
 
-        String nickname = etNickname.getText().toString().trim();
-        String name = etName.getText().toString().trim();
-        String lastname = etLastname.getText().toString().trim();
-        String eMail = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        String repeatPassword = etRepeatPassword.getText().toString().trim();
+        String nickname = etNickname.getText().toString();
+        String name = etName.getText().toString();
+        String lastname = etLastname.getText().toString();
+        String eMail = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        String repeatPassword = etRepeatPassword.getText().toString();
 
         if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || eMail.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
-        }
+        } //TODO Add input check
 
         if(!password.equals(repeatPassword)){
             Toast.makeText(this, "Passwords don't match to each other", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(!(nameCheck(this, name) && lastnameCheck(this, lastname) && nicknameCheck(this, nickname) && gmailCheck(this, eMail) && passwordCheck(this, password))){
-            return;
+        if(isValidName(this, name) && isValidName(this, lastname) && isValidNickname(this, nickname)){
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    UserService.setMyUser(new UserProfile(nickname, name, lastname, eMail, password));
+                    Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
+                  startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
+                  finish();
+               } else {
+                    Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                UserService.setMyUser(new UserProfile(nickname, name, lastname, eMail, password));
-                Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void createLinkedText(TextView textView){
@@ -128,48 +119,48 @@ public class SignUpActivity extends AppCompatActivity  {
         textView.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-    private void showPopupWindow(View view) {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optionAuthor:
+                startActivity(new Intent(SignUpActivity.this, AuthorInfoActivity.class));
+                return true;
+            case R.id.optionExit:
+                String message = "Are you sure you want to exit?";
+                String accept = "Yeah \n Let's get out";
+                String decline = "Nope \n Back to study";
+                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity);
 
-        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_menu_auth_layout, null);
+                //TODO: Didn't find a way for closing app windows of smartphone itself
 
-        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        TextView tvAuthor = popupView.findViewById(R.id.tvAuthMenuAuthor);
-        TextView tvExit = popupView.findViewById(R.id.tvAuthMenuExit);
-
-        tvAuthor.setOnClickListener(v -> {
-            startActivity(new Intent(SignUpActivity.this, AuthorInfoActivity.class));
-            popupWindow.dismiss();
-        });
-
-        tvExit.setOnClickListener(v -> {
-                showOptionsAlertDialog(SignUpActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finishAndRemoveTask());
-                popupWindow.dismiss();
-            });
-
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
-
-        popupWindow.showAsDropDown(view);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        //TODO: to work on a optionsMenu design or to apply custom layout
     }
 
     private void guestEnter(){
 
-        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
+        String email = "guest@guest.com";
+        String password = "guestt";
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "You entered as a guest", Toast.LENGTH_SHORT).show();
+                UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
                 finish();
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @SuppressLint("MissingSuperCall")
-    @Override
-    public void onBackPressed() {
-        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", v -> finishAffinity());
-    }
+    } //TODO: To find some normal way to enter as a guest
 
 }
