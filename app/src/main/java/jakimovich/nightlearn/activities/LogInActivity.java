@@ -66,7 +66,7 @@ public class LogInActivity extends AppCompatActivity {
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
-        } //TODO Add input check
+        }
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){

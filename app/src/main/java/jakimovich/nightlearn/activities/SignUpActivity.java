@@ -1,6 +1,11 @@
 package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
+import static jakimovich.nightlearn.helpers.InputChecker.gmailCheck;
+import static jakimovich.nightlearn.helpers.InputChecker.lastnameCheck;
+import static jakimovich.nightlearn.helpers.InputChecker.nameCheck;
+import static jakimovich.nightlearn.helpers.InputChecker.nicknameCheck;
+import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserProfile;
 import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.InputChecker;
 
 public class SignUpActivity extends AppCompatActivity  {
 
@@ -65,20 +71,24 @@ public class SignUpActivity extends AppCompatActivity  {
 
     private void signUp() {
 
-        String nickname = etNickname.getText().toString();
-        String name = etName.getText().toString();
-        String lastname = etLastname.getText().toString();
-        String eMail = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-        String repeatPassword = etRepeatPassword.getText().toString();
+        String nickname = etNickname.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+        String lastname = etLastname.getText().toString().trim();
+        String eMail = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String repeatPassword = etRepeatPassword.getText().toString().trim();
 
         if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || eMail.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
             return;
-        } //TODO Add input check
+        }
 
         if(!password.equals(repeatPassword)){
             Toast.makeText(this, "Passwords don't match to each other", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!(nameCheck(this, name) && lastnameCheck(this, lastname) && nicknameCheck(this, nickname) && gmailCheck(this, eMail) && passwordCheck(this, password))){
             return;
         }
 

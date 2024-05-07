@@ -40,4 +40,11 @@ public class UserProfile {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    public void setEMail(String eMail) {
+        this.eMail = eMail;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

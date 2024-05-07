@@ -94,7 +94,7 @@ public class AlertDialogHelper {
         final AlertDialog alertDialog = builder.create();
 
         alertAccept.setOnClickListener(v -> {
-                String output = editText.getText().toString();
+                String output = editText.getText().toString().trim();
                 if (!output.isEmpty()) {
                     listener.onTextEntered(output);
                     alertDialog.dismiss();
