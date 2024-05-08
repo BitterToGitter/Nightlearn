@@ -1,5 +1,7 @@
 package jakimovich.nightlearn.classes;
 
+import android.net.Uri;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -7,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Objects;
+
+import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class UserService {
     public static UserProfile myUser;
@@ -44,17 +48,39 @@ public class UserService {
          String lastname = task.getResult().child("lastname").getValue(String.class);
          String eMail = task.getResult().child("eMail").getValue(String.class);
          String password = task.getResult().child("password").getValue(String.class);
+
+
          UserProfile profile = new UserProfile(nickname, name, lastname, eMail, password);
 
          if (Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
              myUser = profile;
          }
+            Uri profilePic = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
+            if (profilePic != null){
+             myUser.setProfilePic(profilePic);
+            }
+
+
          return profile;
 
      } else {
          throw task.getException();
      }
     });
+    }
+
+    public static Task<Void> uploadProfilePic(UserProfile user){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = database.getReference("users/" + userId);
+
+        return ref.child("profilePic").setValue(user.getProfilePic().toString()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                myUser = user;
+            }
+        });
+
     }
 
 }

@@ -9,24 +9,28 @@ import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
+import android.net.Uri;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.NonNull;
 
-import com.google.firebase.Firebase;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.checkerframework.checker.units.qual.A;
+import com.google.firebase.database.ValueEventListener;
 
 import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.UserService;
-import jakimovich.nightlearn.interfaces.AlertAcceptClickListener;
 
 public class MethodsHelper {
+
+    public static boolean databasePathExists = false;
 
     public static void signOut(Context context, Activity activity) {
         FirebaseAuth.getInstance().signOut();
@@ -41,15 +45,14 @@ public class MethodsHelper {
     }
 
     public static void deleteAccount(Context context, Activity activity){
-        FirebaseAuth.getInstance().getCurrentUser().delete();
-
-        UserService.myUser = null;
-        if (FirebaseAuth.getInstance().getCurrentUser() == null){
-            Toast.makeText(context, "User has been deleted successfully, you're starting from scratch!", Toast.LENGTH_LONG).show();
-            activity.startActivity(new Intent(activity, SplashActivity.class));
-            activity.finish();
-        }
-    }//Todo to work on
+        FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(task -> {
+            if (FirebaseAuth.getInstance().getCurrentUser() == null){
+                UserService.myUser = null;
+                Toast.makeText(context, "User has been deleted successfully, you're starting from scratch!", Toast.LENGTH_LONG).show();
+                activity.startActivity(new Intent(activity, SplashActivity.class));
+                activity.finish();
+            }});
+    }//Todo to work on delete account
 
     public static void updateUserName(Context context, String name){
         if(nameCheck(context, name)) {
@@ -123,6 +126,10 @@ public class MethodsHelper {
 
             Toast.makeText(context, "Your password has been updated, don't forget it!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void setProfilePic(Context context, Uri imageUri, ImageView imageView){
+        Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
     }
 
 

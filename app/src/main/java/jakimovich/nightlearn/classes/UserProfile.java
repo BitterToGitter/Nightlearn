@@ -1,11 +1,14 @@
 package jakimovich.nightlearn.classes;
 
+import android.net.Uri;
+
 public class UserProfile {
     private String nickname;
     private String name;
     private String lastname;
     private String eMail;
     private String password;
+    private Uri profilePic;
 
     public UserProfile (String nickname, String name, String lastname, String eMail, String password){
         this.nickname = nickname;
@@ -31,6 +34,10 @@ public class UserProfile {
         return password;
     }
 
+    public Uri getProfilePic() {
+        return profilePic;
+    }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -40,11 +47,14 @@ public class UserProfile {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setProfilePic(Uri profilePic) {
+        this.profilePic = profilePic;
     }
 }

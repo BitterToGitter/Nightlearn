@@ -10,9 +10,13 @@ import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,26 +32,54 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.InputStream;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.MainActivity;
+import jakimovich.nightlearn.activities.NotificationSettingsActivity;
+import jakimovich.nightlearn.activities.SignUpActivity;
+import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.MethodsHelper;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class ProfileFragment extends Fragment {
 
     private static boolean passwordHidden = true;
-    ImageView imageViewProfile;
-    TextView profileName, profileLastname, profileNickname, profileGmail, profilePassword;
+    ImageView profilePicture;
+    TextView profileName, profileLastname, profileNickname, profileGmail, profilePassword, profileNotificationSettings, profileUsersRating;
     Button btnSignOut, btnExit, btnDeleteAccount;
     ImageButton ibEditName, ibEditLastname, ibEditNickname, ibEditGmail, ibEditPassword, ibHidePassword;
+    LinearLayout llUsersRating, llNotificationSettings;
+    ActivityResultLauncher<Intent> imagePickLauncher;
+    Uri selectedImageUri;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        if(data!=null && data.getData()!=null){
+                            selectedImageUri = data.getData();
+                            MethodsHelper.setProfilePic(getContext(), selectedImageUri, profilePicture);
+                            UserService.myUser.setProfilePic(selectedImageUri);
+                            UserService.uploadProfilePic(UserService.myUser);
+                        }
+                    }
+                }
+        );
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +91,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        profilePicture = view.findViewById(R.id.imageViewProfile);
 
         profileName = view.findViewById(R.id.tvProfileName);
         profileName.setText(UserService.myUser.getName());
@@ -74,12 +108,12 @@ public class ProfileFragment extends Fragment {
         profileNickname.setText("Nickname: " + UserService.myUser.getNickname());
         ibEditNickname = view.findViewById(R.id.ibEditNickname);
         ibEditNickname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Nickname", "Type here...", "Update", "Cancel", this::updateUserNickname));
-        
+
         profileGmail = view.findViewById(R.id.tvProfileGmail);
         profileGmail.setText("Gmail: " + UserService.myUser.getEMail());
         ibEditGmail = view.findViewById(R.id.ibEditGmail);
         ibEditGmail.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Gmail", "Type here...", "Update", "Cancel", this::updateUserGmail));
-        
+
         profilePassword = view.findViewById(R.id.tvProfilePassword);
         profilePassword.setText("Password: " + UserService.myUser.getPassword().substring(0,1) + "*******");
         ibEditPassword = view.findViewById(R.id.ibEditPassword);
@@ -88,8 +122,11 @@ public class ProfileFragment extends Fragment {
         ibHidePassword = view.findViewById(R.id.ibHidePassword);
         ibHidePassword.setOnClickListener(V -> hidePassword());
 
-        imageViewProfile = view.findViewById(R.id.imageViewProfile);
-        //Todo to add a profile photo;
+        llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
+        llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
+
+        llUsersRating = view.findViewById(R.id.llProfileUsersRating);
+        llUsersRating.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
         btnExit = view.findViewById(R.id.btnProfileExit);
         btnExit.setOnClickListener((v) -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
@@ -105,21 +142,42 @@ public class ProfileFragment extends Fragment {
         btnSignOut = view.findViewById(R.id.btnProfileSignOut);
         btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", this::signOut));
 
+        setDefaultProfilePhoto(profilePicture);
+        profilePicture.setOnClickListener(v -> setProfilePhoto());
+    }
 
-        setProfilePhoto(imageViewProfile);
+    private void setDefaultProfilePhoto(ImageView imageView) {
+        if(UserService.myUser.getProfilePic() == null) {
+            //Just converts svg file to readable default profile icon
+            try {
+                InputStream inputStream = getResources().openRawResource(R.raw.profile);
+                SVG svg = SVG.getFromInputStream(inputStream);
+                PictureDrawable drawable = new PictureDrawable(svg.renderToPicture());
+                imageView.setImageDrawable(drawable);
+            } catch (SVGParseException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            selectedImageUri = UserService.myUser.getProfilePic();
+            MethodsHelper.setProfilePic(getContext(), selectedImageUri, profilePicture);
 
+        }
 
     }
 
-    private void setProfilePhoto(ImageView imageView) {
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.profile);
-            SVG svg = SVG.getFromInputStream(inputStream);
-            PictureDrawable drawable = new PictureDrawable(svg.renderToPicture());
-            imageView.setImageDrawable(drawable);
-        } catch (SVGParseException e) {
-            e.printStackTrace();
-        }
+    private void setProfilePhoto(){
+
+        ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512,512)
+                    .createIntent(new Function1<Intent, Unit>() {
+                        @Override
+                        public Unit invoke(Intent intent) {
+                            imagePickLauncher.launch(intent);
+                            return null;
+                        }
+                    });
+
+
 
     }
 
@@ -170,6 +228,7 @@ public class ProfileFragment extends Fragment {
             passwordHidden = true;
         }
     }
+
 
 }
 
