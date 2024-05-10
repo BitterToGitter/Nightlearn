@@ -55,7 +55,7 @@ public class InputChecker {
         else{
             Toast.makeText(context, "Invalid input: Password must contain minimum 8 characters: latin letters in both cases, numbers and symbols", Toast.LENGTH_SHORT).show();
             return false;
-        } //Todo smth wrong here
+        }
     }
 
 }

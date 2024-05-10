@@ -109,5 +109,28 @@ public class AlertDialogHelper {
         alertDialog.show();
 
     }
+
+    public static void showWarningAlertDialog(Activity activity, String message, String closeBtnMessage){
+        activity.getApplicationContext();
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_warning, null);
+
+        TextView tvMessage = view.findViewById(R.id.tvWarningAlertMessage);
+        LinearLayout closeBtn = view.findViewById(R.id.llWarningAlertBtn);
+        TextView closeBtnText = view.findViewById(R.id.tvWarningAlertBtn);
+
+        tvMessage.setText(message);
+        closeBtnText.setText(closeBtnMessage);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        closeBtn.setOnClickListener(v -> alertDialog.dismiss());
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.show();
+
+    }
+
 }
 

@@ -7,16 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class HomeFragment extends Fragment {
 
     TextView tvTitle;
+
+    Button btnSignOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,16 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvTitle = view.findViewById(R.id.tvTitleHome);
+
+        if (UserService.isGuest()){
+         tvTitle.setText("Nice to see you, Guest");
+        }else {
         tvTitle.setText("Happy to see you, " + UserService.myUser.getNickname());
+        }
+
+        btnSignOut = view.findViewById(R.id.btnHomeSignOut);
+        btnSignOut.setOnClickListener(v -> MethodsHelper.signOut(getContext(), getActivity()));
+
+
     }
 }

@@ -2,6 +2,9 @@ package jakimovich.nightlearn.classes;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserProfile {
     private String nickname;
     private String name;
@@ -9,6 +12,7 @@ public class UserProfile {
     private String eMail;
     private String password;
     private Uri profilePic;
+    private ArrayList<Learnset> learnsets;
 
     public UserProfile (String nickname, String name, String lastname, String eMail, String password){
         this.nickname = nickname;
@@ -37,6 +41,7 @@ public class UserProfile {
     public Uri getProfilePic() {
         return profilePic;
     }
+    public ArrayList<Learnset> getLearnsets() {return learnsets;}
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -50,6 +55,7 @@ public class UserProfile {
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -57,4 +63,6 @@ public class UserProfile {
     public void setProfilePic(Uri profilePic) {
         this.profilePic = profilePic;
     }
+
+    public void setLearnsets(ArrayList<Learnset> learnsets) {this.learnsets = learnsets;}
 }

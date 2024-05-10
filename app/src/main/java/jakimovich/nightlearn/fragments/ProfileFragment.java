@@ -4,6 +4,7 @@ import static jakimovich.nightlearn.R.drawable.ic_password_hide;
 import static jakimovich.nightlearn.R.drawable.ic_password_show;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showEditAlertDialog;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showWarningAlertDialog;
 import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
 import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
@@ -66,6 +67,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!UserService.isGuest()){
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if(result.getResultCode() == Activity.RESULT_OK){
@@ -74,11 +76,12 @@ public class ProfileFragment extends Fragment {
                             selectedImageUri = data.getData();
                             MethodsHelper.setProfilePic(getContext(), selectedImageUri, profilePicture);
                             UserService.myUser.setProfilePic(selectedImageUri);
-                            UserService.uploadProfilePic(UserService.myUser);
+                            UserService.uploadProfilePic();
                         }
                     }
                 }
         );
+        }
     }
 
     @Override
@@ -92,68 +95,98 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        profilePicture = view.findViewById(R.id.imageViewProfile);
+            profilePicture = view.findViewById(R.id.imageViewProfile);
 
-        profileName = view.findViewById(R.id.tvProfileName);
-        profileName.setText(UserService.myUser.getName());
-        ibEditName = view.findViewById(R.id.ibEditName);
-        ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Name", "Type here...", "Update", "Cancel", this::updateUserName));
+            profileName = view.findViewById(R.id.tvProfileName);
+            ibEditName = view.findViewById(R.id.ibEditName);
 
-        profileLastname = view.findViewById(R.id.tvProfileLastname);
-        profileLastname.setText(UserService.myUser.getLastname());
-        ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditLastname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Lastname", "Type here...", "Update", "Cancel", this::updateUserLastname));
+            profileLastname = view.findViewById(R.id.tvProfileLastname);
+            ibEditLastname = view.findViewById(R.id.ibEditLastname);
 
-        profileNickname = view.findViewById(R.id.tvProfileNickname);
-        profileNickname.setText("Nickname: " + UserService.myUser.getNickname());
-        ibEditNickname = view.findViewById(R.id.ibEditNickname);
-        ibEditNickname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Nickname", "Type here...", "Update", "Cancel", this::updateUserNickname));
+            profileNickname = view.findViewById(R.id.tvProfileNickname);
+            ibEditNickname = view.findViewById(R.id.ibEditNickname);
 
-        profileGmail = view.findViewById(R.id.tvProfileGmail);
-        profileGmail.setText("Gmail: " + UserService.myUser.getEMail());
-        ibEditGmail = view.findViewById(R.id.ibEditGmail);
-        ibEditGmail.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Gmail", "Type here...", "Update", "Cancel", this::updateUserGmail));
+            profileGmail = view.findViewById(R.id.tvProfileGmail);
+            ibEditGmail = view.findViewById(R.id.ibEditGmail);
 
-        profilePassword = view.findViewById(R.id.tvProfilePassword);
-        profilePassword.setText("Password: " + UserService.myUser.getPassword().substring(0,1) + "*******");
-        ibEditPassword = view.findViewById(R.id.ibEditPassword);
-        ibEditPassword.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Password", "Type here...", "Update", "Cancel", this::updateUserPassword));
+            profilePassword = view.findViewById(R.id.tvProfilePassword);
+            ibEditPassword = view.findViewById(R.id.ibEditPassword);
 
-        ibHidePassword = view.findViewById(R.id.ibHidePassword);
-        ibHidePassword.setOnClickListener(V -> hidePassword());
+            ibHidePassword = view.findViewById(R.id.ibHidePassword);
 
-        llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
-        llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
+            llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
+            llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
-        llUsersRating = view.findViewById(R.id.llProfileUsersRating);
-        llUsersRating.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
+            llUsersRating = view.findViewById(R.id.llProfileUsersRating);
+            llUsersRating.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
-        btnExit = view.findViewById(R.id.btnProfileExit);
-        btnExit.setOnClickListener((v) -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
+            btnExit = view.findViewById(R.id.btnProfileExit);
+            btnExit.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
 
-        btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
-        btnDeleteAccount.setOnClickListener(V -> showOptionsAlertDialog(getActivity(), "Want to delete an account?\n" +
-                "What’s wrong with you?\n" +
-                "Think twice, man",
-                "Delete anyway",
-                "It was a fault, get back!",
-                this::deleteAccount));
+            btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 
-        btnSignOut = view.findViewById(R.id.btnProfileSignOut);
-        btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", this::signOut));
+            btnSignOut = view.findViewById(R.id.btnProfileSignOut);
 
         setDefaultProfilePhoto(profilePicture);
-        profilePicture.setOnClickListener(v -> setProfilePhoto());
+
+        if(!UserService.isGuest()){
+
+            profileName.setText(UserService.myUser.getName());
+            profileLastname.setText(UserService.myUser.getLastname());
+            profileNickname.setText("Nickname: " + UserService.myUser.getNickname());
+            profileGmail.setText("Gmail: " + UserService.myUser.getEMail());
+            profilePassword.setText("Password: " + UserService.myUser.getPassword().substring(0,1) + "*******");
+
+            ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Name", "Type here...", "Update", "Cancel", this::updateUserName));
+            ibEditLastname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Lastname", "Type here...", "Update", "Cancel", this::updateUserLastname));
+            ibEditNickname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Nickname", "Type here...", "Update", "Cancel", this::updateUserNickname));
+            ibEditGmail.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Gmail", "Type here...", "Update", "Cancel", this::updateUserGmail));
+            ibEditPassword.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Password", "Type here...", "Update", "Cancel", this::updateUserPassword));
+
+            ibHidePassword.setOnClickListener(V -> hidePassword());
+
+            btnDeleteAccount.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Want to delete an account?\n" +
+                            "What’s wrong with you?\n" +
+                            "Think twice, man",
+                    "Delete anyway",
+                    "No, get back!",
+                    this::deleteAccount));
+
+            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", this::signOut));
+
+            profilePicture.setOnClickListener(v -> setProfilePhoto());
+
+        }else {
+
+
+            profileName.setText("Sign up to type your name");
+            profileLastname.setText("Sign up to type your lastname");
+            profileNickname.setText("Nickname: " + "Sign up to type");
+            profileGmail.setText("Gmail: " + "Sign up to type");
+            profilePassword.setText("Password: " + "Sign up to type");
+
+            ibEditName.setOnClickListener(v -> showWarningAlertDialog(getActivity(), "This option is available for registered users only. \n Sign in to set up your own profile as you wish!", "Ok"));
+            ibEditLastname.setOnClickListener(v -> showWarningAlertDialog(getActivity(), "This option is available for registered users only. \n Sign in to set up your own profile as you wish!", "Ok"));
+            ibEditNickname.setOnClickListener(v -> showWarningAlertDialog(getActivity(), "This option is available for registered users only. \n Sign in to set up your own profile as you wish!", "Ok"));
+            ibEditGmail.setOnClickListener(v -> showWarningAlertDialog(getActivity(), "This option is available for registered users only. \n Sign in to set up your own profile as you wish!", "Ok"));
+            ibEditPassword.setOnClickListener(v -> showWarningAlertDialog(getActivity(), "This option is available for registered users only. \n Sign in to set up your own profile as you wish!", "Ok"));
+
+            passwordHidden = false;
+            ibHidePassword.setVisibility(View.INVISIBLE);
+
+            btnDeleteAccount.setVisibility(View.INVISIBLE);
+
+            btnSignOut.setText("Sign Up");
+            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Congrats! You decided to sign up. \n Just you to know, In your new account you'll start making progress from scratch",  "Sign Up!", "Get back", this::deleteAccount));
+
+        }
     }
 
     private void setDefaultProfilePhoto(ImageView imageView) {
         if(UserService.myUser.getProfilePic() == null) {
             //Just converts svg file to readable default profile icon
             try {
-                InputStream inputStream = getResources().openRawResource(R.raw.profile);
-                SVG svg = SVG.getFromInputStream(inputStream);
-                PictureDrawable drawable = new PictureDrawable(svg.renderToPicture());
-                imageView.setImageDrawable(drawable);
+                imageView.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.profile));
             } catch (SVGParseException e) {
                 e.printStackTrace();
             }

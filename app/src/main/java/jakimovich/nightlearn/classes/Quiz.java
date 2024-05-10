@@ -2,21 +2,21 @@ package jakimovich.nightlearn.classes;
 
 public class Quiz {
 
-    private int questionsNum, answerTimeSec, numForLearnedCards, questionType;
+    private int questionsAmount, answerTimeSec, rightAnswersNumToBeLearned, questionType;
 
-    public Quiz (int questionsNum,int answerTimeSec, int numForLearnedCards, int questionType){
-        this.questionsNum = questionsNum;
+    public Quiz (int questionsAmount,int answerTimeSec, int rightAnswersNumToBeLearned, int questionType){
+        this.questionsAmount = questionsAmount;
         this.answerTimeSec = answerTimeSec;
-        this.numForLearnedCards = numForLearnedCards;
+        this.rightAnswersNumToBeLearned = rightAnswersNumToBeLearned;
         this.questionType = questionType;
     }
 
-    public int getQuestionsNum() {
-        return questionsNum;
+    public int getQuestionsAmount() {
+        return questionsAmount;
     }
 
-    public void setQuestionsNum(int questionsNum) {
-        this.questionsNum = questionsNum;
+    public void setQuestionsAmount(int questionsAmount) {
+        this.questionsAmount = questionsAmount;
     }
 
     public int getAnswerTimeSec() {
@@ -27,12 +27,12 @@ public class Quiz {
         this.answerTimeSec = answerTimeSec;
     }
 
-    public int getNumForLearnedCards() {
-        return numForLearnedCards;
+    public int getRightAnswersNumToBeLearned() {
+        return rightAnswersNumToBeLearned;
     }
 
-    public void setNumForLearnedCards(int numForLearnedCards) {
-        this.numForLearnedCards = numForLearnedCards;
+    public void setRightAnswersNumToBeLearned(int rightAnswersNumToBeLearned) {
+        this.rightAnswersNumToBeLearned = rightAnswersNumToBeLearned;
     }
 
     public int getQuestionType() {

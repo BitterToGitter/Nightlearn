@@ -9,6 +9,7 @@ import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,20 +19,23 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
 import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.UserService;
 
 public class MethodsHelper {
-
-    public static boolean databasePathExists = false;
-
+    
     public static void signOut(Context context, Activity activity) {
         FirebaseAuth.getInstance().signOut();
         UserService.myUser = null;
@@ -45,14 +49,17 @@ public class MethodsHelper {
     }
 
     public static void deleteAccount(Context context, Activity activity){
-        FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(task -> {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        user.delete().addOnCompleteListener(task -> {
             if (FirebaseAuth.getInstance().getCurrentUser() == null){
                 UserService.myUser = null;
+                FirebaseDatabase.getInstance().getReference("users/" + userId).removeValue();
                 Toast.makeText(context, "User has been deleted successfully, you're starting from scratch!", Toast.LENGTH_LONG).show();
                 activity.startActivity(new Intent(activity, SplashActivity.class));
                 activity.finish();
             }});
-    }//Todo to work on delete account
+    }
 
     public static void updateUserName(Context context, String name){
         if(nameCheck(context, name)) {
@@ -130,6 +137,16 @@ public class MethodsHelper {
 
     public static void setProfilePic(Context context, Uri imageUri, ImageView imageView){
         Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
+    }
+
+    public static PictureDrawable convertSvgToDrawable (Context context, int inputStreamInt) throws SVGParseException {
+
+        try {
+            return new PictureDrawable(SVG.getFromInputStream(context.getResources().openRawResource(inputStreamInt)).renderToPicture());
+    } catch (SVGParseException e) {
+        e.printStackTrace();
+    }
+        return null;
     }
 
 

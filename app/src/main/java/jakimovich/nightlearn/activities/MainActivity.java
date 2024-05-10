@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment(), "home");
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.menuHome:
                     replaceFragment(new HomeFragment(), "home");
                     break;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
     }
 
     public void replaceFragment(Fragment fragment, String fragmentTag) {
@@ -80,5 +82,12 @@ public class MainActivity extends AppCompatActivity {
         showMenuAlertDialog(this);
     }
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+
+        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity);
+
+    }
 
 }

@@ -6,26 +6,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ClickableSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caverock.androidsvg.SVGParseException;
 import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.classes.UserProfile;
 import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class LogInActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+    ImageView ivOptionsMenuBtn;
     EditText etEmail, etPassword;
     TextView tvBntContinue, tvGoSignUp;
     LinearLayout btnContinue;
@@ -47,9 +55,13 @@ public class LogInActivity extends AppCompatActivity {
 
         btnContinueGuest = findViewById(R.id.btnLogInGuest);
 
-        toolbar = findViewById(R.id.logInToolbar);
-        setSupportActionBar(toolbar);
-
+        ivOptionsMenuBtn = findViewById(R.id.logInOptionsMenuBtn);
+        try {
+            ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
+        } catch (SVGParseException e) {
+            throw new RuntimeException(e);
+        } //TODO: To find a way without surrounding
+        ivOptionsMenuBtn.setOnClickListener(v -> showPopupWindow(v));
         btnContinue.setOnClickListener(v -> logIn());
 
         createLinkedText(tvGoSignUp);
@@ -99,37 +111,43 @@ public class LogInActivity extends AppCompatActivity {
         textView.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    private void showPopupWindow(View view) {
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.optionAuthor:
+        View popupView = LayoutInflater.from(this).inflate(R.layout.menu_auth_layout, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        TextView tvAuthor = popupView.findViewById(R.id.tvAuthMenuAuthor);
+        TextView tvExit = popupView.findViewById(R.id.tvAuthMenuExit);
+
+        tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(LogInActivity.this, AuthorInfoActivity.class));
-                return true;
-            case R.id.optionExit:
-                String message = "Are you sure you want to exit?";
-                String accept = "Yeah \n Let's get out";
-                String decline = "Nope \n Back to study";
-                showOptionsAlertDialog(this,  message, accept, decline, this::finishAffinity);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+                popupWindow.dismiss();
+            }
+        });
+
+        tvExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOptionsAlertDialog(LogInActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finnishAffinity);
+                popupWindow.dismiss();
+            }
+            private void finnishAffinity() {
+                finishAffinity();
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
+
+        popupWindow.showAsDropDown(view);
     }
 
     private void guestEnter(){
 
-        String email = "guest@guest.com";
-        String password = "guestt";
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-                Toast.makeText(this, "You entered as a guest", Toast.LENGTH_SHORT).show();
-                UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
                 finishAffinity();
             } else {

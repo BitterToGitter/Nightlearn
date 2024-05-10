@@ -48,7 +48,11 @@ public class Learnset {
     }
 
     public int getProgress(){
-        return cardsLearned() * 100 / cardsInTotal;
+        if(cardsInTotal != 0) {
+            return cardsLearned() * 100 / cardsInTotal;
+        } else {
+            return 0;
+        }
     }
 
     public ArrayList<Learncard> getLearncards() {
