@@ -5,12 +5,16 @@ import java.util.ArrayList;
 public class Learnset {
 
     private String name;
-    private ArrayList<Learncard> learncards = new ArrayList<>();
-    private int cardsInTotal = 0;
-    private int progress;
+    private ArrayList<Learncard> learncards;
     private Quiz quizSettings;
 
     public Learnset(String name, Quiz quizSettings) {
+        this.name = name;
+        this.learncards = new ArrayList<Learncard>();
+        this.quizSettings = quizSettings;
+    }
+
+    public Learnset(String name, Quiz quizSettings, ArrayList<Learncard> learncards) {
         this.name = name;
         this.learncards = learncards;
         this.quizSettings = quizSettings;
@@ -22,10 +26,6 @@ public class Learnset {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getCardsInTotal() {
-        return cardsInTotal;
     }
 
     public int cardsLearned() {
@@ -47,9 +47,9 @@ public class Learnset {
         return seen;
     }
 
-    public int getProgress(){
-        if(cardsInTotal != 0) {
-            return cardsLearned() * 100 / cardsInTotal;
+    public int countProgress(){
+        if(learncards.size() != 0) {
+            return cardsLearned() * 100 / learncards.size();
         } else {
             return 0;
         }
@@ -61,14 +61,17 @@ public class Learnset {
 
     public void addLearncard(Learncard learncard){
         learncards.add(learncard);
-        cardsInTotal++;
     }
     public void deleteLearncard(int n){
         learncards.remove(n);
-        cardsInTotal--;
     }
 
     public void setQuizSettings(Quiz quizSettings) {
         this.quizSettings = quizSettings;
+    }
+
+
+    public Quiz getQuizSettings() {
+        return quizSettings;
     }
 }

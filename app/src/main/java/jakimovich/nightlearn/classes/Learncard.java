@@ -12,6 +12,17 @@ public class Learncard {
         this.explanation = explanation;
     }
 
+    public Learncard(String definition, String explanation, int timesSeen, int timesAnsweredRight, boolean learned){
+
+        this.definition = definition;
+        this.explanation = explanation;
+        this.timesSeen = timesSeen;
+        this.timesAnsweredRight = timesAnsweredRight;
+        this.learned = learned;
+
+    }
+
+
     public String getDefinition() {
         return definition;
     }
@@ -40,18 +51,19 @@ public class Learncard {
         timesAnsweredRight++;
     }
 
-    public void setDefinition(String definition) {
-        this.definition = definition;
-    }
+    public void setDefinition(String definition) {this.definition = Character.toUpperCase(definition.charAt(0)) + definition.substring(1);;}
 
     public void setExplanation(String explanation) {
-        this.explanation = explanation;
+        this.explanation = Character.toUpperCase(explanation.charAt(0)) + explanation.substring(1);
     }
 
     public void setLearned(Boolean learned) {
         this.learned = learned;
     }
 
+    public void setTimesAnsweredRight(int timesAnsweredRight) {this.timesAnsweredRight = timesAnsweredRight;}
+
+    public void setTimesSeen(int timesSeen) {this.timesSeen = timesSeen;}
 }
 
 

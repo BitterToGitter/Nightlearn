@@ -159,8 +159,8 @@ public class ProfileFragment extends Fragment {
         }else {
 
 
-            profileName.setText("Sign up to type your name");
-            profileLastname.setText("Sign up to type your lastname");
+            profileName.setText("Sign up to type a name");
+            profileLastname.setText("Sign up to type a lastname");
             profileNickname.setText("Nickname: " + "Sign up to type");
             profileGmail.setText("Gmail: " + "Sign up to type");
             profilePassword.setText("Password: " + "Sign up to type");
@@ -184,7 +184,7 @@ public class ProfileFragment extends Fragment {
 
     private void setDefaultProfilePhoto(ImageView imageView) {
         if(UserService.myUser.getProfilePic() == null) {
-            //Just converts svg file to readable default profile icon
+
             try {
                 imageView.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.profile));
             } catch (SVGParseException e) {
@@ -202,12 +202,9 @@ public class ProfileFragment extends Fragment {
     private void setProfilePhoto(){
 
         ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512,512)
-                    .createIntent(new Function1<Intent, Unit>() {
-                        @Override
-                        public Unit invoke(Intent intent) {
-                            imagePickLauncher.launch(intent);
-                            return null;
-                        }
+                    .createIntent(intent -> {
+                        imagePickLauncher.launch(intent);
+                        return null;
                     });
 
 

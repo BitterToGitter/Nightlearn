@@ -1,7 +1,9 @@
 package jakimovich.nightlearn.helpers;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,13 +47,13 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Learnset learnset = learnsetList.get(position);
 
-        // Bind data to TextViews
         holder.tvLearnsetTitle.setText(learnset.getName());
-        holder.tvCardsNum.setText("Cards amount: " + learnset.getCardsInTotal());
+        holder.tvCardsNum.setText("Cards amount: " + learnset.getLearncards().size());
         holder.tvSeenCards.setText("Cards seen in games: " + learnset.cardsSeen());
         holder.tvLearnedCards.setText("Learned cards: " + learnset.cardsLearned());
-        holder.tvLearnsetProgress.setText("Progress: " + learnset.getProgress() + "%");
-        // Similarly bind other TextViews
+        holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
+
+        holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset));
     }
 
     @Override
@@ -72,11 +74,9 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
             optionsMenu = itemView.findViewById(R.id.ivOptionsMenuButton);
             optionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
 
-            optionsMenu.setOnClickListener(v -> showPopupWindow(v));
-
         }
 
-        private void showPopupWindow(View view) {
+        private void showPopupWindow(View view, final Learnset learnset) {
 
             View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learnsets_layout, null);
 
@@ -85,20 +85,14 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
             TextView tvEdit = popupView.findViewById(R.id.tvLearnsetsMenuEdit);
             TextView tvDelete = popupView.findViewById(R.id.tvLearnsetsMenuDelete);
 
-            tvEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, LearnsetEditActivity.class));
-                    popupWindow.dismiss();
-                }
+            tvEdit.setOnClickListener(v -> {
+                context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset));
+                popupWindow.dismiss();
             });
 
-            tvDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Perform delete action
-                    popupWindow.dismiss();
-                }
+            tvDelete.setOnClickListener(v -> {
+                // Perform delete action
+                popupWindow.dismiss();
             });
 
             popupWindow.setBackgroundDrawable(new ColorDrawable(0));

@@ -30,8 +30,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.activities.SplashActivity;
+import jakimovich.nightlearn.classes.Learncard;
+import jakimovich.nightlearn.classes.Learnset;
+import jakimovich.nightlearn.classes.Quiz;
 import jakimovich.nightlearn.classes.UserService;
 
 public class MethodsHelper {
@@ -149,28 +155,52 @@ public class MethodsHelper {
         return null;
     }
 
+    public static Intent putLearnsetIntoIntent(Activity activity, Learnset learnset){
 
-//    public static void systemExit(Activity activity){
-//        activity.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
-//                new View.OnSystemUiVisibilityChangeListener() {
-//                    @Override
-//                    public void onSystemUiVisibilityChange(int visibility) {
-//                        // Check if the navigation bar arrow button was clicked
-//                        if ((visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0) {
-//                            // Navigation bar is visible
-//                            // Show AlertDialog when the arrow button is clicked
-//                            AlertDialogHelper.showOptionsAlertDialog(activity, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finish );
-//                        }
-//                    }
-//
-//                    private void finish() {
-//                        activity.finishAffinity();
-//                    }
-//                });
+        List<Learncard> learncards = learnset.getLearncards();
 
-//    }
-    //Todo: To think about systemExit here
+        Intent intent = new Intent(activity, LearnsetEditActivity.class);
 
+        intent.putExtra("cardsInTotal", learncards.size());
+        intent.putExtra("learnsetName", learnset.getName());
+        intent.putExtra("quizQuestionsAmount", learnset.getQuizSettings().getQuestionsAmount());
+        intent.putExtra("quizAnswerTimeSec", learnset.getQuizSettings().getAnswerTimeSec());
+        intent.putExtra("quizRightAnswersNumToBeLearned", learnset.getQuizSettings().getRightAnswersNumToBeLearned());
+        intent.putExtra("quizQuestionType", learnset.getQuizSettings().getQuestionType());
 
+        for(int i = 0; i < learncards.size(); i++ ){
+            intent.putExtra("definition " + i, learncards.get(i).getDefinition());
+            intent.putExtra("explanation " + i, learncards.get(i).getExplanation());
+            intent.putExtra("timesSeen " + i, learncards.get(i).getTimesSeen());
+            intent.putExtra("timesAnsweredRight " + i, learncards.get(i).getTimesAnsweredRight());
+            intent.putExtra("learned " + i, learncards.get(i).getLearned());
+        }
+
+        return intent;
+
+    }
+
+    public static Learnset getLearnsetFromIntent(Intent intent){
+
+        ArrayList<Learncard> learncards = new ArrayList<>();
+        for (int i = 0; i < intent.getExtras().getInt("cardsInTotal"); i++){
+            learncards.add(new Learncard(
+                    intent.getExtras().getString("definition " + i),
+                    intent.getExtras().getString("explanation " + i),
+                    intent.getExtras().getInt("timesSeen " + i),
+                    intent.getExtras().getInt("timesAnsweredRight " + i),
+                    intent.getExtras().getBoolean("learned " + i)));
+        }
+
+        return new Learnset(
+                intent.getExtras().getString("learnsetName"),
+                new Quiz(intent.getExtras().getInt("quizQuestionsAmount"),
+                        intent.getExtras().getInt("quizAnswerTimeSec"),
+                        intent.getExtras().getInt("quizRightAnswersNumToBeLearned"),
+                        intent.getExtras().getInt("quizQuestionType")),
+                learncards
+        );
+
+    }
 
 }

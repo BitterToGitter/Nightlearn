@@ -11,6 +11,13 @@ public class Quiz {
         this.questionType = questionType;
     }
 
+    public Quiz(){
+        this.questionsAmount = 8;
+        this.answerTimeSec = 10;
+        this.rightAnswersNumToBeLearned = 3;
+        questionType = 1;
+    }
+
     public int getQuestionsAmount() {
         return questionsAmount;
     }

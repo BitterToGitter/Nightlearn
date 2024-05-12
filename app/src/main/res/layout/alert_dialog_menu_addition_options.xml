@@ -10,6 +10,25 @@
     >
 
     <TextView
+        android:id="@+id/tvCreateLearnsetsFolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create a new lernsets folder"
+        android:textColor="@color/bottom_menu_textcolor_focused"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="#D9D9D9" />
+
+    <TextView
         android:id="@+id/tvCreateLearnset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,7 +1,10 @@
 package jakimovich.nightlearn.helpers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +15,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+
+import jakimovich.nightlearn.activities.LearnsetEditActivity;
+import jakimovich.nightlearn.classes.Learncard;
+import jakimovich.nightlearn.classes.Learnset;
+import jakimovich.nightlearn.classes.Quiz;
+import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.interfaces.AlertAcceptClickListener;
+import jakimovich.nightlearn.interfaces.AlertDialogDismissListener;
 import jakimovich.nightlearn.interfaces.AlertEnteredTextListener;
 import jakimovich.nightlearn.R;
 
@@ -24,8 +35,11 @@ public class AlertDialogHelper {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_menu, null);
 
-        TextView tvCreateLearnsetsFolder = view.findViewById(R.id.tvCreateLearnsetsFolder);
+        //TextView tvCreateLearnsetsFolder = view.findViewById(R.id.tvCreateLearnsetsFolder);
+
         TextView tvCreateLearnset = view.findViewById(R.id.tvCreateLearnset);
+
+
         TextView tvCreateAlarm = view.findViewById(R.id.tvCreateAlarm);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -37,6 +51,18 @@ public class AlertDialogHelper {
         window.setBackgroundDrawable(new ColorDrawable(0));
         window.getAttributes().windowAnimations = R.style.DialogAnimation;
         window.setGravity(Gravity.BOTTOM);
+
+        tvCreateLearnset.setOnClickListener(v -> {
+            if (UserService.isGuest()){
+                showWarningAlertDialog(activity, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok");
+                alertDialog.dismiss();
+            } else {
+            Learnset learnset = new Learnset("New learnset", new Quiz());
+            learnset.addLearncard(new Learncard("Sample definition", "Sample explanation"));
+            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset));
+            alertDialog.dismiss();
+            }
+        });
 
         alertDialog.show();
     }
@@ -126,6 +152,29 @@ public class AlertDialogHelper {
         final AlertDialog alertDialog = builder.create();
 
         closeBtn.setOnClickListener(v -> alertDialog.dismiss());
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.show();
+
+    }
+    public static void showWarningAlertDialog(Activity activity, String message, String closeBtnMessage, AlertDialogDismissListener listener){
+        activity.getApplicationContext();
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_warning, null);
+
+        TextView tvMessage = view.findViewById(R.id.tvWarningAlertMessage);
+        LinearLayout closeBtn = view.findViewById(R.id.llWarningAlertBtn);
+        TextView closeBtnText = view.findViewById(R.id.tvWarningAlertBtn);
+
+        tvMessage.setText(message);
+        closeBtnText.setText(closeBtnMessage);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        closeBtn.setOnClickListener(v -> alertDialog.dismiss());
+
+        alertDialog.setOnDismissListener(v -> listener.onDialogDismissed());
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.show();

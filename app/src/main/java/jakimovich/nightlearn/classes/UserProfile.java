@@ -62,7 +62,7 @@ public class UserProfile {
 
     public void setProfilePic(Uri profilePic) {
         this.profilePic = profilePic;
-    }
+    }//TODO: Uri isn't a way to upload an image. It wouldn't appear
 
     public void setLearnsets(ArrayList<Learnset> learnsets) {this.learnsets = learnsets;}
 }
