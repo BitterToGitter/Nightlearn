@@ -72,8 +72,8 @@ public class LogInActivity extends AppCompatActivity {
 
     private void logIn(){
 
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();

@@ -1,4 +1,6 @@
 package jakimovich.nightlearn.helpers;
+import static jakimovich.nightlearn.helpers.AlertDialogHelper.showWarningAlertDialog;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import java.util.List;
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.classes.Learnset;
+import jakimovich.nightlearn.classes.UserService;
 
 public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHolder> {
 
@@ -54,6 +57,8 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
 
         holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset));
+
+
     }
 
     @Override
@@ -86,8 +91,13 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
             TextView tvDelete = popupView.findViewById(R.id.tvLearnsetsMenuDelete);
 
             tvEdit.setOnClickListener(v -> {
-                context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset));
-                popupWindow.dismiss();
+                if (UserService.isGuest()){
+                    showWarningAlertDialog((Activity) context, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok");
+                    popupWindow.dismiss();
+                } else {
+                    context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset));
+                    popupWindow.dismiss();
+                }
             });
 
             tvDelete.setOnClickListener(v -> {

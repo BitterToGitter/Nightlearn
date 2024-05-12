@@ -23,8 +23,6 @@ public class HomeFragment extends Fragment {
 
     TextView tvTitle;
 
-    Button btnSignOut;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +50,7 @@ public class HomeFragment extends Fragment {
         tvTitle.setText("Happy to see you, " + UserService.myUser.getNickname());
         }
 
-        btnSignOut = view.findViewById(R.id.btnHomeSignOut);
-        btnSignOut.setOnClickListener(v -> MethodsHelper.signOut(getContext(), getActivity()));
+
 
 
     }

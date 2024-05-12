@@ -37,6 +37,7 @@ public class AuthorInfoActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
     }
+//        TODO: To split activities about app/author
 
     private void onChosenEnglish(){
         tvEnglish.setTextColor(R.color.darkGray);

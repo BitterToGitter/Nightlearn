@@ -2,12 +2,14 @@ package jakimovich.nightlearn.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learncard;
+import jakimovich.nightlearn.classes.Learnset;
 
 public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.ViewHolder> {
 
@@ -34,7 +37,11 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learncard_layout, parent, false);
-        return new ViewHolder(view);
+        try {
+            return new ViewHolder(view);
+        } catch (SVGParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -49,6 +56,8 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
         holder.tvDefinition.setText(learncard.getDefinition());
         holder.tvExplanation.setText(learncard.getExplanation());
 
+        holder.btnOptionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learncard));
+
     }
 
     @Override
@@ -57,9 +66,12 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView tvDefinition, tvExplanation, tvDefinitionTitle, tvExplanationTitle;
         LinearLayout llDefinition, llExplanation;
-        public ViewHolder(@NonNull View itemView) {
+        ImageView btnOptionsMenu;
+
+        public ViewHolder(@NonNull View itemView) throws SVGParseException {
             super(itemView);
 
             tvDefinition = itemView.findViewById(R.id.tvDefinition);
@@ -69,6 +81,29 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
             llDefinition = itemView.findViewById(R.id.llDefinition);
             llExplanation = itemView.findViewById(R.id.llExplanation);
 
+            btnOptionsMenu = itemView.findViewById(R.id.learncardOptionsMenuBtn);
+            btnOptionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
+
         }
+
+        private void showPopupWindow(View view, final Learncard learncard) {
+
+            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learncard_layout, null);
+
+            PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+            TextView tvDelete = popupView.findViewById(R.id.tvLearncardMenuDelete);
+
+            tvDelete.setOnClickListener(v -> {
+
+                popupWindow.dismiss();
+            });
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(0));
+
+            popupWindow.showAsDropDown(view);
+        }
+
     }
 }
+
