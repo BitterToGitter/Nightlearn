@@ -56,21 +56,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSwichLanguage"
         app:layout_constraintVertical_bias="0.807" />
 
-    <TextView
-        android:id="@+id/tvTitleAuthor"
+    <LinearLayout
+        android:id="@+id/llLearnsetsFragmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_top"
         android:gravity="center"
-        android:text="About an author"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022"
-        tools:ignore="MissingConstraints" />
+        android:paddingVertical="25dp">
+
+        <TextView
+            android:id="@+id/tvTitleAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="About an author"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvPreInfo"
@@ -81,25 +84,20 @@
 Here you can check for some information about this project and person who made it"
         android:textColor="@color/white"
         android:textSize="16dp"
-        android:textStyle="bold"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintTop_toBottomOf="@+id/llLearnsetsFragmentTitle"
+        app:layout_constraintVertical_bias="0.05" />
 
-    <TextView
-        android:id="@+id/tvInfo"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/authorView_pager"
         android:layout_width="338dp"
         android:layout_height="385dp"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        android:scrollbars="vertical"
-        android:text="All the needed info"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
@@ -118,7 +116,7 @@ Here you can check for some information about this project and person who made i
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+        app:layout_constraintTop_toBottomOf="@+id/authorView_pager"
         app:layout_constraintVertical_bias="0.203" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

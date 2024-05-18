@@ -12,9 +12,9 @@ public class Quiz {
     }
 
     public Quiz(){
-        this.questionsAmount = 8;
+        this.questionsAmount = 5;
         this.answerTimeSec = 10;
-        this.rightAnswersNumToBeLearned = 3;
+        this.rightAnswersNumToBeLearned = 4;
         questionType = 1;
     }
 

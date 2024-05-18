@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.auth.User;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,65 +47,23 @@ public class LearnsetsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.learnsetsRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        learnsetsList = new ArrayList<>();
+          if(myUser.getLearnsets() != null){
+             learnsetsList = myUser.getLearnsets();
+              recyclerView.setAdapter(new LearnsetAdapter(getContext(), learnsetsList));
+          }
 
-        learnsetsList.add(new Learnset("French", new Quiz()));
-        learnsetsList.add(new Learnset("Quantum Physics", new Quiz()));
         //TODO: To set a reaction on touch
-
-        recyclerView.setAdapter(new LearnsetAdapter(getContext(), learnsetsList));
-
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if(requestCode==0)
-//        {
-//            if(resultCode==RESULT_OK)
-//            {
-//                String title = data.getExtras().getString("title");
-//                String subtitle = data.getExtras().getString("sub");
-//                String price = data.getExtras().getString("price");
-//                Bitmap bitmap=Helper.byteArrayToBitmap(data.getExtras().getByteArray("bitmap"));
-//
-//                lastSelected.setPrice(Integer.valueOf(price));
-//                lastSelected.setTitle(title);
-//                lastSelected.setSubTitle(subtitle);
-//                lastSelected.setBitmap(bitmap);
-//
-//                toyAdapter.notifyDataSetChanged();
-//
-//                Toast.makeText(this,"data saved",Toast.LENGTH_LONG).show();
-//            }
-//            else if(resultCode==RESULT_CANCELED)
-//            {
-//                Toast.makeText(this,"action have been canceled", Toast.LENGTH_LONG).show();
-//            }
-//        }
-//
-//        if(requestCode==1) //come from add mode
-//        {
-//            if(resultCode==RESULT_OK)
-//            {
-//                String title = data.getExtras().getString("title");
-//                String subtitle = data.getExtras().getString("sub");
-//                String price = data.getExtras().getString("price");
-//                Bitmap bitmap = Helper.byteArrayToBitmap(data.getExtras().getByteArray("bitmap"));
-//
-//                Toy toy=new Toy(Integer.valueOf(price),title,subtitle,bitmap);
-//
-//                toyAdapter.add(toy);
-//                toyAdapter.notifyDataSetChanged();
-//
-//                Toast.makeText(this,"data saved",Toast.LENGTH_LONG).show();
-//            }
-//            else if(resultCode==RESULT_CANCELED)
-//            {
-//                Toast.makeText(this,"action have been canceled",Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==0){
+            if(resultCode == getActivity().RESULT_OK ){
+               recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+    }
 }

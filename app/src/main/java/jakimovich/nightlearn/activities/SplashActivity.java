@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         if(isConnectedToInternet()){
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null){
-                UserService.getUserById(currentUser.getUid()).addOnCompleteListener(task -> {
+                UserService.getUserById(currentUser.getUid(), this).addOnCompleteListener(task -> {
                     if(UserService.myUser == null){
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(SplashActivity.this, SignUpActivity.class));

@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="25dp"
+        android:background="@drawable/background_top">
 
         <TextView
             android:layout_width="wrap_content"

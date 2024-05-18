@@ -20,6 +20,7 @@ public class UserProfile {
         this.lastname = lastname;
         this.eMail = eMail;
         this.password = password;
+        learnsets = new ArrayList<>();
     }
 
     public String getNickname() {

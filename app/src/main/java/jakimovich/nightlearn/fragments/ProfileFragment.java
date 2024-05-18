@@ -1,32 +1,21 @@
 package jakimovich.nightlearn.fragments;
 
-import static jakimovich.nightlearn.R.drawable.ic_password_hide;
-import static jakimovich.nightlearn.R.drawable.ic_password_show;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showEditAlertDialog;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showWarningAlertDialog;
-import static jakimovich.nightlearn.helpers.MethodsHelper.signOut;
-import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserLastname;
-import static jakimovich.nightlearn.helpers.MethodsHelper.updateUserName;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 
-import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,22 +25,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-
-import java.io.InputStream;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.activities.NotificationSettingsActivity;
-import jakimovich.nightlearn.activities.SignUpActivity;
-import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.UserService;
-import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.MethodsHelper;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class ProfileFragment extends Fragment {
 
@@ -98,30 +78,37 @@ public class ProfileFragment extends Fragment {
             profilePicture = view.findViewById(R.id.imageViewProfile);
 
             profileName = view.findViewById(R.id.tvProfileName);
-            ibEditName = view.findViewById(R.id.ibEditName);
+        ibEditName = view.findViewById(R.id.ibEditName);
+        ibEditName.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-            profileLastname = view.findViewById(R.id.tvProfileLastname);
-            ibEditLastname = view.findViewById(R.id.ibEditLastname);
+        profileLastname = view.findViewById(R.id.tvProfileLastname);
+        ibEditLastname = view.findViewById(R.id.ibEditLastname);
+        ibEditLastname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-            profileNickname = view.findViewById(R.id.tvProfileNickname);
-            ibEditNickname = view.findViewById(R.id.ibEditNickname);
+        profileNickname = view.findViewById(R.id.tvProfileNickname);
+        ibEditNickname = view.findViewById(R.id.ibEditNickname);
+        ibEditNickname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-            profileGmail = view.findViewById(R.id.tvProfileGmail);
-            ibEditGmail = view.findViewById(R.id.ibEditGmail);
+        profileGmail = view.findViewById(R.id.tvProfileGmail);
+        ibEditGmail = view.findViewById(R.id.ibEditGmail);
+        ibEditGmail.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-            profilePassword = view.findViewById(R.id.tvProfilePassword);
-            ibEditPassword = view.findViewById(R.id.ibEditPassword);
+        profilePassword = view.findViewById(R.id.tvProfilePassword);
+        ibEditPassword = view.findViewById(R.id.ibEditPassword);
+        ibEditPassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-            ibHidePassword = view.findViewById(R.id.ibHidePassword);
+        ibHidePassword = view.findViewById(R.id.ibHidePassword);
+        ibHidePassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.ic_password_hidden));
 
-            llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
+
+        llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
             llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
             llUsersRating = view.findViewById(R.id.llProfileUsersRating);
             llUsersRating.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
             btnExit = view.findViewById(R.id.btnProfileExit);
-            btnExit.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity));
+            btnExit.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", vi -> {getActivity().finishAndRemoveTask();}));
 
             btnDeleteAccount = view.findViewById(R.id.btnProfileDeleteAccount);
 
@@ -150,9 +137,9 @@ public class ProfileFragment extends Fragment {
                             "Think twice, man",
                     "Delete anyway",
                     "No, get back!",
-                    this::deleteAccount));
+                    v1 -> deleteAccount()));
 
-            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", this::signOut));
+            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to sign out? \n Do you need that?", "Sign out!", "Nope, get back", v1 -> signOut()));
 
             profilePicture.setOnClickListener(v -> setProfilePhoto());
 
@@ -177,19 +164,14 @@ public class ProfileFragment extends Fragment {
             btnDeleteAccount.setVisibility(View.INVISIBLE);
 
             btnSignOut.setText("Sign Up");
-            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Congrats! You decided to sign up. \n Just you to know, In your new account you'll start making progress from scratch",  "Sign Up!", "Get back", this::deleteAccount));
+            btnSignOut.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Congrats! You decided to sign up. \n Just you to know, In your new account you'll start making progress from scratch. This guest account will be deleted.",  "Sign Up!", "Get back", v1 -> deleteAccount()));
 
         }
     }
 
     private void setDefaultProfilePhoto(ImageView imageView) {
         if(UserService.myUser.getProfilePic() == null) {
-
-            try {
                 imageView.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.profile));
-            } catch (SVGParseException e) {
-                e.printStackTrace();
-            }
         }
         else {
             selectedImageUri = UserService.myUser.getProfilePic();
@@ -211,49 +193,46 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void finishAffinity() {
-            getActivity().finishAffinity();
-            //TODO: Didn't find a way for closing app windows of smartphone itself
-    }
-
     private void signOut(){
-        MethodsHelper.signOut(getContext(), getActivity());
+        UserService.signOut(getContext(), getActivity());
     }
 
-    private void deleteAccount() {MethodsHelper.deleteAccount(getContext(), getActivity());}
+    private void deleteAccount() {
+        UserService.deleteAccount(getContext(), getActivity());}
 
     private void updateUserName(String name) {
-        MethodsHelper.updateUserName(getContext(), name);
+        UserService.updateUserName(getContext(), name);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 
     private void updateUserLastname(String lastname) {
-        MethodsHelper.updateUserLastname(getContext(), lastname);
+        UserService.updateUserLastname(getContext(), lastname);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 
     private void updateUserNickname(String nickname){
-        MethodsHelper.updateUserNickname(getContext(), nickname);
+        UserService.updateUserNickname(getContext(), nickname);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 
     private void updateUserGmail(String gmail){
-        MethodsHelper.updateUserGmail(getContext(), gmail);
+        UserService.updateUserGmail(getContext(), gmail);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
     private void updateUserPassword(String password){
-        MethodsHelper.updateUserPassword(getContext(), password);
+        UserService.updateUserPassword(getContext(), password);
         ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "profile");
     }
 
-    private void hidePassword(){
+    private void hidePassword()
+    {
         if(passwordHidden){
-            ibHidePassword.setImageResource(ic_password_show);
+            ibHidePassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.ic_password_shown));
             profilePassword.setText("Password: " + UserService.myUser.getPassword());
             passwordHidden = false;
         }
         else {
-            ibHidePassword.setImageResource(ic_password_hide);
+            ibHidePassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.ic_password_hidden));
             profilePassword.setText("Password: " + UserService.myUser.getPassword().substring(0,1) + "*******");
             passwordHidden = true;
         }

@@ -155,10 +155,12 @@
         app:layout_constraintVertical_bias="0.147" />
 
     <LinearLayout
+        android:id="@+id/llProfileFragmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="25dp"
+        android:background="@drawable/background_top">
 
         <TextView
             android:layout_width="wrap_content"
@@ -171,7 +173,7 @@
 
     <LinearLayout
         android:id="@+id/llProfileNameLastname"
-        android:layout_width="192dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/flashcard_background"
         android:orientation="vertical"
@@ -191,6 +193,7 @@
                 android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="143dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:text="Name"
@@ -200,7 +203,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-            <!--Todo: To solve the problem with long strings-->
 
             <ImageButton
                 android:id="@+id/ibEditName"
@@ -229,6 +231,7 @@
                 android:id="@+id/tvProfileLastname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="143dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:text="Lastname"

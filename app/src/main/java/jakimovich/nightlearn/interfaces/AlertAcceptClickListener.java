@@ -1,6 +1,8 @@
 package jakimovich.nightlearn.interfaces;
 
+import android.view.View;
+
 public interface AlertAcceptClickListener {
-     void onAlertAcceptClicked();
+     void onAlertAcceptClicked(View v);
 
 }

@@ -1,10 +1,7 @@
 package jakimovich.nightlearn.helpers;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import java.util.ArrayList;
-
-import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
@@ -49,7 +43,7 @@ public class AlertDialogHelper {
         Window window = alertDialog.getWindow();
 
         window.setBackgroundDrawable(new ColorDrawable(0));
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
+        window.getAttributes().windowAnimations = R.style.MenuAlertDialogAnimation;
         window.setGravity(Gravity.BOTTOM);
 
         tvCreateLearnset.setOnClickListener(v -> {
@@ -59,7 +53,7 @@ public class AlertDialogHelper {
             } else {
             Learnset learnset = new Learnset("New learnset", new Quiz());
             learnset.addLearncard(new Learncard("Sample definition", "Sample explanation"));
-            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset));
+            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset, UserService.myUser.getLearnsets().size()));
             alertDialog.dismiss();
             }
         });
@@ -88,7 +82,7 @@ public class AlertDialogHelper {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
 
-        alertAccept.setOnClickListener(v -> acceptListener.onAlertAcceptClicked());
+        alertAccept.setOnClickListener(v -> {acceptListener.onAlertAcceptClicked(v); alertDialog.dismiss();});
 
         alertDecline.setOnClickListener(v -> alertDialog.dismiss());
 

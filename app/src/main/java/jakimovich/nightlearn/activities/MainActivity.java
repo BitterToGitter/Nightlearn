@@ -2,21 +2,27 @@ package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showMenuAlertDialog;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.databinding.ActivityMainBinding;
 import jakimovich.nightlearn.fragments.AlarmsFragment;
 import jakimovich.nightlearn.fragments.HomeFragment;
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", this::finishAffinity);
+        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", v -> finishAffinity());
 
     }
 

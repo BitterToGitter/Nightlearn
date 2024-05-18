@@ -1,9 +1,8 @@
 package jakimovich.nightlearn.activities;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -11,8 +10,6 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,7 +24,6 @@ import com.caverock.androidsvg.SVGParseException;
 import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.classes.UserProfile;
 import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
@@ -56,11 +52,8 @@ public class LogInActivity extends AppCompatActivity {
         btnContinueGuest = findViewById(R.id.btnLogInGuest);
 
         ivOptionsMenuBtn = findViewById(R.id.logInOptionsMenuBtn);
-        try {
-            ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
-        } catch (SVGParseException e) {
-            throw new RuntimeException(e);
-        } //TODO: To find a way without surrounding
+        ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
+
         ivOptionsMenuBtn.setOnClickListener(v -> showPopupWindow(v));
         btnContinue.setOnClickListener(v -> logIn());
 
@@ -83,7 +76,7 @@ public class LogInActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "User has been signed in successfully", Toast.LENGTH_SHORT).show();
-                UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                //UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid(), this);
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
                 finishAffinity();
             } else {
@@ -131,7 +124,7 @@ public class LogInActivity extends AppCompatActivity {
         tvExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOptionsAlertDialog(LogInActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", this::finnishAffinity);
+                showOptionsAlertDialog(LogInActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finnishAffinity());
                 popupWindow.dismiss();
             }
             private void finnishAffinity() {

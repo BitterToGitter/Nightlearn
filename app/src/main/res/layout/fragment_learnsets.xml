@@ -15,8 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llProfileFragmentTitle"
-        app:layout_constraintVertical_bias="0.07">
+        app:layout_constraintTop_toBottomOf="@+id/llLearnsetsFragmentTitle"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,11 +43,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/llProfileFragmentTitle"
+        android:id="@+id/llLearnsetsFragmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="25dp"
+        android:background="@drawable/background_top">
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,8 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llLearnsetsListTitle"
-        android:layout_marginTop="120dp">
-
+        android:layout_marginTop="110dp">
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,8 +24,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llLogInLearnsetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="25dp"
+        android:background="@drawable/background_top">
 
         <TextView
             android:id="@+id/tvTitleSignUp"
@@ -43,13 +50,14 @@
             app:layout_constraintVertical_bias="0.022"
             tools:ignore="MissingConstraints" />
 
+
+    </LinearLayout>
+
         <ImageView
             android:id="@+id/logInOptionsMenuBtn"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_gravity="end"
-            />
-
+            android:layout_gravity="end" />
 
     </LinearLayout>
 

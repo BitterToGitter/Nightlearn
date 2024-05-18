@@ -1,32 +1,43 @@
 package jakimovich.nightlearn.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.fragments.AuthorFragment;
+import jakimovich.nightlearn.fragments.ProjectFragment;
 
 public class AuthorInfoActivity extends AppCompatActivity {
 
+    public static String PROJECT_INFO;
+    public static String AUTHOR_INFO;
     Button btnBack;
-    TextView tvEnglish, tvHebrew, tvInfo;
+    TextView tvEnglish, tvHebrew;
+    ViewPager viewPager;
+    public static int PROJECT_AUTHOR_INFO_GRAVITY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_info);
 
+        viewPager = findViewById(R.id.authorView_pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+
+
         btnBack = findViewById(R.id.btnAuthorGetBack);
         tvEnglish = findViewById(R.id.tvEnglish);
         tvHebrew = findViewById(R.id.tvHebrew);
-        tvInfo = findViewById(R.id.tvInfo);
-        tvInfo.setMovementMethod(new ScrollingMovementMethod());
 
         //Default settings
         onChosenEnglish();
@@ -37,12 +48,12 @@ public class AuthorInfoActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
     }
-//        TODO: To split activities about app/author
 
-    private void onChosenEnglish(){
+    private void onChosenEnglish() {
         tvEnglish.setTextColor(R.color.darkGray);
         tvHebrew.setTextColor(Color.parseColor("#D9D9D9"));
-        String info = "About an app: " +
+
+        PROJECT_INFO = "About an app: " +
                 "\nThe primary purpose of NightLearn is to aid individuals in their learning journey. " +
                 "Utilizing flashcard technology, NightLearn enables users to store various types of information within learning cards " +
                 "and reinforce their memory through short, customizable quizzes. " +
@@ -50,22 +61,27 @@ public class AuthorInfoActivity extends AppCompatActivity {
                 "the application sends notifications encouraging users to take a quiz. " +
                 "Furthermore, users have the option to set alarms within the app. " +
                 "These alarms can only be deactivated by answering a few questions based on the user's learning cards, " +
-                "leaving them with no choice but to engage in studying!" +
-                "\n\n About an author: " +
-                "\n Name: Maxim Yakimovich " +
-                "\n ID number: 346814221 " +
-                "\n Teachers' names: Avital Shain, Eli Sinyanski " +
-                "\n School name: Makif Gimel Ha-Amit " +
-                "\n Year: 2024";
+                "leaving them with no choice but to engage in studying!";
 
-        tvInfo.setGravity(Gravity.LEFT);
-        tvInfo.setText(info);
+        AUTHOR_INFO = "About an author: " +
+                "\n\n Name: Maxim Yakimovich" +
+                "\n\n ID number: 346814221" +
+                "\n\n Teachers' names: Avital Shain, Eli Sinyanski" +
+                "\n\n School name: Makif Gimel Ha-Amit" +
+                "\n\n Year: 2024";
+
+        PROJECT_AUTHOR_INFO_GRAVITY = Gravity.LEFT;
+
+        updateFragments();
+
     }
 
-    private void onChosenHebrew(){
+
+    private void onChosenHebrew() {
         tvEnglish.setTextColor(Color.parseColor("#D9D9D9"));
         tvHebrew.setTextColor(R.color.darkGray);
-        String info = "על האפליקציה: " +
+
+        PROJECT_INFO = "על האפליקציה: " +
                 "\n המטרה העיקרית של NightLearn היא לסייע לאנשים במסע הלמידה שלהם." +
                 " באמצעות טכנולוגיית קלפים מיוחדת, NightLearn מאפשר למשתמשים לאחסן מגוון רחב של מידע בתוך קלפי למידה" +
                 " ולחזק את הזיכרון שלהם דרך חידושי קצרים וניתנים להתאמה אישית." +
@@ -73,15 +89,54 @@ public class AuthorInfoActivity extends AppCompatActivity {
                 " האפליקציה שולחת התראות שמציעות למשתמשים לבצע חידוש." +
                 " בנוסף, המשתמשים יכולים להגדיר שעונים מעוררים באפליקציה." +
                 " השעונים האלה ניתן לבטל רק על ידי עניין במספר שאלות מבוססות על קלפי הלמידה של המשתמש," +
-                " משאירים אותם עם אפשרות רק להתעסק בלימודים!" +
-                "\n\n על היצרן: " +
-                "\n שם: מקסים יקימוביץ " +
-                "\n תעודת זהות: 346814221 " +
-                "\n שמות המורים: אביטל שיין, אלי סיניאנסקי " +
-                "\n תיכון: מקיף ג האמית " +
-                "\n שנה: 2024";
-        tvInfo.setGravity(Gravity.RIGHT);
-        tvInfo.setText(info);
+                " משאירים אותם עם אפשרות רק להתעסק בלימודים!";
+
+        AUTHOR_INFO = " על היצרן: " +
+                "\n\n שם: מקסים יקימוביץ" +
+                "\n\n תעודת זהות: 346814221" +
+                "\n\n שמות המורים: אביטל שיין, אלי סיניאנסקי" +
+                "\n\n יכון: מקיף ג האמית " +
+                "\n\n שנה: 2024";
+
+        PROJECT_AUTHOR_INFO_GRAVITY = Gravity.RIGHT;
+
+        updateFragments();
+
     }
 
+    private void updateFragments() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment instanceof ProjectFragment) {
+                ((ProjectFragment) fragment).updateTextView();
+            } else if (fragment instanceof AuthorFragment) {
+                ((AuthorFragment) fragment).updateTextView();
+            }
+        }
+    }
+
+    public static class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new ProjectFragment();
+                case 1:
+                    return new AuthorFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2; // Number of fragments
+        }
+    }
 }
+

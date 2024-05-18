@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.QuizSettingsActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/llActivityQuizSettingsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="25dp"
+        android:background="@drawable/background_top">
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,4 +28,247 @@
 
             />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvQuestionType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Question type"
+        android:textColor="@color/brightGray"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llActivityQuizSettingsTitle" />
+
+
+        <LinearLayout
+            android:id="@+id/llCardsMatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/flashcard_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestionType">
+
+            <TextView
+                android:id="@+id/tvEditCardsMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Cards match "
+                android:textColor="@color/darkGray"
+                android:textSize="22dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivInfoCardsMatch"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_info"/>
+
+            <Switch
+                android:id="@+id/swCardsMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/llManualTyping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingEnd="10dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/flashcard_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llCardsMatch">
+
+            <TextView
+                android:id="@+id/tvManualTyping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Manual typing "
+                android:textColor="@color/darkGray"
+                android:textSize="22dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivInfoManualTyping"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_info"/>
+
+            <Switch
+                android:id="@+id/swManualTyping"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    <View
+        android:id="@+id/vDivider1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/brightGray"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/llManualTyping"
+        />
+
+    <TextView
+        android:id="@+id/tvNumberOfQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Number of questions"
+        android:textColor="@color/brightGray"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider1" />
+
+    <jakimovich.nightlearn.helpers.CustomSeekBar
+        android:id="@+id/sbNumberOfQuestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="top"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="35dp"
+        android:paddingTop="10dp"
+        android:progressBackgroundTint="@color/brightGray"
+        android:progressTint="@color/brightGray"
+        android:thumb="@drawable/seekbar_thumb"
+        android:thumbTint="@color/brightGray"
+        android:progress="5"
+        android:max="20"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberOfQuestions"/>
+
+    <TextView
+        android:id="@+id/tvTimeForAnswering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Time for answering one question"
+        android:textColor="@color/brightGray"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbNumberOfQuestions" />
+
+    <jakimovich.nightlearn.helpers.CustomSeekBarSec
+        android:id="@+id/sbTimeForAnswering"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="top"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="35dp"
+        android:paddingTop="10dp"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/brightGray"
+        android:thumb="@drawable/seekbar_thumb"
+        android:thumbTint="@color/brightGray"
+        android:progress="15"
+        android:max="60"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeForAnswering"/>
+
+    <View
+        android:id="@+id/vDivider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/brightGray"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/sbTimeForAnswering"
+        />
+
+    <TextView
+        android:id="@+id/tvNumCountedAsLearned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center"
+        android:text="Number of correct answers to count learncard as learned"
+        android:textColor="@color/brightGray"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider2" />
+
+    <jakimovich.nightlearn.helpers.CustomSeekBar
+        android:id="@+id/sbNumCountedAsLearned"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="top"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="35dp"
+        android:paddingTop="10dp"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/brightGray"
+        android:thumb="@drawable/seekbar_thumb"
+        android:thumbTint="@color/brightGray"
+        android:progress="4"
+        android:max="10"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumCountedAsLearned"/>
+
+    <Button
+        android:id="@+id/btnQuizSettingsSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_background"
+        android:text="Save"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbNumCountedAsLearned" />
+
+    <Button
+        android:id="@+id/btnQuizSettingsCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Cancel"
+        android:textSize="20dp"
+        android:background="@drawable/btn_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbNumCountedAsLearned" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

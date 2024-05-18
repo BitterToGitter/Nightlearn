@@ -11,8 +11,9 @@
         android:id="@+id/llEditLearnsetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_top"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="25dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
         android:id="@+id/giveYourLearnsetAName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="5dp"
         android:text="Give your learnset a name!"
         android:textColor="@color/brightGray"
         android:textSize="25dp"
@@ -58,7 +59,7 @@
 
             <TextView
                 android:id="@+id/tvEditLearnsetName"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Learnset name: "
@@ -140,7 +141,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/learncardsRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="310dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,14 +181,14 @@
         android:id="@+id/btnLearnsetEditQuizSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="540dp"
+        android:background="@drawable/btn_background"
         android:text="Quiz Settings"
         android:textSize="20dp"
-        android:background="@drawable/btn_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/learncardsRecycleView" />
+        app:layout_constraintTop_toBottomOf="@+id/llEditLearnsetTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,11 +37,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learncard_layout, parent, false);
-        try {
-            return new ViewHolder(view);
-        } catch (SVGParseException e) {
-            throw new RuntimeException(e);
-        }
+        return new ViewHolder(view);
     }
 
     @Override
@@ -51,12 +47,12 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
         holder.tvDefinitionTitle.setText(Html.fromHtml("<u>Definition</u>"));
         holder.tvExplanationTitle.setText(Html.fromHtml("<u>Explanation</u>"));
-        holder.llDefinition.setOnClickListener(v -> {AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", definition -> {learncard.setDefinition(definition); onBindViewHolder(holder, position); });});
-        holder.llExplanation.setOnClickListener(v -> {AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", explanation -> {learncard.setExplanation(explanation); onBindViewHolder(holder, position); });});
+        holder.llDefinition.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", definition -> {learncard.setDefinition(definition); notifyDataSetChanged(); }));
+        holder.llExplanation.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", explanation -> {learncard.setExplanation(explanation); notifyDataSetChanged(); }));
         holder.tvDefinition.setText(learncard.getDefinition());
         holder.tvExplanation.setText(learncard.getExplanation());
 
-        holder.btnOptionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learncard));
+        holder.btnOptionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, holder, position));
 
     }
 
@@ -71,7 +67,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
         LinearLayout llDefinition, llExplanation;
         ImageView btnOptionsMenu;
 
-        public ViewHolder(@NonNull View itemView) throws SVGParseException {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvDefinition = itemView.findViewById(R.id.tvDefinition);
@@ -86,7 +82,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
         }
 
-        private void showPopupWindow(View view, final Learncard learncard) {
+        private void showPopupWindow(View view, ViewHolder holder, int position) {
 
             View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learncard_layout, null);
 
@@ -95,8 +91,9 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
             TextView tvDelete = popupView.findViewById(R.id.tvLearncardMenuDelete);
 
             tvDelete.setOnClickListener(v -> {
-
                 popupWindow.dismiss();
+                learncardList.remove(position);
+                notifyDataSetChanged();
             });
 
             popupWindow.setBackgroundDrawable(new ColorDrawable(0));

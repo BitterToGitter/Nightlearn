@@ -39,11 +39,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learnset_layout_for_lernsets_list, parent, false);
-        try {
-            return new ViewHolder(view);
-        } catch (SVGParseException e) {
-            throw new RuntimeException(e);
-        }
+        return new ViewHolder(view);
     }
 
     @Override
@@ -56,7 +52,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.tvLearnedCards.setText("Learned cards: " + learnset.cardsLearned());
         holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
 
-        holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset));
+        holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset, position));
 
 
     }
@@ -69,7 +65,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvLearnsetTitle, tvCardsNum, tvSeenCards, tvLearnedCards, tvLearnsetProgress;
         ImageView optionsMenu;
-        public ViewHolder(@NonNull View itemView) throws SVGParseException {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLearnsetTitle = itemView.findViewById(R.id.tvlearnsetTitle);
             tvCardsNum = itemView.findViewById(R.id.tvLearnsetCardsNum);
@@ -81,7 +77,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
 
         }
 
-        private void showPopupWindow(View view, final Learnset learnset) {
+        private void showPopupWindow(View view, Learnset learnset, int position) {
 
             View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learnsets_layout, null);
 
@@ -95,14 +91,19 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
                     showWarningAlertDialog((Activity) context, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok");
                     popupWindow.dismiss();
                 } else {
-                    context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset));
+                    ((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position), 0);
                     popupWindow.dismiss();
                 }
             });
 
             tvDelete.setOnClickListener(v -> {
-                // Perform delete action
+                if(UserService.isGuest()){
+                    showWarningAlertDialog((Activity) context, "Only registered users can delete the sample learnsets. \n Sign in to do manage the learnsets as you wish.", "Ok");
+                    popupWindow.dismiss();
+                } else{
+                AlertDialogHelper.showOptionsAlertDialog((Activity) context, "Are you sure you want to delete the learnset? There will be no way to return in.", "Delete","Cancel", v1 -> {learnsetList.remove(position); UserService.removeLearnset(context, position); notifyDataSetChanged();});
                 popupWindow.dismiss();
+                }
             });
 
             popupWindow.setBackgroundDrawable(new ColorDrawable(0));
