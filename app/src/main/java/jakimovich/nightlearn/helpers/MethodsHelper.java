@@ -37,11 +37,11 @@ public class MethodsHelper {
 
     }
 
-    public static Intent putLearnsetIntoIntent(Activity activity, Learnset learnset, int positionInArray){
+    public static Intent putLearnsetIntoIntent(Activity activity, Learnset learnset, int positionInArray, Class<?> activityClass){
 
         List<Learncard> learncards = learnset.getLearncards();
 
-        Intent intent = new Intent(activity, LearnsetEditActivity.class);
+        Intent intent = new Intent(activity, activityClass);
 
         intent.putExtra("positionInArray", positionInArray);
 

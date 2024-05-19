@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llPlayAlertDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:background="@drawable/flashcard_background"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvPlayAlertLearnsetName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Learnset Name"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="#585858" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvPlayAlertQuestionsAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Questions amount: "
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tvPlayAlertTimeForAnsweringOneQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time for answering one question: "
+            android:layout_marginBottom="15dp"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shall we start?"
+            android:layout_marginBottom="5dp"
+            android:textSize="18dp"
+            android:textStyle="italic|bold"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="#585858" />
+
+
+
+    <LinearLayout
+        android:id="@+id/llWarningAlertBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvWarningAlertBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Play!"
+            android:textColor="@color/alert_dialog_textcolor_focused"
+            android:textSize="22dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+</LinearLayout>

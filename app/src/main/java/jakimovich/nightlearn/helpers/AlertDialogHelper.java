@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
@@ -53,7 +54,7 @@ public class AlertDialogHelper {
             } else {
             Learnset learnset = new Learnset("New learnset", new Quiz());
             learnset.addLearncard(new Learncard("Sample definition", "Sample explanation"));
-            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset, UserService.myUser.getLearnsets().size()));
+            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset, UserService.myUser.getLearnsets().size(), LearnsetEditActivity.class));
             alertDialog.dismiss();
             }
         });
@@ -168,7 +169,31 @@ public class AlertDialogHelper {
 
         closeBtn.setOnClickListener(v -> alertDialog.dismiss());
 
-        alertDialog.setOnDismissListener(v -> listener.onDialogDismissed());
+        alertDialog.setOnDismissListener(v -> listener.onDialogDismissed((View) v));
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.show();
+
+    }
+
+    public static void showPlayAlertDialog(Activity activity, String learnsetName, int questionsAmount, int timeForAnsweringQuestion, AlertDialogDismissListener listener){
+        activity.getApplicationContext();
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_play, null);
+
+        TextView tvLearnsetName = view.findViewById(R.id.tvPlayAlertLearnsetName);
+        TextView tvQuestionsAmount = view.findViewById(R.id.tvPlayAlertQuestionsAmount);
+        TextView tvTimeForAnsweringQuestion = view.findViewById(R.id.tvPlayAlertTimeForAnsweringOneQuestion);
+        LinearLayout closeBtn = view.findViewById(R.id.llWarningAlertBtn);
+
+        tvLearnsetName.setText(learnsetName);
+        tvQuestionsAmount.setText("Questions amount: " + questionsAmount + " questions");
+        tvTimeForAnsweringQuestion.setText("Time for answering one question: " + timeForAnsweringQuestion + " seconds");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        closeBtn.setOnClickListener(v -> {alertDialog.dismiss(); listener.onDialogDismissed(v);});
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.show();

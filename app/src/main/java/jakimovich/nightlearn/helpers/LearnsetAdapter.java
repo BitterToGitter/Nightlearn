@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.LearnsetEditActivity;
+import jakimovich.nightlearn.activities.PlayActivity;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.UserService;
 
@@ -53,6 +55,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
 
         holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset, position));
+        holder.llLearncardPresentationBase.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class));}));
 
 
     }
@@ -63,6 +66,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout llLearncardPresentationBase;
         TextView tvLearnsetTitle, tvCardsNum, tvSeenCards, tvLearnedCards, tvLearnsetProgress;
         ImageView optionsMenu;
         public ViewHolder(@NonNull View itemView) {
@@ -72,6 +76,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
             tvSeenCards = itemView.findViewById(R.id.tvLearnsetSeenCards);
             tvLearnedCards = itemView.findViewById(R.id.tvLearnsetLearnedCards);
             tvLearnsetProgress = itemView.findViewById(R.id.tvLearnsetProgress);
+            llLearncardPresentationBase = itemView.findViewById(R.id.llLearncardPresentationBase);
             optionsMenu = itemView.findViewById(R.id.ivOptionsMenuButton);
             optionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
 
@@ -91,7 +96,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
                     showWarningAlertDialog((Activity) context, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok");
                     popupWindow.dismiss();
                 } else {
-                    ((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position), 0);
+                    ((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, LearnsetEditActivity.class), 0);
                     popupWindow.dismiss();
                 }
             });

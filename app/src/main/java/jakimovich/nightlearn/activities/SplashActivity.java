@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }else {
-            AlertDialogHelper.showWarningAlertDialog(this, "Oops..., your device seems to be disconnected from internet. For proper app work stable wifi network is needed.", "Ok", this::finish);
+            AlertDialogHelper.showWarningAlertDialog(this, "Oops..., your device seems to be disconnected from internet. For proper app work stable wifi network is needed.", "Ok", v -> finishAndRemoveTask());
         }
         }, 500);
 
