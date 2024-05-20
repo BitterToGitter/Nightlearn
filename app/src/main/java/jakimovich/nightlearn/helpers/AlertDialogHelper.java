@@ -54,7 +54,7 @@ public class AlertDialogHelper {
             } else {
             Learnset learnset = new Learnset("New learnset", new Quiz());
             learnset.addLearncard(new Learncard("Sample definition", "Sample explanation"));
-            activity.startActivity(MethodsHelper.putLearnsetIntoIntent(activity, learnset, UserService.myUser.getLearnsets().size(), LearnsetEditActivity.class));
+            activity.startActivityForResult(MethodsHelper.putLearnsetIntoIntent(activity, learnset, UserService.myUser.getLearnsets().size(), LearnsetEditActivity.class), 0);
             alertDialog.dismiss();
             }
         });
@@ -187,7 +187,7 @@ public class AlertDialogHelper {
 
         tvLearnsetName.setText(learnsetName);
         tvQuestionsAmount.setText("Questions amount: " + questionsAmount + " questions");
-        tvTimeForAnsweringQuestion.setText("Time for answering one question: " + timeForAnsweringQuestion + " seconds");
+        tvTimeForAnsweringQuestion.setText("Time for answering one question: " + timeForAnsweringQuestion + " sec.");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(view);

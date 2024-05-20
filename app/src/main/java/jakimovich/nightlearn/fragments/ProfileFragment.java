@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment {
                             selectedImageUri = data.getData();
                             MethodsHelper.setProfilePic(getContext(), selectedImageUri, profilePicture);
                             UserService.myUser.setProfilePic(selectedImageUri);
-                            UserService.uploadProfilePic();
+                            UserService.uploadProfilePicToStorage(getContext(), selectedImageUri);
                         }
                     }
                 }
@@ -78,30 +78,29 @@ public class ProfileFragment extends Fragment {
             profilePicture = view.findViewById(R.id.imageViewProfile);
 
             profileName = view.findViewById(R.id.tvProfileName);
-        ibEditName = view.findViewById(R.id.ibEditName);
-        ibEditName.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
+            ibEditName = view.findViewById(R.id.ibEditName);
+            ibEditName.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-        profileLastname = view.findViewById(R.id.tvProfileLastname);
-        ibEditLastname = view.findViewById(R.id.ibEditLastname);
-        ibEditLastname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
+            profileLastname = view.findViewById(R.id.tvProfileLastname);
+            ibEditLastname = view.findViewById(R.id.ibEditLastname);
+            ibEditLastname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-        profileNickname = view.findViewById(R.id.tvProfileNickname);
-        ibEditNickname = view.findViewById(R.id.ibEditNickname);
-        ibEditNickname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
+            profileNickname = view.findViewById(R.id.tvProfileNickname);
+            ibEditNickname = view.findViewById(R.id.ibEditNickname);
+            ibEditNickname.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-        profileGmail = view.findViewById(R.id.tvProfileGmail);
-        ibEditGmail = view.findViewById(R.id.ibEditGmail);
-        ibEditGmail.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
+            profileGmail = view.findViewById(R.id.tvProfileGmail);
+            ibEditGmail = view.findViewById(R.id.ibEditGmail);
+            ibEditGmail.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-        profilePassword = view.findViewById(R.id.tvProfilePassword);
-        ibEditPassword = view.findViewById(R.id.ibEditPassword);
-        ibEditPassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
+            profilePassword = view.findViewById(R.id.tvProfilePassword);
+            ibEditPassword = view.findViewById(R.id.ibEditPassword);
+            ibEditPassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(),R.raw.ic_edit));
 
-        ibHidePassword = view.findViewById(R.id.ibHidePassword);
-        ibHidePassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.ic_password_hidden));
+            ibHidePassword = view.findViewById(R.id.ibHidePassword);
+            ibHidePassword.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.ic_password_hidden));
 
-
-        llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
+            llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
             llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
             llUsersRating = view.findViewById(R.id.llProfileUsersRating);

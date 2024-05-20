@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
 import jakimovich.nightlearn.classes.UserService;
@@ -51,19 +52,7 @@ public class LearnsetsFragment extends Fragment {
              learnsetsList = myUser.getLearnsets();
               recyclerView.setAdapter(new LearnsetAdapter(getContext(), learnsetsList));
           }
-
-        //TODO: To set a reaction on touch
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==0){
-            if(resultCode == getActivity().RESULT_OK ){
-               recyclerView.getAdapter().notifyDataSetChanged();
-            }
-        }
-
-    }
 }

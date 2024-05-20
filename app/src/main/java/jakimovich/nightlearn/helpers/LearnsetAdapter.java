@@ -3,21 +3,18 @@ import static jakimovich.nightlearn.helpers.AlertDialogHelper.showWarningAlertDi
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.caverock.androidsvg.SVGParseException;
 
 import java.util.List;
 
@@ -51,12 +48,12 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.tvLearnsetTitle.setText(learnset.getName());
         holder.tvCardsNum.setText("Cards amount: " + learnset.getLearncards().size());
         holder.tvSeenCards.setText("Cards seen in games: " + learnset.cardsSeen());
-        holder.tvLearnedCards.setText("Learned cards: " + learnset.cardsLearned());
+        holder.tvLearnedCards.setText("Cards learned: " + learnset.cardsLearned());
         holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
+        holder.progressBar.setProgress(learnset.countProgress());
 
         holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset, position));
         holder.llLearncardPresentationBase.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class));}));
-
 
     }
 
@@ -69,6 +66,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         LinearLayout llLearncardPresentationBase;
         TextView tvLearnsetTitle, tvCardsNum, tvSeenCards, tvLearnedCards, tvLearnsetProgress;
         ImageView optionsMenu;
+        ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLearnsetTitle = itemView.findViewById(R.id.tvlearnsetTitle);
@@ -77,6 +75,8 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
             tvLearnedCards = itemView.findViewById(R.id.tvLearnsetLearnedCards);
             tvLearnsetProgress = itemView.findViewById(R.id.tvLearnsetProgress);
             llLearncardPresentationBase = itemView.findViewById(R.id.llLearncardPresentationBase);
+            progressBar = itemView.findViewById(R.id.progressBar);
+
             optionsMenu = itemView.findViewById(R.id.ivOptionsMenuButton);
             optionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
 
@@ -84,7 +84,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
 
         private void showPopupWindow(View view, Learnset learnset, int position) {
 
-            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learnsets_layout, null);
+            View popupView = LayoutInflater.from(context).inflate(R.layout.popup_menu_learnsets_layout, null);
 
             PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 

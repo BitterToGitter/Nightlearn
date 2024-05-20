@@ -20,11 +20,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.caverock.androidsvg.SVGParseException;
 import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class LogInActivity extends AppCompatActivity {
@@ -106,7 +104,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private void showPopupWindow(View view) {
 
-        View popupView = LayoutInflater.from(this).inflate(R.layout.menu_auth_layout, null);
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_menu_auth_layout, null);
 
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 

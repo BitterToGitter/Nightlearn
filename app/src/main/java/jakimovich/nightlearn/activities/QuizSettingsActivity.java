@@ -3,16 +3,24 @@ package jakimovich.nightlearn.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.CustomSeekBar;
 import jakimovich.nightlearn.helpers.CustomSeekBarSec;
+import jakimovich.nightlearn.helpers.LearncardAdapter;
 
 public class QuizSettingsActivity extends AppCompatActivity {
 
@@ -53,10 +61,10 @@ public class QuizSettingsActivity extends AppCompatActivity {
         }
 
         ivInfoCardsMatch = findViewById(R.id.ivInfoCardsMatch);
-        ivInfoCardsMatch.setOnClickListener(v -> AlertDialogHelper.showWarningAlertDialog(this, "If you choose this option, you will have to match the right answer among 4 random cards from your learnset.", "OK"));
+        ivInfoCardsMatch.setOnClickListener(v -> showPopupWindow(v, "This option allows to to match the right answer among 4 random cards from your learnset."));
 
         ivInfoManualTyping = findViewById(R.id.ivInfoManualTyping);
-        ivInfoManualTyping.setOnClickListener(v -> AlertDialogHelper.showWarningAlertDialog(this,  "If you choose this option, you will have to type the answer manually.", "OK"));
+        ivInfoManualTyping.setOnClickListener(v -> showPopupWindow(v, "This option allows to type the answer manually."));
         //Todo: maybe popUpWindow
 
         btnSave = findViewById(R.id.btnQuizSettingsSave);
@@ -97,5 +105,21 @@ public class QuizSettingsActivity extends AppCompatActivity {
         finish();
 
     }
+
+    private void showPopupWindow(View view, String message) {
+
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_menu_learncard_layout, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        TextView tvMessage = popupView.findViewById(R.id.tvLearncardMenuDelete);
+        tvMessage.setGravity(Gravity.CENTER);
+        tvMessage.setText(message);
+
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
+
+        popupWindow.showAsDropDown(view);
+    }
+
 
 }

@@ -15,13 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.caverock.androidsvg.SVGParseException;
-
 import java.util.List;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learncard;
-import jakimovich.nightlearn.classes.Learnset;
 
 public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.ViewHolder> {
 
@@ -84,7 +81,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
         private void showPopupWindow(View view, ViewHolder holder, int position) {
 
-            View popupView = LayoutInflater.from(context).inflate(R.layout.menu_learncard_layout, null);
+            View popupView = LayoutInflater.from(context).inflate(R.layout.popup_menu_learncard_layout, null);
 
             PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 

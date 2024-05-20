@@ -20,15 +20,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import org.checkerframework.checker.units.qual.C;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 import jakimovich.nightlearn.activities.SplashActivity;
-import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class UserService {
     public static UserProfile myUser;
@@ -75,9 +75,19 @@ public class UserService {
                     myUser = profile;
                     getLearnsetsFromDatabase(context);
                 }
+
                 Uri profilePic = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
-                if (profilePic != null) {
+                if (profilePic != null && new File(profilePic.getPath()).exists()) {
                     myUser.setProfilePic(profilePic);
+                    Toast.makeText(context, "Stuck on database", Toast.LENGTH_SHORT).show();
+                } else {
+                    StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + userId + "/profilePic");
+                    profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        uploadUriPicToDatabase(uri);
+                        myUser.setProfilePic(uri);
+                    }).addOnFailureListener(exception -> {
+                        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
                 }
 
 
@@ -89,13 +99,23 @@ public class UserService {
         });
     }
 
-    public static Task<Void> uploadProfilePic() {
+   public static void uploadProfilePicToStorage(Context context, Uri fileUri) {
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userId);
+    StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profilePic");
 
-        return ref.child("profilePic").setValue(myUser.getProfilePic().toString());
+    profilePicRef.putFile(fileUri)
+        .addOnSuccessListener(taskSnapshot -> {
+            uploadUriPicToDatabase(fileUri);
+            Toast.makeText(context, "Profile picture uploaded successfully", Toast.LENGTH_SHORT).show();
+        })
+        .addOnFailureListener(exception -> {
+            Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+}
 
+    public static void uploadUriPicToDatabase(Uri fileUri) {
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profilePic");
+        databaseRef.setValue(fileUri.toString());
     }
 
     public static boolean isGuest() {
