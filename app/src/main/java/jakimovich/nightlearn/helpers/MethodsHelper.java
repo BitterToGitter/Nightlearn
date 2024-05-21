@@ -12,6 +12,9 @@ import com.bumptech.glide.request.RequestOptions;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +88,14 @@ public class MethodsHelper {
                         intent.getExtras().getInt("quizQuestionType")),
                 learncards
         );
+
+    }
+
+    public static void setPictureFromFirebaseStorage(Context context, ImageView imageView){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + userId + "/profilePic");
+
+        Glide.with(context).load(profilePicRef).apply(RequestOptions.circleCropTransform()).into(imageView);
 
     }
 

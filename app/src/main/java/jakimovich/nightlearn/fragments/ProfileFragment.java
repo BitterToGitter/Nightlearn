@@ -170,7 +170,15 @@ public class ProfileFragment extends Fragment {
 
     private void setDefaultProfilePhoto(ImageView imageView) {
         if(UserService.myUser.getProfilePic() == null) {
-                imageView.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.profile));
+
+//            try {
+//                MethodsHelper.setPictureFromFirebaseStorage(getContext(), imageView);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+
+        imageView.setImageDrawable(MethodsHelper.convertSvgToDrawable(getContext(), R.raw.profile));
+
         }
         else {
             selectedImageUri = UserService.myUser.getProfilePic();

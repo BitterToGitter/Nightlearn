@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -24,10 +26,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.activities.SplashActivity;
 
 public class UserService {
@@ -68,7 +73,6 @@ public class UserService {
                 String eMail = task.getResult().child("eMail").getValue(String.class);
                 String password = task.getResult().child("password").getValue(String.class);
 
-
                 UserProfile profile = new UserProfile(nickname, name, lastname, eMail, password);
 
                 if (Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())) {
@@ -76,20 +80,40 @@ public class UserService {
                     getLearnsetsFromDatabase(context);
                 }
 
-                Uri profilePic = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
-                if (profilePic != null && new File(profilePic.getPath()).exists()) {
-                    myUser.setProfilePic(profilePic);
-                    Toast.makeText(context, "Stuck on database", Toast.LENGTH_SHORT).show();
-                } else {
-                    StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + userId + "/profilePic");
-                    profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        uploadUriPicToDatabase(uri);
-                        myUser.setProfilePic(uri);
-                    }).addOnFailureListener(exception -> {
-                        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-                }
+                Uri profilePicUri = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
+                if(profilePicUri != null)
+                {myUser.setProfilePic(profilePicUri);}
+//                File uriFile = new File(Environment.getExternalStorageDirectory() + profilePicUri.getPath());
+//                if (uriFile.exists()) {
+//                    myUser.setProfilePic(profilePicUri);
+//                    Toast.makeText(context, "Stuck on database", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + userId + "/profilePic");
+//
+//                    profilePicRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes ->  {
+//                        { File file = new File(Environment.getExternalStorageDirectory() + "/Android/data/jakimovich.nightlearn/files/DCIM", "profilePic.jpg");
+//
+//                            // Create parent directories if they don't exist
+//                            if (!file.getParentFile().exists()) {
+//                                file.getParentFile().mkdirs();
+//                            }
+//
+//                            try (FileOutputStream fos = new FileOutputStream(file)) {
+//                                fos.write(bytes);
+//                                myUser.setProfilePic(Uri.fromFile(file));
+//                                uploadUriPicToDatabase(Uri.fromFile(file));
+//                                Toast.makeText(context, "Image Saved Successfully", Toast.LENGTH_SHORT).show();
+//                            } catch (IOException e) {
+//                                Log.e("SaveImage", "Saving image failed", e);
+//                            }
+//                        }
+//                    }).addOnFailureListener(e ->
+//                            { Log.e("FirebaseStorage", "Download failed", e); }
+//                    );
+                //}
+                // TODO: To fix storage downloading
 
+                //TODO: To build user inheritance
 
                 return profile;
 

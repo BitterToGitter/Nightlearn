@@ -1,5 +1,7 @@
 package jakimovich.nightlearn.fragments;
 
+import static jakimovich.nightlearn.classes.UserService.myUser;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -47,10 +50,10 @@ public class HomeFragment extends Fragment {
         if (UserService.isGuest()){
          tvTitle.setText("Nice to see you, Guest");
         }else {
-        tvTitle.setText("Happy to see you, " + UserService.myUser.getNickname());
+        tvTitle.setText("Happy to see you, " + myUser.getNickname());
         }
 
-
+        //Toast.makeText(getContext(), myUser.getProfilePic().getPath().toString(), Toast.LENGTH_SHORT).show();
 
 
     }
