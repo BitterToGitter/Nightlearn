@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.GameMatchCardsFragment">
+    tools:context=".fragments.game.GameMatchCardsFragment">
 
 
     <LinearLayout
@@ -26,7 +26,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvMatchCardsSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Choose right definition!"
+        android:textSize="30dp"
+        android:textColor="@color/brightGray"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="300dp"
         android:layout_height="200dp"
         android:background="@drawable/flashcard_background"
@@ -36,13 +48,13 @@
         app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle">
 
         <TextView
-            android:id="@+id/questionExplanation"
+            android:id="@+id/tvMatchCardsQuestionExplanation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:padding="10dp"
             android:text="Some kind of explanation randomly taken from the learnset"
-            android:textSize="20dp"
-            android:gravity="center"/>
+            android:textSize="20dp" />
 
 
     </LinearLayout>
@@ -82,13 +94,18 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
-                    android:id="@+id/ans1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_background"
-                    android:text="Answer 1"
-                    />
+                    <TextView
+                        android:id="@+id/btnMatchCardsAnswer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="30dp"
+                        android:paddingVertical="20dp"
+                        android:textSize="20dp"
+                        android:text="Answer 1"
+                        android:textColor="@color/alert_dialog_textcolor_focused"
+                        android:gravity="center"
+                        android:background="@drawable/btn_background"/>
+
 
             </LinearLayout>
 
@@ -98,11 +115,15 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
-                    android:id="@+id/ans2"
+                <TextView
+                    android:id="@+id/btnMatchCardsAnswer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="20dp"
+                    android:textSize="20dp"
                     android:background="@drawable/btn_background"
+                    android:textColor="@color/alert_dialog_textcolor_focused"
                     android:text="Answer 2"/>
 
             </LinearLayout>
@@ -123,13 +144,16 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
-                    android:id="@+id/ans3"
+                <TextView
+                    android:id="@+id/btnMatchCardsAnswer3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_background"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="20dp"
+                    android:textColor="@color/alert_dialog_textcolor_focused"
                     android:text="Answer 3"
-                    />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -139,10 +163,14 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
-                    android:id="@+id/ans4"
+                <TextView
+                    android:id="@+id/btnMatchCardsAnswer4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="20dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/alert_dialog_textcolor_focused"
                     android:background="@drawable/btn_background"
                     android:text="Answer 4"/>
 

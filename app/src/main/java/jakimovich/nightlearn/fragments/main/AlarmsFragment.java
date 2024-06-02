@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.fragments;
+package jakimovich.nightlearn.fragments.main;
 
 import android.os.Bundle;
 

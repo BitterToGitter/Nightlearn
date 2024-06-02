@@ -1,7 +1,7 @@
-package jakimovich.nightlearn.fragments;
+package jakimovich.nightlearn.fragments.main;
 
+import static jakimovich.nightlearn.activities.AuthorInfoActivity.AUTHOR_INFO;
 import static jakimovich.nightlearn.activities.AuthorInfoActivity.PROJECT_AUTHOR_INFO_GRAVITY;
-import static jakimovich.nightlearn.activities.AuthorInfoActivity.PROJECT_INFO;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,9 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import jakimovich.nightlearn.R;
 
-public class ProjectFragment extends Fragment {
+public class AuthorFragment extends Fragment {
 
-    TextView tvProjectInfo;
+    TextView tvAuthorInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,23 +29,23 @@ public class ProjectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        return inflater.inflate(R.layout.fragment_author, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvProjectInfo = view.findViewById(R.id.tvProjectInfo);
-        tvProjectInfo.setText(PROJECT_INFO);
-        tvProjectInfo.setGravity(PROJECT_AUTHOR_INFO_GRAVITY);
+        tvAuthorInfo = view.findViewById(R.id.tvAuthorInfo);
+        tvAuthorInfo.setText(AUTHOR_INFO);
+        tvAuthorInfo.setGravity(PROJECT_AUTHOR_INFO_GRAVITY);
 
     }
 
     public void updateTextView() {
-        if (tvProjectInfo != null) {
-            tvProjectInfo.setText(PROJECT_INFO);
-            tvProjectInfo.setGravity(PROJECT_AUTHOR_INFO_GRAVITY);
+        if (tvAuthorInfo != null) {
+            tvAuthorInfo.setText(AUTHOR_INFO);
+            tvAuthorInfo.setGravity(PROJECT_AUTHOR_INFO_GRAVITY);
         }
     }
 

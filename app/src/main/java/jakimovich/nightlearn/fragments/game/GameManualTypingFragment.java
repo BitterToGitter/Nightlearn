@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.fragments;
+package jakimovich.nightlearn.fragments.game;
 
 import android.os.Bundle;
 
@@ -15,10 +15,8 @@ import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
-public class GameManualTypingFragment extends Fragment {
+public class GameManualTypingFragment extends GameFragment {
 
-    TextView tvRound;
-    Learnset learnsetToPlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,13 +34,17 @@ public class GameManualTypingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvRound = view.findViewById(R.id.tvManualTypingRound);
-        tvRound.setText("Round " + getArguments().getInt("round"));
-
-        learnsetToPlay = MethodsHelper.getLearnsetFromIntent(getActivity().getIntent());
-
-
 
     }
+
+    @Override
+    protected void onRightAnswer(){
+        super.onRightAnswer();
+    }
+
+    @Override
+    protected void onWrongAnswer(){
+        super.onRightAnswer();
+    };
 
 }

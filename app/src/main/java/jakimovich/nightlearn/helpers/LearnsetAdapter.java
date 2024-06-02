@@ -47,8 +47,8 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
 
         holder.tvLearnsetTitle.setText(learnset.getName());
         holder.tvCardsNum.setText("Cards amount: " + learnset.getLearncards().size());
-        holder.tvSeenCards.setText("Cards seen in games: " + learnset.cardsSeen());
-        holder.tvLearnedCards.setText("Cards learned: " + learnset.cardsLearned());
+        holder.tvSeenCards.setText("Cards seen in games: " + learnset.countCardsSeen());
+        holder.tvLearnedCards.setText("Cards learned: " + learnset.countCardsLearned());
         holder.tvLearnsetProgress.setText("Progress: " + learnset.countProgress() + "%");
         holder.progressBar.setProgress(learnset.countProgress());
 

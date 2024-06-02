@@ -91,7 +91,36 @@ public class AlertDialogHelper {
         alertDialog.show();
     }
 
-    public static void showEditAlertDialog(Activity activity, String message, String editTextHint, String accept, String decline, AlertEnteredTextListener listener){
+    public static void showOptionsAlertDialog(Activity activity, String message, String accept, String decline, AlertAcceptClickListener acceptListener, AlertDialogDismissListener dismissListener )
+    {
+
+        activity.getApplicationContext();
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_options, null);
+
+        LinearLayout alertAccept = view.findViewById(R.id.llOptionsAlertAccept);
+        LinearLayout alertDecline = view.findViewById(R.id.llOptionsAlertDecline);
+        TextView tvMessage = view.findViewById(R.id.tvOptionsAlertDialogMessage);
+        TextView tvAccept = view.findViewById(R.id.tvOptionsAlertDialogAccept);
+        TextView tvDecline = view.findViewById(R.id.tvOptionsAlertDialogDecline);
+
+        tvMessage.setText(message);
+        tvAccept.setText(accept);
+        tvDecline.setText(decline);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        alertAccept.setOnClickListener(v -> {acceptListener.onAlertAcceptClicked(v); alertDialog.dismiss();});
+
+        alertDecline.setOnClickListener(v -> {dismissListener.onDialogDismissed(v); alertDialog.dismiss();} );
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.show();
+    }
+
+    public static void showEditAlertDialog(Activity activity, String message, String editTextHint, String accept, String decline, String previousInfo, AlertEnteredTextListener listener){
         activity.getApplicationContext();
 
         View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_edit, null);
@@ -104,6 +133,7 @@ public class AlertDialogHelper {
         TextView tvDecline = view.findViewById(R.id.tvAlertEditDecline);
 
         EditText editText = view.findViewById(R.id.alertEditEditText);
+        editText.setText(previousInfo);
 
         if(message != null){tvMessage.setText(message);}
         if(accept != null){tvAccept.setText(accept);}
@@ -124,7 +154,6 @@ public class AlertDialogHelper {
         });
 
         alertDecline.setOnClickListener(v -> alertDialog.dismiss());
-
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.show();

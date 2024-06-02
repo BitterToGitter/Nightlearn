@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.fragments;
+package jakimovich.nightlearn.fragments.info;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showEditAlertDialog;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;
@@ -123,11 +123,11 @@ public class ProfileFragment extends Fragment {
             profileGmail.setText("Gmail: " + UserService.myUser.getEMail());
             profilePassword.setText("Password: " + UserService.myUser.getPassword().substring(0,1) + "*******");
 
-            ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Name", "Type here...", "Update", "Cancel", this::updateUserName));
-            ibEditLastname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Lastname", "Type here...", "Update", "Cancel", this::updateUserLastname));
-            ibEditNickname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Nickname", "Type here...", "Update", "Cancel", this::updateUserNickname));
-            ibEditGmail.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Gmail", "Type here...", "Update", "Cancel", this::updateUserGmail));
-            ibEditPassword.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Password", "Type here...", "Update", "Cancel", this::updateUserPassword));
+            ibEditName.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Name", "Type here...", "Update", "Cancel", profileName.getText().toString(), this::updateUserName));
+            ibEditLastname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Lastname", "Type here...", "Update", "Cancel", profileLastname.getText().toString(), this::updateUserLastname));
+            ibEditNickname.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Nickname", "Type here...", "Update", "Cancel", profileNickname.getText().toString(), this::updateUserNickname));
+            ibEditGmail.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Gmail", "Type here...", "Update", "Cancel", profileGmail.getText().toString(), this::updateUserGmail));
+            ibEditPassword.setOnClickListener(v -> showEditAlertDialog(getActivity(), "Update your Password", "Type here...", "Update", "Cancel", profilePassword.getText().toString(), this::updateUserPassword));
 
             ibHidePassword.setOnClickListener(V -> hidePassword());
 

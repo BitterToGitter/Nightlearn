@@ -1,6 +1,7 @@
 package jakimovich.nightlearn.classes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Learnset {
 
@@ -28,7 +29,49 @@ public class Learnset {
         this.name = name;
     }
 
-    public int cardsLearned() {
+    private ArrayList<Learncard> getLearnedCards(){
+        ArrayList<Learncard> learnedCards = new ArrayList<>();
+        for (Learncard learncard : learncards){
+            if (learncard.getLearned()){
+                learnedCards.add(learncard);
+            }
+        }
+        return learnedCards;
+    }
+
+    private ArrayList<Learncard> getUnlearnedCards(){
+        ArrayList<Learncard> unlearnedCards = new ArrayList<>();
+        for (Learncard learncard : learncards){
+            if (!learncard.getLearned()){
+                unlearnedCards.add(learncard);
+            }
+        }
+        return unlearnedCards;
+    }
+
+    /**
+     * Returns a random card from the learnset. If unlearnedCardPriority is true, the method will return an unlearned card with a 70% probability.
+     * @param unlearnedCardPriority
+     * @return
+     */
+    public Learncard getRandomCard(boolean unlearnedCardPriority){
+        if(unlearnedCardPriority){
+
+            if(new Random().nextFloat() < 0.7f){
+                if (!getUnlearnedCards().isEmpty()) {
+                    return getUnlearnedCards().get((int) (Math.random() * getUnlearnedCards().size()));
+                }
+            } else {
+                if (!getLearnedCards().isEmpty()){
+                return getLearnedCards().get((int) (Math.random() * getLearnedCards().size()));
+                }
+            }
+
+        }
+        return learncards.get((int) (Math.random() * learncards.size()));
+    }
+
+    public int countCardsLearned() {
         int learned = 0;
         for (Learncard learncard : learncards){
             if (learncard.getLearned())
@@ -37,7 +80,7 @@ public class Learnset {
         return learned;
     }
 
-    public int cardsSeen(){
+    public int countCardsSeen(){
         int seen = 0;
         for (Learncard learncard : learncards){
             if (learncard.getTimesSeen() > 0){
@@ -49,9 +92,17 @@ public class Learnset {
 
     public int countProgress(){
         if(learncards.size() != 0) {
-            return cardsLearned() * 100 / learncards.size();
+            return countCardsLearned() * 100 / learncards.size();
         } else {
             return 0;
+        }
+    }
+
+    public void updateLearncard(Learncard learncard){
+        for (int i = 0; i < learncards.size(); i++){
+            if (learncards.get(i).getDefinition().equals(learncard.getDefinition())){
+                learncards.set(i, learncard);
+            }
         }
     }
 
@@ -66,12 +117,12 @@ public class Learnset {
         learncards.remove(n);
     }
 
+    public Quiz getQuizSettings() {
+        return quizSettings;
+    }
+
     public void setQuizSettings(Quiz quizSettings) {
         this.quizSettings = quizSettings;
     }
 
-
-    public Quiz getQuizSettings() {
-        return quizSettings;
-    }
 }

@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.fragments.AuthorFragment;
-import jakimovich.nightlearn.fragments.ProjectFragment;
+import jakimovich.nightlearn.fragments.main.AuthorFragment;
+import jakimovich.nightlearn.fragments.info.ProjectFragment;
 
 public class AuthorInfoActivity extends AppCompatActivity {
 

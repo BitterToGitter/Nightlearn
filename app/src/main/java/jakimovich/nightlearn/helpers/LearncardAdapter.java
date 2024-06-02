@@ -44,8 +44,8 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
         holder.tvDefinitionTitle.setText(Html.fromHtml("<u>Definition</u>"));
         holder.tvExplanationTitle.setText(Html.fromHtml("<u>Explanation</u>"));
-        holder.llDefinition.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", definition -> {learncard.setDefinition(definition); notifyDataSetChanged(); }));
-        holder.llExplanation.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", explanation -> {learncard.setExplanation(explanation); notifyDataSetChanged(); }));
+        holder.llDefinition.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", learncard.getDefinition(), definition -> {learncard.setDefinition(definition); notifyDataSetChanged(); }));
+        holder.llExplanation.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", learncard.getExplanation(), explanation -> {learncard.setExplanation(explanation); notifyDataSetChanged(); }));
         holder.tvDefinition.setText(learncard.getDefinition());
         holder.tvExplanation.setText(learncard.getExplanation());
 

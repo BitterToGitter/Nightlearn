@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -14,26 +15,21 @@ import java.util.Random;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.fragments.GameManualTypingFragment;
-import jakimovich.nightlearn.fragments.GameMatchCardsFragment;
+import jakimovich.nightlearn.fragments.game.GameFragment;
+import jakimovich.nightlearn.fragments.game.GameManualTypingFragment;
+import jakimovich.nightlearn.fragments.game.GameMatchCardsFragment;
+import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class PlayActivity extends AppCompatActivity {
 
     //TODO: To think of Quiz' inheritance ( Regular Quiz / Exam Quiz)
 
+    TextView tvPreCountDown;
     Learnset learnsetToPlay;
-
-    int roundsInTotal;
-    int currentRound = 0;
-
-    int timeForAnswering;
-
-    Button btnNext;
-
     Fragment fragment;
-
-    CountDownTimer countDownTimer;
+    int currentRound;
+    int roundsInTotal;
 
 
     @Override
@@ -43,17 +39,26 @@ public class PlayActivity extends AppCompatActivity {
 
         learnsetToPlay = MethodsHelper.getLearnsetFromIntent(getIntent());
         roundsInTotal = learnsetToPlay.getQuizSettings().getQuestionsAmount();
-        timeForAnswering = learnsetToPlay.getQuizSettings().getAnswerTimeSec() * 1000;
 
+        currentRound = 0;
 
-        btnNext = findViewById(R.id.playBtnNext);
-
-        btnNext.setOnClickListener(v ->  goNextAction());
+        tvPreCountDown = findViewById(R.id.tvPreCountDown);
+        new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tvPreCountDown.setText((int) ((millisUntilFinished / 1000) + 1));
+            }
+            @Override
+            public void onFinish() {
+                tvPreCountDown.setVisibility(TextView.GONE);
+                goNextRound();
+            }
+        }.start();
 
     }
 
 
-    private void showNextFragment() {
+    public void goNextRound() {
 
         if(currentRound < roundsInTotal) {
 
@@ -67,7 +72,7 @@ public class PlayActivity extends AppCompatActivity {
                     fragment = new GameManualTypingFragment();
                     break;
                 case 3:
-                    if (getRandomChance()) {
+                    if (new Random().nextFloat() < 0.6f) {
                         fragment = new GameMatchCardsFragment();
                     } else {
                         fragment = new GameManualTypingFragment();
@@ -75,10 +80,6 @@ public class PlayActivity extends AppCompatActivity {
             }
 
             currentRound++;
-
-            Bundle bundle = new Bundle();
-            bundle.putInt("round", currentRound);
-            fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -88,45 +89,34 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    private boolean getRandomChance(){
-
-        Random random = new Random();
-        float probability = 0.7f;
-
-        return random.nextFloat() < probability;
-
+    public int getCurrentRound() {
+        return currentRound;
     }
 
-    public void startCountDownTimer(TextView timeUpdate) {
-        countDownTimer = new CountDownTimer(timeForAnswering, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeUpdate.setText((millisUntilFinished / 1000) + " sec");
-            }
-
-            @Override
-            public void onFinish() {
-                showNextFragment();
-            }
-        }.start();
+    public Learnset getLearnsetToPlay() {
+        return learnsetToPlay;
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countDownTimer != null) {
-            countDownTimer.cancel(); // Clean up to avoid memory leaks
+        if (fragment instanceof GameFragment) {
+            ((GameFragment) fragment).resetCountDownTimer();
         }
     }
 
-    private void goNextAction(){
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer = null;
+    @Override
+    public void onBackPressed() {
+        if (fragment instanceof GameFragment) {
+            ((GameFragment) fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
         }
-        showNextFragment();
     }
 
+    //Todo: To make transaction animations
+    //Todo: To make a game result screen
 
 }
 

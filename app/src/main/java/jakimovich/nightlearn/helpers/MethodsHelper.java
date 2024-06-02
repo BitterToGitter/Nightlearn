@@ -7,6 +7,10 @@ import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -97,6 +101,18 @@ public class MethodsHelper {
 
         Glide.with(context).load(profilePicRef).apply(RequestOptions.circleCropTransform()).into(imageView);
 
+    }
+
+    public static Fragment getVisibleFragment(FragmentActivity activity){
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
 }

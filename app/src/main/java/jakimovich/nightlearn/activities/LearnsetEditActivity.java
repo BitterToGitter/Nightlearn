@@ -51,7 +51,7 @@ public class LearnsetEditActivity extends AppCompatActivity {
         tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName());
 
         ivLearncardName = findViewById(R.id.ivEditLearnsetName);
-        ivLearncardName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(this,"Update your learnset Name", null, "Update", null, name -> {learnsetToEdit.setName(name); tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName());}));
+        ivLearncardName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(this,"Update your learnset Name", null, "Update", null, learnsetToEdit.getName(), name -> {learnsetToEdit.setName(name); tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName());}));
 
         btnAddLearncard = findViewById(R.id.ivLearnsetEditBtnAddLearncard);
         btnAddLearncard.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_btn_add_learncard));
@@ -75,7 +75,7 @@ public class LearnsetEditActivity extends AppCompatActivity {
 
         learncardsRV.setAdapter(adapter);
 
-        btnAddLearncard.setOnClickListener(v -> {learnsetToEdit.addLearncard(new Learncard("New Definition", "New Explanation")); adapter.notifyDataSetChanged(); });
+        btnAddLearncard.setOnClickListener(v -> {learnsetToEdit.addLearncard(new Learncard("New Definition", "New Explanation")); adapter.notifyDataSetChanged(); learncardsRV.getLayoutManager().scrollToPosition(learnsetToEdit.getLearncards().size() - 1); });
     }
 
     private void save() {
