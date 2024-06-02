@@ -65,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/llMatchCardsNextRound"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/tvMatchCardsTime"
@@ -178,6 +179,29 @@
 
 
         </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMatchCardsNextRound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/flashcard_transparent_ripple_background"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:text="Next round"
+            android:textColor="@color/darkGray"
+            android:textSize="20sp" />
 
 
     </LinearLayout>

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.activities.PlayActivity;
 import jakimovich.nightlearn.classes.Learncard;
 
 public class GameMatchCardsFragment extends GameFragment {
@@ -22,6 +21,8 @@ public class GameMatchCardsFragment extends GameFragment {
 
     TextView btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4;
     TextView[] btnAnswers = {btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4};
+
+    TextView rightAnswer, wrongAnswer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +65,12 @@ public class GameMatchCardsFragment extends GameFragment {
 
             if(i == rightAnswerPosition){
 
-                int finalI1 = i;
-                btnAnswers[i].setOnClickListener(v -> onRightAnswer(btnAnswers[finalI1]));
                 btnAnswers[i].setText(questionLearncard.getDefinition());
+                rightAnswer = btnAnswers[i];
+                rightAnswer.setOnClickListener(v -> onRightAnswer());
 
             } else {
 
-                int finalI = i;
-                btnAnswers[i].setOnClickListener(v -> onWrongAnswer(btnAnswers[finalI], btnAnswers[rightAnswerPosition]));
 
                 int randomWrongAnswerIndex = new Random().nextInt(wrongAnswers.size());
                 btnAnswers[i].setText(wrongAnswers.get(randomWrongAnswerIndex));
@@ -79,13 +78,24 @@ public class GameMatchCardsFragment extends GameFragment {
                 if (wrongAnswers.size() > 1) {
                     wrongAnswers.remove(randomWrongAnswerIndex);
                 }
+
+                int finalI = i;
+                btnAnswers[i].setOnClickListener(v -> {wrongAnswer = btnAnswers[finalI]; onWrongAnswer(); });
             }
         }
 
     }
 
     @Override
-    protected void onWrongAnswer(TextView wrongAnswer, TextView rightAnswer) {
+    protected void onMissedAnswer() {
+        super.onMissedAnswer();
+        allButtonsUnclickable();
+        rightAnswer.setTextColor(getResources().getColor(R.color.green));
+
+    }
+
+    @Override
+    protected void onWrongAnswer() {
         super.onWrongAnswer();
 
         wrongAnswer.setTextColor(getResources().getColor(R.color.red));
@@ -94,7 +104,7 @@ public class GameMatchCardsFragment extends GameFragment {
     }
 
     @Override
-    protected void onRightAnswer(TextView rightAnswer) {
+    protected void onRightAnswer() {
         super.onRightAnswer();
 
         rightAnswer.setTextColor(getResources().getColor(R.color.green));

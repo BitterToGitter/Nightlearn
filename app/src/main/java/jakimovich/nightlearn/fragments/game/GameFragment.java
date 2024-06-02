@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,8 +29,12 @@ public abstract class GameFragment extends Fragment {
     TextView tvRound, tvSubTitle;
     TextView tvTime;
     TextView tvQuestion;
+
+    LinearLayout llNextRound;
+
     Learnset learnsetToPlay;
     Learncard questionLearncard;
+
     CountDownTimer countDownTimer;
     long timeLeftInMillis;
 
@@ -57,11 +62,15 @@ public abstract class GameFragment extends Fragment {
             tvSubTitle = view.findViewById(getResources().getIdentifier("tvMatchCardsSubTitle", "id", getActivity().getPackageName()));
             tvTime = view.findViewById(getResources().getIdentifier("tvMatchCardsTime", "id", getActivity().getPackageName()));
             tvQuestion = view.findViewById(getResources().getIdentifier("tvMatchCardsQuestionExplanation", "id", getActivity().getPackageName()));
+            llNextRound = view.findViewById(R.id.llMatchCardsNextRound);
         }
         if (this instanceof GameManualTypingFragment){
             tvRound = view.findViewById(R.id.tvManualTypingRound);
             //Todo: to fill in the rest of the views for GameManualTypingFragment
         }
+
+        llNextRound.setVisibility(View.INVISIBLE); //Todo: to add animation
+        llNextRound.setOnClickListener(v -> ((PlayActivity) getActivity()).goNextRound()) ;
 
         tvRound.setText("Round " + ((PlayActivity) getActivity()).getCurrentRound() + "/" + learnsetToPlay.getQuizSettings().getQuestionsAmount());
 
@@ -89,16 +98,6 @@ public abstract class GameFragment extends Fragment {
                 timeLeftInMillis = 0;
                 onMissedAnswer();
 
-                new CountDownTimer(3000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                    }
-                    @Override
-                    public void onFinish() {
-                        ((PlayActivity) getActivity()).goNextRound();
-                    }
-                }.start();
-
             }
 
         }.start();
@@ -114,51 +113,34 @@ public abstract class GameFragment extends Fragment {
 
     protected void onMissedAnswer() {
 
-
-            tvSubTitle.setText("Time's up!");
-
-            //questionLearncard.onSeen();
+        tvSubTitle.setText("Time's up!");
+        tvTime.setText("0 sec.");
+        llNextRound.setVisibility(View.VISIBLE);
+        resetCountDownTimer();
+        //questionLearncard.onSeen();
     }
+
 
     protected void onWrongAnswer(){
 
-        countDownTimer.cancel();
+        resetCountDownTimer();
         tvSubTitle.setText(answerCommentsOptions(false));
-
+        llNextRound.setVisibility(View.VISIBLE);
         //questionLearncard.onSeen();
 
     }
 
     protected void onRightAnswer(){
 
-        countDownTimer.cancel();
+        resetCountDownTimer();
         tvSubTitle.setText(answerCommentsOptions(true));
-
+        llNextRound.setVisibility(View.VISIBLE);
         //questionLearncard.onAnsweredRight();
         //questionLearncard.onSeen();
         //questionLearncard.checkLearned(learnsetToPlay.getQuizSettings().getRightAnswersNumToBeLearned());
 
     }
 
-    protected void onRightAnswer(TextView rightAnswer){
-
-        countDownTimer.cancel();
-        tvSubTitle.setText(answerCommentsOptions(true));
-
-        //questionLearncard.onAnsweredRight();
-        //questionLearncard.onSeen();
-        //questionLearncard.checkLearned(learnsetToPlay.getQuizSettings().getRightAnswersNumToBeLearned());
-
-    };
-
-    protected void onWrongAnswer(TextView wrongAnswer, TextView rightAnswer){
-
-        countDownTimer.cancel();
-        tvSubTitle.setText(answerCommentsOptions(false));
-
-        //questionLearncard.onSeen();
-
-    };
 
     private String answerCommentsOptions (boolean rightAnswer){
 
@@ -194,11 +176,10 @@ public abstract class GameFragment extends Fragment {
     }
 
 
-
     public void onBackPressed() {
 
         countDownTimer.cancel();
-        AlertDialogHelper.showOptionsAlertDialog(getActivity(), "The game is paused. Choose your next action", "Stop and exit the game", "Continue playing", v -> getActivity().finish(), v -> { startCountDownTimer((tvTime));});
+        AlertDialogHelper.showOptionsAlertDialog(getActivity(), "The game is paused \nChoose your next action", "Stop and exit the game", "Continue playing", v -> getActivity().finish(), v -> { startCountDownTimer((tvTime));});
 
     }
 }

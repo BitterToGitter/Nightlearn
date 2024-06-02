@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -18,6 +20,8 @@ import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.fragments.game.GameFragment;
 import jakimovich.nightlearn.fragments.game.GameManualTypingFragment;
 import jakimovich.nightlearn.fragments.game.GameMatchCardsFragment;
+import jakimovich.nightlearn.fragments.game.GamePreviewFragment;
+import jakimovich.nightlearn.fragments.game.GameResultsFragment;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
@@ -25,11 +29,12 @@ public class PlayActivity extends AppCompatActivity {
 
     //TODO: To think of Quiz' inheritance ( Regular Quiz / Exam Quiz)
 
-    TextView tvPreCountDown;
     Learnset learnsetToPlay;
     Fragment fragment;
     int currentRound;
     int roundsInTotal;
+    int rightAnswersNum;
+    int cardsLearnedNum;
 
 
     @Override
@@ -40,27 +45,23 @@ public class PlayActivity extends AppCompatActivity {
         learnsetToPlay = MethodsHelper.getLearnsetFromIntent(getIntent());
         roundsInTotal = learnsetToPlay.getQuizSettings().getQuestionsAmount();
 
-        currentRound = 0;
+        currentRound = -1;
 
-        tvPreCountDown = findViewById(R.id.tvPreCountDown);
-        new CountDownTimer(3000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tvPreCountDown.setText((int) ((millisUntilFinished / 1000) + 1));
-            }
-            @Override
-            public void onFinish() {
-                tvPreCountDown.setVisibility(TextView.GONE);
-                goNextRound();
-            }
-        }.start();
+        rightAnswersNum = 0;
+        cardsLearnedNum = 0;
+
+        goNextRound();
 
     }
 
 
     public void goNextRound() {
 
-        if(currentRound < roundsInTotal) {
+        if(currentRound < 0){
+
+            fragment = new GamePreviewFragment();
+
+        } else if(currentRound < roundsInTotal) {
 
             int questionType = learnsetToPlay.getQuizSettings().getQuestionType();
 
@@ -77,16 +78,15 @@ public class PlayActivity extends AppCompatActivity {
                     } else {
                         fragment = new GameManualTypingFragment();
                     }
+
             }
-
-            currentRound++;
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.playFragmentContainer, fragment);
-            fragmentTransaction.commit();
-
+        } else {
+            fragment = new GameResultsFragment();
         }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.playFragmentContainer, fragment).commit();
+        currentRound++;
+
     }
 
     public int getCurrentRound() {
@@ -97,6 +97,21 @@ public class PlayActivity extends AppCompatActivity {
         return learnsetToPlay;
     }
 
+    public int getRightAnswersNum() {
+        return rightAnswersNum;
+    }
+
+    public int getCardsLearnedNum() {
+        return cardsLearnedNum;
+    }
+
+    public void answeredRight(){
+        rightAnswersNum++;
+    }
+
+    public void cardLearned() {
+        cardsLearnedNum++;
+    }
 
     @Override
     protected void onDestroy() {
@@ -116,7 +131,6 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //Todo: To make transaction animations
-    //Todo: To make a game result screen
 
 }
 
