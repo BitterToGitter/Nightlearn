@@ -80,8 +80,8 @@ public class LearnsetEditActivity extends AppCompatActivity {
 
     private void save() {
 
-        if(learnsetToEdit.getLearncards().size() == 0){
-            Toast.makeText(this, "You need to add at least one learncard", Toast.LENGTH_SHORT).show();
+        if(learnsetToEdit.getLearncards().size() < 2){
+            Toast.makeText(this, "You need to add at least two learncards", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -95,8 +95,7 @@ public class LearnsetEditActivity extends AppCompatActivity {
             myUser.getLearnsets().set(learnsetPosition, learnsetToEdit);
         }
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        ref.child("learnsets/" + learnsetPosition).setValue(learnsetToEdit);
+        UserService.updateLearnset(learnsetToEdit, learnsetPosition);
 
         Toast.makeText(this, "Learnset saved", Toast.LENGTH_SHORT).show();
         finish();

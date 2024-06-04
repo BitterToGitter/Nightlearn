@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/llMatchCardsNextRound"
+        app:layout_constraintBottom_toTopOf="@id/llMatchCardsButtonsLevelButtons"
         android:layout_marginBottom="5dp">
 
         <TextView
@@ -104,7 +104,6 @@
                         android:textSize="20dp"
                         android:text="Answer 1"
                         android:textColor="@color/alert_dialog_textcolor_focused"
-                        android:gravity="center"
                         android:background="@drawable/btn_background"/>
 
 
@@ -137,7 +136,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:layout_marginVertical="15dp">
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -180,28 +180,81 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/darkGray"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 
+
+
+
     <LinearLayout
-        android:id="@+id/llMatchCardsNextRound"
-        android:layout_width="wrap_content"
+        android:id="@+id/llMatchCardsButtonsLevelButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_background"
+        android:weightSum="2"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="15dp">
 
-        <TextView
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/flashcard_transparent_ripple_background"
-            android:gravity="center"
-            android:paddingVertical="10dp"
-            android:text="Next round"
-            android:textColor="@color/darkGray"
-            android:textSize="20sp" />
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/llMatchCardsBtnPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/flashcard_transparent_ripple_background"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="5dp"
+                    android:text="Pause game"
+                    android:textColor="@color/darkGray"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/llMatchCardsBtnSkip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background">
+
+                <TextView
+                    android:id="@+id/tvMatchCardsBtnSkip"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/flashcard_transparent_ripple_background"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:text="Skip this round"
+                    android:textColor="@color/darkGray"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </LinearLayout>

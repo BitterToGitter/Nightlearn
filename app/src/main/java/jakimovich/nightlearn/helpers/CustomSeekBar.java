@@ -33,11 +33,10 @@ public class CustomSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
         String progressText = String.valueOf(progress);
 
         // get thumb's x position
-        float thumb_x = (float) (getPaddingLeft() + ((double) progress / getMax()) * (getWidth() - getPaddingLeft() - getPaddingRight()));
+        float thumb_x = (float) (getPaddingLeft() + ((double) progress / ( getMax() - getMin() ) ) * (getWidth() - getPaddingLeft() - getPaddingRight()));
         // get thumb's y position
-        float thumb_y = getHeight() / 2 + getPaddingBottom() / 2;
+        float thumb_y = getHeight() / 2 + getPaddingBottom() / 2; //Todo: to solve the problem with the thumb's x position
 
-        // draw text centered on thumb
         paint.getTextBounds(progressText, 0, progressText.length(), rect);
         canvas.drawText(progressText, thumb_x, thumb_y + rect.height() / 2, paint);
     }

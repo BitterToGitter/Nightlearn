@@ -53,7 +53,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.progressBar.setProgress(learnset.countProgress());
 
         holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset, position));
-        holder.llLearncardPresentationBase.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {context.startActivity(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class));}));
+        holder.llLearncardPresentationBase.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class), 0);}));
 
     }
 

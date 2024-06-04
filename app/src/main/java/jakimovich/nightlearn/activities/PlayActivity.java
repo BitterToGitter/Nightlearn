@@ -2,27 +2,20 @@ package jakimovich.nightlearn.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import java.util.Random;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learnset;
+import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.fragments.game.GameFragment;
 import jakimovich.nightlearn.fragments.game.GameManualTypingFragment;
 import jakimovich.nightlearn.fragments.game.GameMatchCardsFragment;
 import jakimovich.nightlearn.fragments.game.GamePreviewFragment;
 import jakimovich.nightlearn.fragments.game.GameResultsFragment;
-import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class PlayActivity extends AppCompatActivity {
@@ -82,9 +75,16 @@ public class PlayActivity extends AppCompatActivity {
             }
         } else {
             fragment = new GameResultsFragment();
+            UserService.updateLearnset(learnsetToPlay, getIntent().getExtras().getInt("positionInArray"));
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.playFragmentContainer, fragment).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.fragment_fade_out);
+
+        transaction.replace(R.id.playFragmentContainer, fragment);
+        transaction.commit();
+
         currentRound++;
 
     }
@@ -109,7 +109,7 @@ public class PlayActivity extends AppCompatActivity {
         rightAnswersNum++;
     }
 
-    public void cardLearned() {
+    public void cardHasBeenLearned() {
         cardsLearnedNum++;
     }
 
@@ -119,12 +119,14 @@ public class PlayActivity extends AppCompatActivity {
         if (fragment instanceof GameFragment) {
             ((GameFragment) fragment).resetCountDownTimer();
         }
+        //UserService.myUser.getLearnsets(getIntent().getExtras().getInt("positionInArray")).updateLearnset(learnsetToPlay);
+        setResult(RESULT_OK);
     }
 
     @Override
     public void onBackPressed() {
         if (fragment instanceof GameFragment) {
-            ((GameFragment) fragment).onBackPressed();
+            ((GameFragment) fragment).onGamePaused();
         } else {
             super.onBackPressed();
         }

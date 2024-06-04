@@ -42,9 +42,9 @@ public class GameResultsFragment extends Fragment {
         pointsEarned = view.findViewById(R.id.gameResultPointsEarned);
         btnBackHome = view.findViewById(R.id.gameResultBtnBackHome);
 
-        roundsPlayed.setText("Rounds played: " );
-        rightAnswersNum.setText("Right answers given: ");
-        cardsLearnedNum.setText("Cards learned for session: ");
+        roundsPlayed.setText("Rounds played: " + (((PlayActivity) getActivity()).getCurrentRound() - 1));
+        rightAnswersNum.setText("Right answers given: " + ((PlayActivity) getActivity()).getRightAnswersNum());
+        cardsLearnedNum.setText("Cards learned for session: " + ((PlayActivity) getActivity()).getCardsLearnedNum());
         pointsEarned.setText("Points earned: ");
         //Todo: to end up with these
 

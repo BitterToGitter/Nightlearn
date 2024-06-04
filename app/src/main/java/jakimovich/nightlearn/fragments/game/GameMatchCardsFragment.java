@@ -71,7 +71,6 @@ public class GameMatchCardsFragment extends GameFragment {
 
             } else {
 
-
                 int randomWrongAnswerIndex = new Random().nextInt(wrongAnswers.size());
                 btnAnswers[i].setText(wrongAnswers.get(randomWrongAnswerIndex));
 
@@ -83,11 +82,18 @@ public class GameMatchCardsFragment extends GameFragment {
                 btnAnswers[i].setOnClickListener(v -> {wrongAnswer = btnAnswers[finalI]; onWrongAnswer(); });
             }
         }
+    }
 
+    @Override
+    protected void onSkipped() {
+        super.onSkipped();
+        allButtonsUnclickable();
+        rightAnswer.setTextColor(getResources().getColor(R.color.green));
     }
 
     @Override
     protected void onMissedAnswer() {
+
         super.onMissedAnswer();
         allButtonsUnclickable();
         rightAnswer.setTextColor(getResources().getColor(R.color.green));
@@ -111,7 +117,6 @@ public class GameMatchCardsFragment extends GameFragment {
         allButtonsUnclickable();
 
     }
-
 
     private void allButtonsUnclickable(){
         for (TextView btnAnswer : btnAnswers){

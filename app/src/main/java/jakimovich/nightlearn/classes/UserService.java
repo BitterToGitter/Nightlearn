@@ -258,10 +258,18 @@ public class UserService {
         }
     }
 
+    public static void updateLearnset(Learnset learnset, int position) {
+
+        myUser.getLearnsets().set(position, learnset);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ref.child("learnsets/" + position).setValue(learnset);
+    }
+
     public static void removeLearnset(Context context, int position) {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         ref.child("learnsets/" + position).removeValue();
+        //Todo: to rebase the rest of arrayView
 
         Toast.makeText(context, "Learnset removed", Toast.LENGTH_SHORT).show();
     }
