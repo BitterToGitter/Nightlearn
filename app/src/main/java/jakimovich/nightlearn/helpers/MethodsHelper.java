@@ -115,4 +115,50 @@ public class MethodsHelper {
         return null;
     }
 
+    public static ArrayList<Learnset> createSampleLearnsets(){
+        Learnset sampleLearnset1 = new Learnset("General history events", new Quiz());
+        sampleLearnset1.addLearncard(new Learncard("World War II", "The deadliest conflict in human history"));
+        sampleLearnset1.addLearncard(new Learncard("The French Revolution", "A period of radical social and political change in France"));
+        sampleLearnset1.addLearncard(new Learncard("The American Civil War", "A civil war in the United States fought between the northern states and the southern states"));
+        sampleLearnset1.addLearncard(new Learncard("The Cold War", "A period of geopolitical tension between the Soviet Union and the United States"));
+        sampleLearnset1.addLearncard(new Learncard("The Industrial Revolution", "A period of major industrialization that took place during the late 18th and early 19th centuries"));
+        sampleLearnset1.addLearncard(new Learncard("The Renaissance", "A period in European history marking the transition from the Middle Ages to modernity"));
+        sampleLearnset1.addLearncard(new Learncard("The Great Depression", "A severe worldwide economic depression that took place mostly during the 1930s"));
+        sampleLearnset1.addLearncard(new Learncard("The Russian Revolution", "A period of political and social revolution across the territory of the Russian Empire"));
+        sampleLearnset1.addLearncard(new Learncard("The Vietnam War", "A conflict in Vietnam, Laos, and Cambodia from November 1, 1955, to the fall of Saigon on April 30, 1975"));
+        sampleLearnset1.addLearncard(new Learncard("The American Revolution", "A colonial revolt that took place between 1765 and 1783"));
+
+        Learnset sampleLearnset2 = new Learnset("Chemistry, basic terms", new Quiz());
+        sampleLearnset2.addLearncard(new Learncard("Atom", "The basic unit of a chemical element"));
+        sampleLearnset2.addLearncard(new Learncard("Molecule", "A group of atoms bonded together"));
+        sampleLearnset2.addLearncard(new Learncard("Chemical bond", "A lasting attraction between atoms"));
+        sampleLearnset2.addLearncard(new Learncard("Chemical reaction", "A process that leads to the transformation of one set of chemical substances to another"));
+        sampleLearnset2.addLearncard(new Learncard("Periodic table", "A tabular arrangement of the chemical elements"));
+        sampleLearnset2.addLearncard(new Learncard("Acid", "A molecule or ion capable of donating a hydron"));
+        sampleLearnset2.addLearncard(new Learncard("Base", "A substance that can accept hydrogen ions"));
+        sampleLearnset2.addLearncard(new Learncard("pH", "A scale used to specify how acidic or basic a water-based solution is"));
+        sampleLearnset2.addLearncard(new Learncard("Chemical formula", "A way of expressing information about the proportions of atoms that constitute a particular chemical compound"));
+        sampleLearnset2.addLearncard(new Learncard("Chemical equation", "The symbolic representation of a chemical reaction"));
+
+        Learnset sampleLearnset3 = new Learnset("Interesting geography", new Quiz());
+        sampleLearnset3.addLearncard(new Learncard("Russia", "The largest country in the world"));
+        sampleLearnset3.addLearncard(new Learncard("China", "The most populous country in the world"));
+        sampleLearnset3.addLearncard(new Learncard("Canada", "The second largest country in the world"));
+        sampleLearnset3.addLearncard(new Learncard("Buthan", "The only country in the world that measures its success by the Gross National Happiness of its citizens"));
+        sampleLearnset3.addLearncard(new Learncard("Vatican", "The smallest country in the world"));
+        sampleLearnset3.addLearncard(new Learncard("Germany", "The country with the most neighboring countries in Europe"));
+        sampleLearnset3.addLearncard(new Learncard("Japan", "The country with the most vending machines in the world"));
+        sampleLearnset3.addLearncard(new Learncard("India", "The country with the most languages spoken in the world"));
+        sampleLearnset3.addLearncard(new Learncard("Brazil", "The country with the most species of monkeys in the world"));
+        sampleLearnset3.addLearncard(new Learncard("Australia", "The country with the most poisonous snakes in the world"));
+
+        ArrayList<Learnset> learnsets = new ArrayList<>();
+        learnsets.add(sampleLearnset1);
+        learnsets.add(sampleLearnset2);
+        learnsets.add(sampleLearnset3);
+
+        return learnsets;
+    }
+
+
 }

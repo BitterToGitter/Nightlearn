@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.fragments.main;
+package jakimovich.nightlearn.fragments.info;
 
 import static jakimovich.nightlearn.activities.AuthorInfoActivity.AUTHOR_INFO;
 import static jakimovich.nightlearn.activities.AuthorInfoActivity.PROJECT_AUTHOR_INFO_GRAVITY;

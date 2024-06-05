@@ -11,9 +11,9 @@
         android:icon="@drawable/ic_learnsets"
         />
 
-    <item android:id="@+id/menuAlarms"
-        android:title="Alarms"
-        android:icon="@drawable/ic_alarm"
+    <item android:id="@+id/menuRating"
+        android:title="Rating"
+        android:icon="@drawable/ic_rating"
         />
 
     <item android:id="@+id/menuProfile"

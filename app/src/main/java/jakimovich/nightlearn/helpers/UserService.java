@@ -27,21 +27,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+import jakimovich.nightlearn.activities.SignUpActivity;
 import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
+import jakimovich.nightlearn.classes.UserGuest;
 import jakimovich.nightlearn.classes.UserProfile;
+import jakimovich.nightlearn.classes.UserVerified;
 
 /**
  * Inner and firebase user management class
  */
 public class UserService {
-    public static UserProfile myUser;
+
+    public static UserProfile myUser; //Todo: to change user
+
     public static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static final DatabaseReference USER_DB_REF = FirebaseDatabase.getInstance().getReference("users/" + USER_ID);
 
-    public static Task<Void> setMyUser(UserProfile user) {
+    public static Task<Void> setMyUser(UserVerified user) {
 
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("nickname", user.getNickname());
@@ -58,7 +63,7 @@ public class UserService {
 
     }
 
-    public static Task<UserProfile> getUserById(String userId, Context context) {
+    public static Task<UserVerified> getUserById(String userId, Context context) {
 
         return USER_DB_REF.get().continueWith(task -> {
             if (task.isSuccessful()) {
@@ -69,11 +74,10 @@ public class UserService {
                 String eMail = task.getResult().child("eMail").getValue(String.class);
                 String password = task.getResult().child("password").getValue(String.class);
 
-                UserProfile profile = new UserProfile(nickname, name, lastname, eMail, password);
+                UserVerified profile = new UserVerified(nickname, name, lastname, eMail, password, getLearnsetsFromDatabase(context));
 
                 if (Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     myUser = profile;
-                    myUser.setLearnsets(getLearnsetsFromDatabase(context));
                 }
 
                 Uri profilePicUri = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
@@ -119,6 +123,20 @@ public class UserService {
         });
     }
 
+    public static void guestEnter(Activity activity){
+
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                myUser = new UserGuest();
+                Toast.makeText(activity, "You entered as a guest", Toast.LENGTH_SHORT).show();
+                activity.startActivity(new Intent(activity, SplashActivity.class));
+                activity.finish();
+            } else {
+                Toast.makeText(activity, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
    public static void uploadProfilePicToStorage(Context context, Uri fileUri) {
 
     StorageReference profilePicRef = FirebaseStorage.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profilePic");
@@ -138,7 +156,7 @@ public class UserService {
     }
 
     public static boolean isGuest() {
-        return FirebaseAuth.getInstance().getCurrentUser().isAnonymous();
+        return (myUser instanceof UserGuest);
     }
 
     public static void signOut(Context context, Activity activity) {

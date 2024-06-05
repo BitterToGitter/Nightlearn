@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.helpers.UserService;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -57,7 +58,7 @@ public class LogInActivity extends AppCompatActivity {
 
         createLinkedText(tvGoSignUp);
 
-        btnContinueGuest.setOnClickListener(v -> guestEnter());
+        btnContinueGuest.setOnClickListener(v -> UserService.guestEnter(this));
 
     }
 
@@ -133,18 +134,6 @@ public class LogInActivity extends AppCompatActivity {
         popupWindow.setBackgroundDrawable(new ColorDrawable(0));
 
         popupWindow.showAsDropDown(view);
-    }
-
-    private void guestEnter(){
-
-        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                startActivity(new Intent(LogInActivity.this, SplashActivity.class));
-                finishAffinity();
-            } else {
-                Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

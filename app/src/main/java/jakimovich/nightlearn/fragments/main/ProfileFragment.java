@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.fragments.info;
+package jakimovich.nightlearn.fragments.main;
 
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showEditAlertDialog;
 import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDialog;

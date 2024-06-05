@@ -27,16 +27,21 @@ public class SplashActivity extends AppCompatActivity {
         if(isConnectedToInternet()){
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null){
-                UserService.getUserById(currentUser.getUid(), this).addOnCompleteListener(task -> {
-                    if(UserService.myUser == null){
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                        finish();
-                    }
-                });
+               // if(UserService.isGuest()){
+               //     startActivity(new Intent(SplashActivity.this, MainActivity.class));
+               //     finish();
+              //  } else { //Todo: to solve
+                    UserService.getUserById(currentUser.getUid(), this).addOnCompleteListener(task -> {
+                        if (UserService.myUser == null) {
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
+                        }
+                    });
+              //  }
             } else {
                 startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                 finish();

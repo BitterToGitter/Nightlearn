@@ -20,10 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.databinding.ActivityMainBinding;
-import jakimovich.nightlearn.fragments.main.AlarmsFragment;
+import jakimovich.nightlearn.fragments.main.RatingFragment;
 import jakimovich.nightlearn.fragments.main.HomeFragment;
 import jakimovich.nightlearn.fragments.main.LearnsetsFragment;
-import jakimovich.nightlearn.fragments.info.ProfileFragment;
+import jakimovich.nightlearn.fragments.main.ProfileFragment;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new LearnsetsFragment(), "learnsets");
                     break;
 
-                case R.id.menuAlarms:
-                    replaceFragment(new AlarmsFragment(), "alarms");
+                case R.id.menuRating:
+                    replaceFragment(new RatingFragment(), "alarms");
                     break;
 
                 case R.id.menuProfile:

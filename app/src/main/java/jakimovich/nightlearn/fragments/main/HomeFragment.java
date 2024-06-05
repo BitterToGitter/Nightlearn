@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import jakimovich.nightlearn.R;
@@ -19,6 +20,7 @@ import jakimovich.nightlearn.helpers.UserService;
 public class HomeFragment extends Fragment {
 
     TextView tvTitle;
+    Button logOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvTitle = view.findViewById(R.id.tvTitleHome);
+        logOut = view.findViewById(R.id.homeLogOut);
+        logOut.setOnClickListener(v -> UserService.signOut(getContext(), getActivity()));
 
         if (UserService.isGuest()){
          tvTitle.setText("Nice to see you, Guest");
