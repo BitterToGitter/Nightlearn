@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.classes.UserGuest;
 import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 
@@ -27,10 +28,11 @@ public class SplashActivity extends AppCompatActivity {
         if(isConnectedToInternet()){
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null){
-               // if(UserService.isGuest()){
-               //     startActivity(new Intent(SplashActivity.this, MainActivity.class));
-               //     finish();
-              //  } else { //Todo: to solve
+                if(currentUser.isAnonymous()){
+                    UserService.myUser = new UserGuest();
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+               } else { //Todo: to solve
                     UserService.getUserById(currentUser.getUid(), this).addOnCompleteListener(task -> {
                         if (UserService.myUser == null) {
                             FirebaseAuth.getInstance().signOut();
@@ -41,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                             finish();
                         }
                     });
-              //  }
+                }
             } else {
                 startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                 finish();

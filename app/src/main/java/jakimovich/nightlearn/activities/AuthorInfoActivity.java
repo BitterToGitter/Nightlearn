@@ -54,19 +54,17 @@ public class AuthorInfoActivity extends AppCompatActivity {
         tvHebrew.setTextColor(Color.parseColor("#D9D9D9"));
 
         PROJECT_INFO = "About an app: " +
-                "\nThe primary purpose of NightLearn is to aid individuals in their learning journey. " +
+                "\nThe primary purpose of NightLearn is to assist individuals in their learning journey. " +
                 "Utilizing flashcard technology, NightLearn enables users to store various types of information within learning cards " +
                 "and reinforce their memory through short, customizable quizzes. " +
                 "Recognizing that one of the optimal times for learning is before sleep, " +
-                "the application sends notifications encouraging users to take a quiz. " +
-                "Furthermore, users have the option to set alarms within the app. " +
-                "These alarms can only be deactivated by answering a few questions based on the user's learning cards, " +
-                "leaving them with no choice but to engage in studying!";
+                "the application sends notifications encouraging users to take a quiz." +
+                " 3-4 minutes taken by playing it before sleep-time may significantly increase learning progress and totally review the idea of learning ways.";
 
         AUTHOR_INFO = "About an author: " +
                 "\n\n Name: Maxim Yakimovich" +
                 "\n\n ID number: 346814221" +
-                "\n\n Teachers' names: Avital Shain, Eli Sinyanski" +
+                "\n\n Teachers' names: Avital Shein, Eli Sinyanski" +
                 "\n\n School name: Makif Gimel Ha-Amit" +
                 "\n\n Year: 2024";
 
@@ -87,9 +85,7 @@ public class AuthorInfoActivity extends AppCompatActivity {
                 " ולחזק את הזיכרון שלהם דרך חידושי קצרים וניתנים להתאמה אישית." +
                 " מודעת לעובדה שאחת הזמנים האופטימליים ללמידה הוא לפני השינה," +
                 " האפליקציה שולחת התראות שמציעות למשתמשים לבצע חידוש." +
-                " בנוסף, המשתמשים יכולים להגדיר שעונים מעוררים באפליקציה." +
-                " השעונים האלה ניתן לבטל רק על ידי עניין במספר שאלות מבוססות על קלפי הלמידה של המשתמש," +
-                " משאירים אותם עם אפשרות רק להתעסק בלימודים!";
+                "3-4 דקות של משחק לפני השינה עשויות להגדיל באופן משמעותי את התקדמות הלמידה ולשנות לחלוטין את תפיסת שיטות הלמיד";
 
         AUTHOR_INFO = " על היצרן: " +
                 "\n\n שם: מקסים יקימוביץ" +

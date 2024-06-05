@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-public abstract class UserProfile {
+public abstract class UserProfile  {
 
     protected String nickname;
     protected String name;

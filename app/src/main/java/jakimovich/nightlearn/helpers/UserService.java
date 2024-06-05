@@ -41,7 +41,7 @@ import jakimovich.nightlearn.classes.UserVerified;
  */
 public class UserService {
 
-    public static UserProfile myUser; //Todo: to change user
+    public static UserProfile myUser;
 
     public static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static final DatabaseReference USER_DB_REF = FirebaseDatabase.getInstance().getReference("users/" + USER_ID);
@@ -54,6 +54,7 @@ public class UserService {
         userMap.put("lastname", user.getLastname());
         userMap.put("eMail", user.getEMail());
         userMap.put("password", user.getPassword());
+        userMap.put("learnsets",user.getLearnsets());
 
         return USER_DB_REF.setValue(userMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -83,6 +84,7 @@ public class UserService {
                 Uri profilePicUri = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
                 if(profilePicUri != null)
                 {myUser.setProfilePic(profilePicUri);}
+
 //                File uriFile = new File(Environment.getExternalStorageDirectory() + profilePicUri.getPath());
 //                if (uriFile.exists()) {
 //                    myUser.setProfilePic(profilePicUri);
@@ -113,26 +115,10 @@ public class UserService {
                 //}
                 // TODO: To fix storage downloading
 
-                //TODO: To build user inheritance
-
                 return profile;
 
             } else {
                 throw task.getException();
-            }
-        });
-    }
-
-    public static void guestEnter(Activity activity){
-
-        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                myUser = new UserGuest();
-                Toast.makeText(activity, "You entered as a guest", Toast.LENGTH_SHORT).show();
-                activity.startActivity(new Intent(activity, SplashActivity.class));
-                activity.finish();
-            } else {
-                Toast.makeText(activity, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -249,7 +235,9 @@ public class UserService {
     public static void updateLearnset(Learnset learnset, int position) {
 
         myUser.getLearnsets().set(position, learnset);
+        if(!isGuest()){
         USER_DB_REF.child("learnsets/" + position).setValue(learnset);
+        }
     }
 
     public static void removeLearnset(int position) {

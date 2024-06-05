@@ -26,9 +26,6 @@
             android:name=".activities.LearnsetEditActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.UsersRatingActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.NotificationSettingsActivity"
             android:exported="false" />
         <activity

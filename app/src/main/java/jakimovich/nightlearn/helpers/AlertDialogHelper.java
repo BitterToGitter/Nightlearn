@@ -1,6 +1,7 @@
 package jakimovich.nightlearn.helpers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import jakimovich.nightlearn.activities.LearnsetEditActivity;
+import jakimovich.nightlearn.activities.NotificationSettingsActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
@@ -29,12 +31,9 @@ public class AlertDialogHelper {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_menu, null);
 
-        //TextView tvCreateLearnsetsFolder = view.findViewById(R.id.tvCreateLearnsetsFolder);
-
         TextView tvCreateLearnset = view.findViewById(R.id.tvCreateLearnset);
 
-
-        TextView tvCreateAlarm = view.findViewById(R.id.tvCreateAlarm);
+        TextView tvAdjustNotifications = view.findViewById(R.id.tvAdjustNotifications);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(view);
@@ -57,6 +56,8 @@ public class AlertDialogHelper {
             alertDialog.dismiss();
             }
         });
+
+        tvAdjustNotifications.setOnClickListener(v -> {activity.startActivity(new Intent(activity, NotificationSettingsActivity.class));});
 
         alertDialog.show();
     }

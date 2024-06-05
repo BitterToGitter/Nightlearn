@@ -58,7 +58,7 @@ public class LogInActivity extends AppCompatActivity {
 
         createLinkedText(tvGoSignUp);
 
-        btnContinueGuest.setOnClickListener(v -> UserService.guestEnter(this));
+        btnContinueGuest.setOnClickListener(v -> guestEnter());
 
     }
 
@@ -78,6 +78,18 @@ public class LogInActivity extends AppCompatActivity {
                 //UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid(), this);
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
                 finishAffinity();
+            } else {
+                Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void guestEnter(){
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                Toast.makeText(this, "You entered as a guest", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SplashActivity.class));
+                finish();
             } else {
                 Toast.makeText(this, "Error:" + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -105,7 +117,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private void showPopupWindow(View view) {
 
-        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_menu_auth_layout, null);
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_menu_signup_layout, null);
 
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 

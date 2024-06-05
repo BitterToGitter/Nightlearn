@@ -20,7 +20,6 @@ import jakimovich.nightlearn.helpers.UserService;
 public class HomeFragment extends Fragment {
 
     TextView tvTitle;
-    Button logOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +30,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
-
-
     }
 
     @Override
@@ -42,8 +38,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvTitle = view.findViewById(R.id.tvTitleHome);
-        logOut = view.findViewById(R.id.homeLogOut);
-        logOut.setOnClickListener(v -> UserService.signOut(getContext(), getActivity()));
 
         if (UserService.isGuest()){
          tvTitle.setText("Nice to see you, Guest");

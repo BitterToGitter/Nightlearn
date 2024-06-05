@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import jakimovich.nightlearn.R;
+import jakimovich.nightlearn.activities.AuthorInfoActivity;
 import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.activities.NotificationSettingsActivity;
 import jakimovich.nightlearn.helpers.UserService;
@@ -37,10 +38,10 @@ public class ProfileFragment extends Fragment {
 
     private static boolean passwordHidden = true;
     ImageView profilePicture;
-    TextView profileName, profileLastname, profileNickname, profileGmail, profilePassword, profileNotificationSettings, profileUsersRating;
+    TextView profileName, profileLastname, profileNickname, profileGmail, profilePassword;
     Button btnSignOut, btnExit, btnDeleteAccount;
     ImageButton ibEditName, ibEditLastname, ibEditNickname, ibEditGmail, ibEditPassword, ibHidePassword;
-    LinearLayout llUsersRating, llNotificationSettings;
+    LinearLayout llAuthorInfo, llNotificationSettings;
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
 
@@ -103,8 +104,8 @@ public class ProfileFragment extends Fragment {
             llNotificationSettings = view.findViewById(R.id.llProfileNotificationsSettings);
             llNotificationSettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
 
-            llUsersRating = view.findViewById(R.id.llProfileUsersRating);
-            llUsersRating.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationSettingsActivity.class)));
+            llAuthorInfo = view.findViewById(R.id.llProfileAuthorInfo);
+            llAuthorInfo.setOnClickListener(v -> startActivity(new Intent(getActivity(), AuthorInfoActivity.class)));
 
             btnExit = view.findViewById(R.id.btnProfileExit);
             btnExit.setOnClickListener(v -> showOptionsAlertDialog(getActivity(), "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", vi -> {getActivity().finishAndRemoveTask();}));
