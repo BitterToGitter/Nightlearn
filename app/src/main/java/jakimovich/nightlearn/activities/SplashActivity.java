@@ -13,9 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
-import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -1,6 +1,6 @@
 package jakimovich.nightlearn.fragments.main;
 
-import static jakimovich.nightlearn.classes.UserService.myUser;
+import static jakimovich.nightlearn.helpers.UserService.myUser;
 
 import android.os.Bundle;
 
@@ -9,18 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.classes.UserService;
-import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.helpers.UserService;
 
 public class HomeFragment extends Fragment {
 

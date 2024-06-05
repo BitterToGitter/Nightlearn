@@ -11,23 +11,15 @@ import androidx.core.content.ContextCompat;
 
 import jakimovich.nightlearn.R;
 
-public class CustomSeekBarSec extends androidx.appcompat.widget.AppCompatSeekBar {
-
-    private Rect rect;
-    private Paint paint;
+public class CustomSeekBarSec extends CustomSeekBar {
 
     public CustomSeekBarSec(Context context, AttributeSet attrs) {
         super(context, attrs);
-        rect = new Rect();
-        paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, R.color.brightGray));
-        paint.setTextSize(70);
-        paint.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        super.superOnDraw(canvas);
 
         int progress = getProgress();
         String progressText = String.valueOf(progress) + " sec";
@@ -40,5 +32,6 @@ public class CustomSeekBarSec extends androidx.appcompat.widget.AppCompatSeekBar
         // draw text centered on thumb
         paint.getTextBounds(progressText, 0, progressText.length(), rect);
         canvas.drawText(progressText, thumb_x, thumb_y + rect.height() / 2, paint);
+
     }
 }

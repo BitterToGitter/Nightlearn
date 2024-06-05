@@ -1,6 +1,6 @@
 package jakimovich.nightlearn.activities;
 
-import static jakimovich.nightlearn.classes.UserService.myUser;
+import static jakimovich.nightlearn.helpers.UserService.myUser;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,24 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.caverock.androidsvg.SVGParseException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.ArrayList;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
-import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.LearncardAdapter;
 import jakimovich.nightlearn.helpers.MethodsHelper;

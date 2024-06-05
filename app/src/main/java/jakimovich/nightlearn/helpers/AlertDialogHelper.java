@@ -16,7 +16,6 @@ import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
 import jakimovich.nightlearn.classes.Quiz;
-import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.interfaces.AlertAcceptClickListener;
 import jakimovich.nightlearn.interfaces.AlertDialogDismissListener;
 import jakimovich.nightlearn.interfaces.AlertEnteredTextListener;

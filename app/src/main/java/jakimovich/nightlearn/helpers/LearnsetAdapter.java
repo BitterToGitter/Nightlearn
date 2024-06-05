@@ -22,7 +22,6 @@ import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.activities.PlayActivity;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.classes.UserService;
 
 public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHolder> {
 
@@ -103,10 +102,10 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
 
             tvDelete.setOnClickListener(v -> {
                 if(UserService.isGuest()){
-                    showWarningAlertDialog((Activity) context, "Only registered users can delete the sample learnsets. \n Sign in to do manage the learnsets as you wish.", "Ok");
+                    showWarningAlertDialog((Activity) context, "Only registered users can delete the sample learnsets. \n Sign in to manage the learnsets as you wish.", "Ok");
                     popupWindow.dismiss();
                 } else{
-                AlertDialogHelper.showOptionsAlertDialog((Activity) context, "Are you sure you want to delete the learnset? There will be no way to return in.", "Delete","Cancel", v1 -> {learnsetList.remove(position); UserService.removeLearnset(context, position); notifyDataSetChanged();});
+                AlertDialogHelper.showOptionsAlertDialog((Activity) context, "Are you sure you want to delete the learnset? There will be no way to return in.", "Delete","Cancel", v1 -> {UserService.removeLearnset(position); notifyDataSetChanged();});
                 popupWindow.dismiss();
                 }
             });

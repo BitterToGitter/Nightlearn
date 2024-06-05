@@ -30,7 +30,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.activities.NotificationSettingsActivity;
-import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class ProfileFragment extends Fragment {

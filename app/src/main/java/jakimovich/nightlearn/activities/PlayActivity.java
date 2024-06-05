@@ -10,7 +10,7 @@ import java.util.Random;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.classes.UserService;
+import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.fragments.game.GameFragment;
 import jakimovich.nightlearn.fragments.game.GameManualTypingFragment;
 import jakimovich.nightlearn.fragments.game.GameMatchCardsFragment;
@@ -19,8 +19,6 @@ import jakimovich.nightlearn.fragments.game.GameResultsFragment;
 import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class PlayActivity extends AppCompatActivity {
-
-    //TODO: To think of Quiz' inheritance ( Regular Quiz / Exam Quiz)
 
     Learnset learnsetToPlay;
     Fragment fragment;
@@ -131,8 +129,6 @@ public class PlayActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-    //Todo: To make transaction animations
 
 }
 

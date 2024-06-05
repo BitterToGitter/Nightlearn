@@ -1,9 +1,7 @@
 package jakimovich.nightlearn.fragments.main;
 
-import static jakimovich.nightlearn.classes.UserService.myUser;
+import static jakimovich.nightlearn.helpers.UserService.myUser;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,20 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.firebase.firestore.auth.User;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.classes.Quiz;
-import jakimovich.nightlearn.classes.UserService;
 import jakimovich.nightlearn.helpers.LearnsetAdapter;
 
 public class LearnsetsFragment extends Fragment {

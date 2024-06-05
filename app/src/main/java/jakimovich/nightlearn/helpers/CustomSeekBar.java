@@ -13,8 +13,8 @@ import jakimovich.nightlearn.R;
 
 public class CustomSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
 
-    private Rect rect;
-    private Paint paint;
+    protected Rect rect;
+    protected Paint paint;
 
     public CustomSeekBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,11 +33,16 @@ public class CustomSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
         String progressText = String.valueOf(progress);
 
         // get thumb's x position
-        float thumb_x = (float) (getPaddingLeft() + ((double) progress / ( getMax() - getMin() ) ) * (getWidth() - getPaddingLeft() - getPaddingRight()));
+        float thumb_x = (float) (getPaddingLeft() + ((double) progress / getMax()  * (getWidth() - getPaddingLeft() - getPaddingRight())));
         // get thumb's y position
-        float thumb_y = getHeight() / 2 + getPaddingBottom() / 2; //Todo: to solve the problem with the thumb's x position
+        float thumb_y = getHeight() / 2 + getPaddingBottom() / 2;
 
         paint.getTextBounds(progressText, 0, progressText.length(), rect);
         canvas.drawText(progressText, thumb_x, thumb_y + rect.height() / 2, paint);
+    } //Todo: to solve issue with x-axis
+
+
+    protected void superOnDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 }

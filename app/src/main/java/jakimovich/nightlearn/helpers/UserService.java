@@ -1,4 +1,4 @@
-package jakimovich.nightlearn.classes;
+package jakimovich.nightlearn.helpers;
 
 import static jakimovich.nightlearn.helpers.InputChecker.gmailCheck;
 import static jakimovich.nightlearn.helpers.InputChecker.lastnameCheck;
@@ -10,8 +10,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -25,24 +23,25 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import jakimovich.nightlearn.activities.MainActivity;
 import jakimovich.nightlearn.activities.SplashActivity;
+import jakimovich.nightlearn.classes.Learncard;
+import jakimovich.nightlearn.classes.Learnset;
+import jakimovich.nightlearn.classes.Quiz;
+import jakimovich.nightlearn.classes.UserProfile;
 
+/**
+ * Inner and firebase user management class
+ */
 public class UserService {
     public static UserProfile myUser;
+    public static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public static final DatabaseReference USER_DB_REF = FirebaseDatabase.getInstance().getReference("users/" + USER_ID);
 
     public static Task<Void> setMyUser(UserProfile user) {
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = database.getReference("users/" + userId);
 
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("nickname", user.getNickname());
@@ -51,7 +50,7 @@ public class UserService {
         userMap.put("eMail", user.getEMail());
         userMap.put("password", user.getPassword());
 
-        return ref.setValue(userMap).addOnCompleteListener(task -> {
+        return USER_DB_REF.setValue(userMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 myUser = user;
             }
@@ -61,10 +60,7 @@ public class UserService {
 
     public static Task<UserProfile> getUserById(String userId, Context context) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("users/" + userId);
-
-        return ref.get().continueWith(task -> {
+        return USER_DB_REF.get().continueWith(task -> {
             if (task.isSuccessful()) {
 
                 String nickname = task.getResult().child("nickname").getValue(String.class);
@@ -77,7 +73,7 @@ public class UserService {
 
                 if (Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     myUser = profile;
-                    getLearnsetsFromDatabase(context);
+                    myUser.setLearnsets(getLearnsetsFromDatabase(context));
                 }
 
                 Uri profilePicUri = Uri.parse(task.getResult().child("profilePic").getValue(String.class));
@@ -138,8 +134,7 @@ public class UserService {
 }
 
     public static void uploadUriPicToDatabase(Uri fileUri) {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profilePic");
-        databaseRef.setValue(fileUri.toString());
+        USER_DB_REF.child("profilePic").setValue(fileUri.toString());
     }
 
     public static boolean isGuest() {
@@ -162,7 +157,7 @@ public class UserService {
         user.delete().addOnCompleteListener(task -> {
             if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                 myUser = null;
-                FirebaseDatabase.getInstance().getReference("users/" + userId).removeValue();
+                USER_DB_REF.removeValue();
                 Toast.makeText(context, "User has been deleted successfully, you're starting from scratch!", Toast.LENGTH_LONG).show();
                 activity.startActivity(new Intent(activity, SplashActivity.class));
                 activity.finish();
@@ -172,27 +167,19 @@ public class UserService {
 
     public static void updateUserName(Context context, String name) {
         if (nameCheck(context, name)) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("users/" + userId).child("name");
-            ref.setValue(name);
-
+            USER_DB_REF.child("name").setValue(name);
             myUser.setName(name);
-
             Toast.makeText(context, "Your name has been updated", Toast.LENGTH_SHORT).show();
+
         }
     }
 
     public static void updateUserLastname(Context context, String lastname) {
 
         if (lastnameCheck(context, lastname)) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("users/" + userId).child("lastname");
-            ref.setValue(lastname);
-
+            USER_DB_REF.child("lastname").setValue(lastname);
             myUser.setLastname(lastname);
 
             Toast.makeText(context, "Your lastname has been updated", Toast.LENGTH_SHORT).show();
@@ -202,88 +189,66 @@ public class UserService {
     public static void updateUserNickname(Context context, String nickname) {
 
         if (nicknameCheck(context, nickname)) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("users/" + userId).child("nickname");
-            ref.setValue(nickname);
-
+            USER_DB_REF.child("nickname").setValue(nickname);
             myUser.setNickname(nickname);
-
             Toast.makeText(context, "Your nickname has been updated", Toast.LENGTH_SHORT).show();
+
         }
     }
 
-    public static void updateUserGmail(Context context, String gmail) {
+    public static void updateUserGmail(Context context, String Email) {
 
-        if (gmailCheck(context, gmail)) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (gmailCheck(context, Email)) {
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("users/" + userId).child("eMail");
-            ref.setValue(gmail);
+            USER_DB_REF.child("eMail").setValue(Email);
+            myUser.setEMail(Email);
+            Toast.makeText(context, "Your Email address has been updated", Toast.LENGTH_SHORT).show();
 
-            myUser.setEMail(gmail);
-
-            Toast.makeText(context, "Your gmail address has been updated", Toast.LENGTH_SHORT).show();
         }
     }
 
     public static void updateUserPassword(Context context, String password) {
 
         if (passwordCheck(context, password)) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference ref = database.getReference("users/" + userId).child("password");
-            ref.setValue(password);
-
+            USER_DB_REF.child("password").setValue(password);
             myUser.setPassword(password);
-
             Toast.makeText(context, "Your password has been updated, don't forget it!", Toast.LENGTH_SHORT).show();
+
         }
     }
 
-    public static void updateLearnsets(Context context, ArrayList<Learnset> learnsets) {
+    public static void updateLearnsets(ArrayList<Learnset> learnsets) {
 
-        if (learnsets != null || learnsets.size() != 0) {
+        USER_DB_REF.child("learnsets").removeValue();
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-            for (int i = 0; i < learnsets.size(); i++) {
-                databaseReference.child("learnsets").push().setValue(learnsets.get(i));
-            }
-
-            Toast.makeText(context, "Learnsets updated", Toast.LENGTH_SHORT).show();
+        if (learnsets != null && learnsets.size() != 0) {
+            USER_DB_REF.child("learnsets").setValue(learnsets);
         }
     }
 
     public static void updateLearnset(Learnset learnset, int position) {
 
         myUser.getLearnsets().set(position, learnset);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        ref.child("learnsets/" + position).setValue(learnset);
+        USER_DB_REF.child("learnsets/" + position).setValue(learnset);
     }
 
-    public static void removeLearnset(Context context, int position) {
+    public static void removeLearnset(int position) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        ref.child("learnsets/" + position).removeValue();
-        //Todo: to rebase the rest of arrayView
-
-        Toast.makeText(context, "Learnset removed", Toast.LENGTH_SHORT).show();
+        myUser.getLearnsets().remove(position);
+        updateLearnsets(myUser.getLearnsets());
     }
 
-    public static void getLearnsetsFromDatabase(Context context) {
+    public static ArrayList<Learnset> getLearnsetsFromDatabase(Context context) {
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userId);
-        if(ref.child("learnsets") != null) {
-            ref.child("learnsets").addListenerForSingleValueEvent(new ValueEventListener() {
+        ArrayList<Learnset> learnsets = new ArrayList<>();
+
+        if(USER_DB_REF.child("learnsets") != null) {
+            USER_DB_REF.child("learnsets").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    ArrayList<Learnset> learnsets = new ArrayList<>();
                     if (dataSnapshot.hasChildren()) {
                         for (DataSnapshot learnsetSnapshot : dataSnapshot.getChildren()) {
                             String name = learnsetSnapshot.child("name").getValue(String.class);
@@ -300,7 +265,6 @@ public class UserService {
                             Learnset learnset = new Learnset(name, quizSettings, learncards);
                             learnsets.add(learnset);
                         }
-                        myUser.setLearnsets(learnsets);
                     }
                 }
 
@@ -310,5 +274,6 @@ public class UserService {
                 }
             });
         }
+        return learnsets;
     }
 }
