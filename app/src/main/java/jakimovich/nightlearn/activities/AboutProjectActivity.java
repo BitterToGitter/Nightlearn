@@ -16,7 +16,7 @@ import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.fragments.info.AuthorFragment;
 import jakimovich.nightlearn.fragments.info.ProjectFragment;
 
-public class AuthorInfoActivity extends AppCompatActivity {
+public class AboutProjectActivity extends AppCompatActivity {
 
     public static String PROJECT_INFO;
     public static String AUTHOR_INFO;

@@ -1,10 +1,9 @@
 package jakimovich.nightlearn.fragments.info;
 
-import static jakimovich.nightlearn.activities.AuthorInfoActivity.AUTHOR_INFO;
-import static jakimovich.nightlearn.activities.AuthorInfoActivity.PROJECT_AUTHOR_INFO_GRAVITY;
+import static jakimovich.nightlearn.activities.AboutProjectActivity.AUTHOR_INFO;
+import static jakimovich.nightlearn.activities.AboutProjectActivity.PROJECT_AUTHOR_INFO_GRAVITY;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

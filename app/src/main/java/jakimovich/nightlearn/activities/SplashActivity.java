@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
                     UserService.myUser = new UserGuest();
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
-               } else { //Todo: to solve
+               } else {
                     UserService.getUserById(currentUser.getUid(), this).addOnCompleteListener(task -> {
                         if (UserService.myUser == null) {
                             FirebaseAuth.getInstance().signOut();

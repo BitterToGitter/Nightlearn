@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import jakimovich.nightlearn.activities.SignUpActivity;
 import jakimovich.nightlearn.activities.SplashActivity;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
@@ -43,10 +42,9 @@ public class UserService {
 
     public static UserProfile myUser;
 
-    public static final String USER_ID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    public static final DatabaseReference USER_DB_REF = FirebaseDatabase.getInstance().getReference("users/" + USER_ID);
-
     public static Task<Void> setMyUser(UserVerified user) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("nickname", user.getNickname());
@@ -56,7 +54,7 @@ public class UserService {
         userMap.put("password", user.getPassword());
         userMap.put("learnsets",user.getLearnsets());
 
-        return USER_DB_REF.setValue(userMap).addOnCompleteListener(task -> {
+        return ref.setValue(userMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 myUser = user;
             }
@@ -66,7 +64,9 @@ public class UserService {
 
     public static Task<UserVerified> getUserById(String userId, Context context) {
 
-        return USER_DB_REF.get().continueWith(task -> {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        return ref.get().continueWith(task -> {
             if (task.isSuccessful()) {
 
                 String nickname = task.getResult().child("nickname").getValue(String.class);
@@ -138,7 +138,8 @@ public class UserService {
 }
 
     public static void uploadUriPicToDatabase(Uri fileUri) {
-        USER_DB_REF.child("profilePic").setValue(fileUri.toString());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        ref.child("profilePic").setValue(fileUri.toString());
     }
 
     public static boolean isGuest() {
@@ -146,9 +147,10 @@ public class UserService {
     }
 
     public static void signOut(Context context, Activity activity) {
+
         FirebaseAuth.getInstance().signOut();
-        myUser = null;
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            myUser = null;
             Toast.makeText(context, "User has been signed out successfully", Toast.LENGTH_SHORT).show();
             activity.startActivity(new Intent(activity, SplashActivity.class));
             activity.finish();
@@ -156,12 +158,13 @@ public class UserService {
     }
 
     public static void deleteAccount(Context context, Activity activity) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
         user.delete().addOnCompleteListener(task -> {
             if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                 myUser = null;
-                USER_DB_REF.removeValue();
+                ref.removeValue();
                 Toast.makeText(context, "User has been deleted successfully, you're starting from scratch!", Toast.LENGTH_LONG).show();
                 activity.startActivity(new Intent(activity, SplashActivity.class));
                 activity.finish();
@@ -172,7 +175,9 @@ public class UserService {
     public static void updateUserName(Context context, String name) {
         if (nameCheck(context, name)) {
 
-            USER_DB_REF.child("name").setValue(name);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            ref.child("name").setValue(name);
             myUser.setName(name);
             Toast.makeText(context, "Your name has been updated", Toast.LENGTH_SHORT).show();
 
@@ -183,7 +188,9 @@ public class UserService {
 
         if (lastnameCheck(context, lastname)) {
 
-            USER_DB_REF.child("lastname").setValue(lastname);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            ref.child("lastname").setValue(lastname);
             myUser.setLastname(lastname);
 
             Toast.makeText(context, "Your lastname has been updated", Toast.LENGTH_SHORT).show();
@@ -194,7 +201,9 @@ public class UserService {
 
         if (nicknameCheck(context, nickname)) {
 
-            USER_DB_REF.child("nickname").setValue(nickname);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            ref.child("nickname").setValue(nickname);
             myUser.setNickname(nickname);
             Toast.makeText(context, "Your nickname has been updated", Toast.LENGTH_SHORT).show();
 
@@ -205,7 +214,9 @@ public class UserService {
 
         if (gmailCheck(context, Email)) {
 
-            USER_DB_REF.child("eMail").setValue(Email);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            ref.child("eMail").setValue(Email);
             myUser.setEMail(Email);
             Toast.makeText(context, "Your Email address has been updated", Toast.LENGTH_SHORT).show();
 
@@ -216,7 +227,9 @@ public class UserService {
 
         if (passwordCheck(context, password)) {
 
-            USER_DB_REF.child("password").setValue(password);
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            ref.child("password").setValue(password);
             myUser.setPassword(password);
             Toast.makeText(context, "Your password has been updated, don't forget it!", Toast.LENGTH_SHORT).show();
 
@@ -225,18 +238,22 @@ public class UserService {
 
     public static void updateLearnsets(ArrayList<Learnset> learnsets) {
 
-        USER_DB_REF.child("learnsets").removeValue();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        ref.child("learnsets").removeValue();
 
         if (learnsets != null && learnsets.size() != 0) {
-            USER_DB_REF.child("learnsets").setValue(learnsets);
+            ref.child("learnsets").setValue(learnsets);
         }
     }
 
     public static void updateLearnset(Learnset learnset, int position) {
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         myUser.getLearnsets().set(position, learnset);
         if(!isGuest()){
-        USER_DB_REF.child("learnsets/" + position).setValue(learnset);
+        ref.child("learnsets/" + position).setValue(learnset);
         }
     }
 
@@ -248,10 +265,12 @@ public class UserService {
 
     public static ArrayList<Learnset> getLearnsetsFromDatabase(Context context) {
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         ArrayList<Learnset> learnsets = new ArrayList<>();
 
-        if(USER_DB_REF.child("learnsets") != null) {
-            USER_DB_REF.child("learnsets").addListenerForSingleValueEvent(new ValueEventListener() {
+        if(ref.child("learnsets") != null) {
+            ref.child("learnsets").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 

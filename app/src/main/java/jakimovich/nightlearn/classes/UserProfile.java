@@ -14,6 +14,8 @@ public abstract class UserProfile  {
     protected Uri profilePic;
     protected ArrayList<Learnset> learnsets;
 
+    protected int points;
+
     public String getNickname() {
         return nickname;
     }
@@ -29,6 +31,8 @@ public abstract class UserProfile  {
     public String getPassword() {
         return password;
     }
+
+    public int getPoints() {return points;}
 
     public Uri getProfilePic() {
         return profilePic;
@@ -47,11 +51,10 @@ public abstract class UserProfile  {
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public void setPoints(int points) {this.points = points;}
     public void setProfilePic(Uri profilePic) {
         this.profilePic = profilePic;
     }//TODO: Uri isn't a way to upload an image. It wouldn't appear
@@ -59,6 +62,6 @@ public abstract class UserProfile  {
     public void setLearnsets(ArrayList<Learnset> learnsets) {this.learnsets = learnsets;}
 
 
-
+    public void addPoints(int points) {this.points += points;}
 
 }

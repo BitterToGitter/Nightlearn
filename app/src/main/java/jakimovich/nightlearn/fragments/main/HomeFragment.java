@@ -20,7 +20,6 @@ import jakimovich.nightlearn.helpers.UserService;
 public class HomeFragment extends Fragment {
 
     TextView tvTitle;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

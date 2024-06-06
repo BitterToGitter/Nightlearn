@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.helpers.MethodsHelper;
-import jakimovich.nightlearn.helpers.UserService;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -127,7 +126,7 @@ public class LogInActivity extends AppCompatActivity {
         tvAuthor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LogInActivity.this, AuthorInfoActivity.class));
+                startActivity(new Intent(LogInActivity.this, AboutProjectActivity.class));
                 popupWindow.dismiss();
             }
         });

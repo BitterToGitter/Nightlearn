@@ -65,7 +65,6 @@ public class QuizSettingsActivity extends AppCompatActivity {
 
         ivInfoManualTyping = findViewById(R.id.ivInfoManualTyping);
         ivInfoManualTyping.setOnClickListener(v -> showPopupWindow(v, "This option allows to type the answer manually."));
-        //Todo: maybe popUpWindow
 
         btnSave = findViewById(R.id.btnQuizSettingsSave);
         btnCancel = findViewById(R.id.btnQuizSettingsCancel);

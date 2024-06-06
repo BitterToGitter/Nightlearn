@@ -151,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity  {
         TextView tvExit = popupView.findViewById(R.id.tvAuthMenuExit);
 
         tvAuthor.setOnClickListener(v -> {
-            startActivity(new Intent(SignUpActivity.this, AuthorInfoActivity.class));
+            startActivity(new Intent(SignUpActivity.this, AboutProjectActivity.class));
             popupWindow.dismiss();
         });
 

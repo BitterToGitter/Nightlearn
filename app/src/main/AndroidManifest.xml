@@ -29,7 +29,7 @@
             android:name=".activities.NotificationSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AuthorInfoActivity"
+            android:name=".activities.AboutProjectActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
