@@ -26,7 +26,7 @@ public abstract class GameFragment extends Fragment {
 
     TextView tvRound, tvSubTitle;
     TextView tvTime;
-    TextView tvQuestion;
+    TextView tvQuestionText, tvQuestionTitle, tvRightAnswer;
 
     TextView tvSkip;
     LinearLayout llSkip, llPauseGame;
@@ -56,18 +56,29 @@ public abstract class GameFragment extends Fragment {
 
         learnsetToPlay = ((PlayActivity) getActivity()).getLearnsetToPlay();
 
+        questionLearncard = learnsetToPlay.getRandomCard(true);
+
+
         if (this instanceof GameMatchCardsFragment){
             tvRound = view.findViewById(R.id.tvMatchCardsRound);
             tvSubTitle = view.findViewById(R.id.tvMatchCardsSubTitle);
             tvTime = view.findViewById(R.id.tvMatchCardsTime);
-            tvQuestion = view.findViewById(R.id.tvMatchCardsQuestionExplanation);
+            tvQuestionText = view.findViewById(R.id.tvMatchCardsQuestionCard);
+            tvQuestionTitle = view.findViewById(R.id.tvMatchCardsQuestionTitle);
             llSkip = view.findViewById(R.id.llMatchCardsBtnSkip);
             llPauseGame = view.findViewById(R.id.llMatchCardsBtnPause);
             tvSkip = view.findViewById(R.id.tvMatchCardsBtnSkip);
         }
         if (this instanceof GameManualTypingFragment){
             tvRound = view.findViewById(R.id.tvManualTypingRound);
-            //Todo: to fill in the rest of the views for GameManualTypingFragment
+            tvSubTitle = view.findViewById(R.id.tvManualTypingSubTitle);
+            tvTime = view.findViewById(R.id.tvManualTypingTime);
+            tvQuestionText = view.findViewById(R.id.tvManualTypingQuestionCard);
+            tvQuestionTitle = view.findViewById(R.id.tvManualTypingQuestionCardTitle);
+            tvRightAnswer = view.findViewById(R.id.tvManualTypingRightAnswer);
+            llSkip = view.findViewById(R.id.llManualTypingBtnSkip);
+            llPauseGame = view.findViewById(R.id.llManualTypingBtnPause);
+            tvSkip = view.findViewById(R.id.tvManualTypingBtnSkip);
         }
 
         llSkip.setOnClickListener(v -> onSkipped());
@@ -75,8 +86,38 @@ public abstract class GameFragment extends Fragment {
 
         tvRound.setText("Round " + ((PlayActivity) getActivity()).getCurrentRound() + "/" + learnsetToPlay.getQuizSettings().getQuestionsAmount());
 
+        switch (learnsetToPlay.getQuizSettings().getQuestionType() % 10)
+        {
+            case 1:
+                onQuestionTypeDefinition();
+                break;
+            case 2:
+                onQuestionTypeExplanation();
+                break;
+            case 3:
+                if (new Random().nextFloat() < 0.3){
+                    onQuestionTypeDefinition();
+                } else {
+                    onQuestionTypeExplanation();
+                }
+                break;
+            default:
+                onQuestionTypeExplanation();
+                break;
+        }
+
         startCountDownTimer(tvTime);
 
+    }
+
+    protected void onQuestionTypeDefinition() {
+        tvQuestionTitle.setText("Definition:");
+        tvQuestionText.setText(questionLearncard.getDefinition());
+    }
+
+    protected void onQuestionTypeExplanation() {
+        tvQuestionTitle.setText("Explanation:");
+        tvQuestionText.setText(questionLearncard.getExplanation());
     }
 
     public void startCountDownTimer(TextView timeUpdate) {
@@ -121,6 +162,14 @@ public abstract class GameFragment extends Fragment {
         questionLearncard.onSeen();
         ((PlayActivity) getActivity()).getLearnsetToPlay().updateLearncard(questionLearncard);
 
+        if (this instanceof GameMatchCardsFragment){
+            ((PlayActivity) getActivity()).removePoints(15);
+        }
+        if (this instanceof GameManualTypingFragment){
+            ((PlayActivity) getActivity()).removePoints(10);
+        }
+
+
     }
 
     protected void onMissedAnswer() {
@@ -130,8 +179,16 @@ public abstract class GameFragment extends Fragment {
         tvTime.setText("0 sec.");
         tvSkip.setText("Next round");
         llSkip.setOnClickListener(v -> ((PlayActivity) getActivity()).goNextRound());
+
         questionLearncard.onSeen();
         ((PlayActivity) getActivity()).getLearnsetToPlay().updateLearncard(questionLearncard);
+
+        if (this instanceof GameMatchCardsFragment){
+            ((PlayActivity) getActivity()).removePoints(15);
+        }
+        if (this instanceof GameManualTypingFragment){
+            ((PlayActivity) getActivity()).removePoints(10);
+        }
 
     }
 
@@ -142,10 +199,16 @@ public abstract class GameFragment extends Fragment {
         tvSubTitle.setText(answerCommentsOptions(false));
         tvSkip.setText("Next round");
         llSkip.setOnClickListener(v -> ((PlayActivity) getActivity()).goNextRound());
+
         questionLearncard.onSeen();
         ((PlayActivity) getActivity()).getLearnsetToPlay().updateLearncard(questionLearncard);
 
-
+        if (this instanceof GameMatchCardsFragment){
+            ((PlayActivity) getActivity()).removePoints(15);
+        }
+        if (this instanceof GameManualTypingFragment){
+            ((PlayActivity) getActivity()).removePoints(10);
+        }
     }
 
     protected void onRightAnswer(){
@@ -155,15 +218,22 @@ public abstract class GameFragment extends Fragment {
         tvSkip.setText("Next round");
         llSkip.setOnClickListener(v -> ((PlayActivity) getActivity()).goNextRound());
 
+        questionLearncard.onAnsweredRight();
+        questionLearncard.onSeen();
+
         ((PlayActivity) getActivity()).answeredRight();
         if (questionLearncard.checkLearned(learnsetToPlay.getQuizSettings().getRightAnswersNumToBeLearned())){
             ((PlayActivity) getActivity()).cardHasBeenLearned();
         }
 
-        questionLearncard.onAnsweredRight();
-        questionLearncard.onSeen();
-        questionLearncard.checkLearned(learnsetToPlay.getQuizSettings().getRightAnswersNumToBeLearned());
         ((PlayActivity) getActivity()).getLearnsetToPlay().updateLearncard(questionLearncard);
+
+        if (this instanceof GameMatchCardsFragment){
+            ((PlayActivity) getActivity()).addPoints(50);
+        }
+        if (this instanceof GameManualTypingFragment){
+            ((PlayActivity) getActivity()).addPoints(70);
+        }
 
     }
 

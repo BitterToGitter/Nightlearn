@@ -145,9 +145,6 @@
             android:id="@+id/LogInLayoutContinue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:orientation="horizontal"
             android:padding="8dp">
 
@@ -158,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Continue"
-                android:textColor="@color/alert_dialog_textcolor_focused"
+                android:textColor="@color/dark_gray_focused"
                 android:textSize="25dp"
                 android:textStyle="bold" />
 

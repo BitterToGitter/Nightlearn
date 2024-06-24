@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.main.RatingFragment">
 
     <LinearLayout
-        android:id="@+id/llAlarmsFragmentTitle"
+        android:id="@+id/llRatingFragmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingVertical="25dp"
-        android:background="@drawable/background_top">
+        android:background="@drawable/background_top"
+        app:layout_constraintTop_toTopOf="parent">
 
     <TextView
+        android:id="@+id/tvRatingFragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="See others' success"
@@ -23,12 +26,13 @@
 
     </LinearLayout>
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ratingRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rating"
-        android:textSize="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="76dp"
+        android:paddingBottom="75dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

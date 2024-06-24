@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.helpers.LearnsetAdapter;
+import jakimovich.nightlearn.helpers.LearnsetsLearnsetAdapter;
 
 public class LearnsetsFragment extends Fragment {
 
@@ -39,7 +39,7 @@ public class LearnsetsFragment extends Fragment {
 
           if(myUser.getLearnsets() != null){
              learnsetsList = myUser.getLearnsets();
-              recyclerView.setAdapter(new LearnsetAdapter(getContext(), learnsetsList));
+              recyclerView.setAdapter(new LearnsetsLearnsetAdapter(getContext(), learnsetsList));
           }
     }
 

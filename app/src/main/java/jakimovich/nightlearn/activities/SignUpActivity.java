@@ -10,6 +10,7 @@ import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,15 +32,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.UserVerified;
+import jakimovich.nightlearn.helpers.GeneralHelper;
 import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
-import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class SignUpActivity extends AppCompatActivity  {
 
     ImageView ivOptionsMenuBtn;
     EditText etName, etLastname, etNickname, etEmail, etPassword, etRepeatPassword;
-    TextView tvGoLogIn, tvBntContinue;
+    TextView tvGoLogIn;
     LinearLayout btnContinue;
     Button btnContinueGuest;
 
@@ -54,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity  {
         etPassword = findViewById(R.id.etSignUpPassword);
         etRepeatPassword = findViewById(R.id.etSignUpRepeatPassword);
 
-        tvBntContinue = findViewById(R.id.tvSignUpContinue);
         tvGoLogIn = findViewById(R.id.tvGoLogIn);
 
         btnContinue = findViewById(R.id.signUpLayoutContinue);
@@ -62,10 +63,12 @@ public class SignUpActivity extends AppCompatActivity  {
         btnContinueGuest = findViewById(R.id.btnSignUpGuest);
 
         ivOptionsMenuBtn = findViewById(R.id.signUpOptionsMenuBtn);
-        ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
+        ivOptionsMenuBtn.setImageDrawable(GeneralHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
         ivOptionsMenuBtn.setOnClickListener(v -> showPopupWindow(v));
 
         btnContinue.setOnClickListener(v -> signUp());
+
+        GeneralHelper.onKeyEnter(etRepeatPassword, v -> signUp());
 
         createLinkedText(tvGoLogIn);
 
@@ -74,6 +77,11 @@ public class SignUpActivity extends AppCompatActivity  {
     }
 
     private void signUp() {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
 
         String nickname = etNickname.getText().toString().trim();
         String name = etName.getText().toString().trim();
@@ -98,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity  {
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-                UserService.setMyUser(new UserVerified(nickname, name, lastname, eMail, password, MethodsHelper.createSampleLearnsets()));
+                UserService.setMyUser(new UserVerified(nickname, name, lastname, eMail, password, 0, GeneralHelper.createSampleLearnsets()));
                 Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
                 finish();
@@ -156,7 +164,7 @@ public class SignUpActivity extends AppCompatActivity  {
         });
 
         tvExit.setOnClickListener(v -> {
-                showOptionsAlertDialog(SignUpActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finishAndRemoveTask());
+                showOptionsAlertDialog(SignUpActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finishAndRemoveTask(), v2 ->{});
                 popupWindow.dismiss();
             });
 
@@ -168,7 +176,9 @@ public class SignUpActivity extends AppCompatActivity  {
     @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", v -> finishAffinity());
+        AlertDialogHelper.showOptionsAlertDialog(this, "Are you sure you want to exit the app?", "Yeah \n Let's get out", "Nope \n Back to study", v -> finishAffinity(), v2 ->{});
     }
 
 }
+
+//Todo: to copy again

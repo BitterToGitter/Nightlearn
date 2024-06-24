@@ -44,8 +44,8 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
         holder.tvDefinitionTitle.setText(Html.fromHtml("<u>Definition</u>"));
         holder.tvExplanationTitle.setText(Html.fromHtml("<u>Explanation</u>"));
-        holder.llDefinition.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", learncard.getDefinition(), definition -> {learncard.setDefinition(definition); notifyDataSetChanged(); }));
-        holder.llExplanation.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", learncard.getExplanation(), explanation -> {learncard.setExplanation(explanation); notifyDataSetChanged(); }));
+        holder.llDefinition.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Definition", "Type Here...", "Update", "Cancel", learncard.getDefinition(), definition -> {learncard.setDefinition(definition); notifyDataSetChanged(); AlertDialogHelper.dismissAlertDialog(); }));
+        holder.llExplanation.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog((Activity) context, "Update Explanation", "Type Here...", "Update", "Cancel", learncard.getExplanation(), explanation -> {learncard.setExplanation(explanation); notifyDataSetChanged(); AlertDialogHelper.dismissAlertDialog(); }));
         holder.tvDefinition.setText(learncard.getDefinition());
         holder.tvExplanation.setText(learncard.getExplanation());
 
@@ -75,7 +75,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
             llExplanation = itemView.findViewById(R.id.llExplanation);
 
             btnOptionsMenu = itemView.findViewById(R.id.learncardOptionsMenuBtn);
-            btnOptionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
+            btnOptionsMenu.setImageDrawable(GeneralHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
 
         }
 
@@ -85,7 +85,7 @@ public class LearncardAdapter extends RecyclerView.Adapter<LearncardAdapter.View
 
             PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-            TextView tvDelete = popupView.findViewById(R.id.tvLearncardMenuDelete);
+            TextView tvDelete = popupView.findViewById(R.id.tvLearncardPopupLayoutText);
 
             tvDelete.setOnClickListener(v -> {
                 popupWindow.dismiss();

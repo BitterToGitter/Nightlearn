@@ -7,18 +7,21 @@ public class Learnset {
 
     private String name;
     private ArrayList<Learncard> learncards;
-    private Quiz quizSettings;
+    private QuizSettings quizSettings;
+    private int gamesPlayed;
 
-    public Learnset(String name, Quiz quizSettings) {
+    public Learnset(String name, QuizSettings quizSettings) {
         this.name = name;
-        this.learncards = new ArrayList<Learncard>();
         this.quizSettings = quizSettings;
+        this.learncards = new ArrayList<Learncard>();
+        this.gamesPlayed = 0;
     }
 
-    public Learnset(String name, Quiz quizSettings, ArrayList<Learncard> learncards) {
+    public Learnset(String name, QuizSettings quizSettings, int gamesPlayed, ArrayList<Learncard> learncards) {
         this.name = name;
-        this.learncards = learncards;
         this.quizSettings = quizSettings;
+        this.learncards = learncards;
+        this.gamesPlayed = gamesPlayed;
     }
 
     public String getName() {
@@ -27,6 +30,14 @@ public class Learnset {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public void gamePlayed() {
+        gamesPlayed++;
     }
 
     private ArrayList<Learncard> getLearnedCards(){
@@ -56,14 +67,13 @@ public class Learnset {
      */
     public Learncard getRandomCard(boolean unlearnedCardPriority){
         if(unlearnedCardPriority){
-
             if(new Random().nextFloat() < 0.7f){
                 if (!getUnlearnedCards().isEmpty()) {
-                    return getUnlearnedCards().get((int) (Math.random() * getUnlearnedCards().size()));
+                    return getUnlearnedCards().get(new Random().nextInt(getUnlearnedCards().size()));
                 }
             } else {
                 if (!getLearnedCards().isEmpty()){
-                return getLearnedCards().get((int) (Math.random() * getLearnedCards().size()));
+                return getLearnedCards().get(new Random().nextInt(getLearnedCards().size()));
                 }
             }
 
@@ -117,11 +127,11 @@ public class Learnset {
         learncards.remove(n);
     }
 
-    public Quiz getQuizSettings() {
+    public QuizSettings getQuizSettings() {
         return quizSettings;
     }
 
-    public void setQuizSettings(Quiz quizSettings) {
+    public void setQuizSettings(QuizSettings quizSettings) {
         this.quizSettings = quizSettings;
     }
 

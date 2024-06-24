@@ -5,9 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,8 +23,9 @@ public class GameMatchCardsFragment extends GameFragment {
 
     TextView btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4;
     TextView[] btnAnswers = {btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4};
-
-    TextView rightAnswer, wrongAnswer;
+    TextView btnRightAnswer, btnWrongAnswer;
+    String rightAnswerText;
+    ArrayList<String> wrongAnswers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,40 +41,32 @@ public class GameMatchCardsFragment extends GameFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        questionLearncard = learnsetToPlay.getRandomCard(true);
-
         setQuestion(view);
-
+        adjustTextSize(btnAnswers);
+        setSameBtnsHeight(btnAnswers);
     }
+
 
     private void setQuestion(View view){
 
-        tvQuestion.setText(questionLearncard.getExplanation());
-
-        int rightAnswerPosition = new Random().nextInt(4);
-
-        ArrayList<String> wrongAnswers = new ArrayList<>();
-        for (Learncard wrongLearncard : learnsetToPlay.getLearncards()){
-            if (!wrongLearncard.getDefinition().equals(questionLearncard.getDefinition()) || learnsetToPlay.getLearncards().size() == 1){
-                wrongAnswers.add(wrongLearncard.getDefinition());
-            }
-        }
-
+        int rightAnswerPositionIndex = new Random().nextInt(4);
 
         for(int i = 0; i < 4; i++){
 
             btnAnswers[i] = view.findViewById(getResources().getIdentifier("btnMatchCardsAnswer" + (i + 1), "id", getActivity().getPackageName()));
 
-            if(i == rightAnswerPosition){
+            setBtnWidth(btnAnswers[i]);
 
-                btnAnswers[i].setText(questionLearncard.getDefinition());
-                rightAnswer = btnAnswers[i];
-                rightAnswer.setOnClickListener(v -> onRightAnswer());
+            if(i == rightAnswerPositionIndex){
+
+                btnAnswers[i].setText(rightAnswerText);
+                btnRightAnswer = btnAnswers[i];
+                btnRightAnswer.setOnClickListener(v -> onRightAnswer());
 
             } else {
 
                 int randomWrongAnswerIndex = new Random().nextInt(wrongAnswers.size());
+
                 btnAnswers[i].setText(wrongAnswers.get(randomWrongAnswerIndex));
 
                 if (wrongAnswers.size() > 1) {
@@ -79,7 +74,40 @@ public class GameMatchCardsFragment extends GameFragment {
                 }
 
                 int finalI = i;
-                btnAnswers[i].setOnClickListener(v -> {wrongAnswer = btnAnswers[finalI]; onWrongAnswer(); });
+                btnAnswers[i].setOnClickListener(v -> {
+                    btnWrongAnswer = btnAnswers[finalI]; onWrongAnswer(); });
+            }
+        }
+
+    }
+
+    @Override
+    protected void onQuestionTypeDefinition() {
+        super.onQuestionTypeDefinition();
+
+        rightAnswerText = questionLearncard.getExplanation();
+
+        wrongAnswers = new ArrayList<>();
+
+        for (Learncard wrongLearncard : learnsetToPlay.getLearncards()){
+            if (!wrongLearncard.getDefinition().equals(questionLearncard.getDefinition()) || learnsetToPlay.getLearncards().size() == 1){
+                wrongAnswers.add(wrongLearncard.getExplanation());
+            }
+        }
+
+    }
+
+    @Override
+    protected void onQuestionTypeExplanation() {
+        super.onQuestionTypeExplanation();
+
+        rightAnswerText = questionLearncard.getDefinition();
+
+        wrongAnswers = new ArrayList<>();
+
+        for (Learncard wrongLearncard : learnsetToPlay.getLearncards()){
+            if (!wrongLearncard.getDefinition().equals(questionLearncard.getDefinition()) || learnsetToPlay.getLearncards().size() == 1){
+                wrongAnswers.add(wrongLearncard.getDefinition());
             }
         }
     }
@@ -88,7 +116,7 @@ public class GameMatchCardsFragment extends GameFragment {
     protected void onSkipped() {
         super.onSkipped();
         allButtonsUnclickable();
-        rightAnswer.setTextColor(getResources().getColor(R.color.green));
+        btnRightAnswer.setTextColor(getResources().getColor(R.color.green));
     }
 
     @Override
@@ -96,7 +124,7 @@ public class GameMatchCardsFragment extends GameFragment {
 
         super.onMissedAnswer();
         allButtonsUnclickable();
-        rightAnswer.setTextColor(getResources().getColor(R.color.green));
+        btnRightAnswer.setTextColor(getResources().getColor(R.color.green));
 
     }
 
@@ -104,8 +132,8 @@ public class GameMatchCardsFragment extends GameFragment {
     protected void onWrongAnswer() {
         super.onWrongAnswer();
 
-        wrongAnswer.setTextColor(getResources().getColor(R.color.red));
-        rightAnswer.setTextColor(getResources().getColor(R.color.green));
+        btnWrongAnswer.setTextColor(getResources().getColor(R.color.red));
+        btnRightAnswer.setTextColor(getResources().getColor(R.color.green));
         allButtonsUnclickable();
     }
 
@@ -113,7 +141,7 @@ public class GameMatchCardsFragment extends GameFragment {
     protected void onRightAnswer() {
         super.onRightAnswer();
 
-        rightAnswer.setTextColor(getResources().getColor(R.color.green));
+        btnRightAnswer.setTextColor(getResources().getColor(R.color.green));
         allButtonsUnclickable();
 
     }
@@ -123,5 +151,69 @@ public class GameMatchCardsFragment extends GameFragment {
             btnAnswer.setClickable(false);
             btnAnswer.setFocusable(false);
         }
+    }
+
+    private void setBtnWidth(TextView btnAnswer){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        btnAnswer.setWidth(displayMetrics.widthPixels * 9/20);
+    }
+
+    private void adjustTextSize(final TextView[] btnAnswers) {
+        // Post a runnable to be executed after the layout pass
+        btnAnswers[0].post(new Runnable() {
+            @Override
+            public void run() {
+                int maxTextLines = 0;
+
+                // Determine the maximum line count among the TextViews
+                for (TextView btnAnswer : btnAnswers) {
+                    int lineCount = btnAnswer.getLineCount();
+                    if (lineCount > maxTextLines) {
+                        maxTextLines = lineCount;
+                    }
+                }
+
+                // Adjust text size based on the maximum line count
+                for (TextView btnAnswer : btnAnswers) {
+                    if (btnAnswer.getLineCount() > 2){
+                        btnAnswer.setGravity(View.TEXT_ALIGNMENT_TEXT_START);
+                    }
+
+                    if (maxTextLines > 3 && maxTextLines <= 6) {
+                        btnAnswer.setTextSize(18);
+                    }
+                    if (maxTextLines > 6) {
+                        btnAnswer.setTextSize(16);
+                    }
+                }
+            }
+        });
+    }
+    private void setSameBtnsHeight(TextView[] btnAnswers) {
+
+        btnAnswers[0].post(new Runnable() {
+            @Override
+            public void run() {
+                if (btnAnswers[0].getLineCount() > btnAnswers[1].getLineCount()) {
+                    btnAnswers[1].setHeight(btnAnswers[0].getHeight());
+                    return;
+                }
+
+                if (btnAnswers[1].getLineCount() > btnAnswers[0].getLineCount()) {
+                    btnAnswers[0].setHeight(btnAnswers[1].getHeight());
+                    return;
+                }
+
+                if (btnAnswers[2].getLineCount() > btnAnswers[3].getLineCount()) {
+                    btnAnswers[3].setHeight(btnAnswers[2].getHeight());
+                    return;
+                }
+                if (btnAnswers[3].getLineCount() > btnAnswers[2].getLineCount()) {
+                    btnAnswers[2].setHeight(btnAnswers[3].getHeight());
+                    return;
+                }
+            }
+        });
     }
 }

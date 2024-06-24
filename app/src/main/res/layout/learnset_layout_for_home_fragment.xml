@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/homeLearnsetBaseLayout"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:background="@drawable/flashcard_background"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp">
+
+        <LinearLayout
+            android:id="@+id/homeLearnsetLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/flashcard_transparent_ripple_background"
+            android:clickable="true"
+            android:paddingHorizontal="6dp">
+
+            <TextView
+                android:id="@+id/tvHomeLearnsetLayoutTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Learnset Title"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginVertical="4dp"
+                />
+
+            <View
+                android:id="@+id/homeLearnsetDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/tvHomeLearnsetLayoutGamesPlayed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Games played: "
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tvHomeLearnsetLayoutCardsLearned"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cards learned: "
+                android:textSize="16sp"
+                android:layout_marginVertical="4dp"/>
+
+            <TextView
+                android:id="@+id/tvHomeLearnsetLayoutProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Completed: "
+                android:textSize="16sp"
+                android:layout_marginVertical="4dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
+

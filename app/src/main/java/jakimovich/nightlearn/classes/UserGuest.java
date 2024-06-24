@@ -1,10 +1,6 @@
 package jakimovich.nightlearn.classes;
 
-import android.net.Uri;
-
-import java.util.ArrayList;
-
-import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.helpers.GeneralHelper;
 
 public class UserGuest extends UserProfile {
 
@@ -16,42 +12,28 @@ public class UserGuest extends UserProfile {
         this.lastname = "Sign in to type";
         this.eMail = "Sign in to type";
         this.password = "Sign in to type";
-        learnsets = MethodsHelper.createSampleLearnsets();
+        this.points = 0;
+        this.gamesPlayed = 0;
+        this.cardsLearned = 0;
+        learnsets = GeneralHelper.createSampleLearnsets();
 
+    }
+    @Override
+    public int getGamesPlayed() {
+        int gamesPlayed = 0;
+        for (Learnset learnset : learnsets) {
+            gamesPlayed += learnset.getGamesPlayed();
+        }
+        return gamesPlayed;
     }
 
     @Override
-    public void setNickname(String nickname) {
-        super.setNickname(nickname);
+    public int getCardsLearned() {
+        int cardsLearned = 0;
+        for (Learnset learnset : learnsets) {
+            cardsLearned += learnset.countCardsLearned();
+        }
+        return cardsLearned;
     }
 
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public void setLastname(String lastname) {
-        super.setLastname(lastname);
-    }
-
-    @Override
-    public void setEMail(String eMail) {
-        super.setEMail(eMail);
-    }
-
-    @Override
-    public void setPassword(String password) {
-        super.setPassword(password);
-    }
-
-    @Override
-    public void setProfilePic(Uri profilePic) {
-        super.setProfilePic(profilePic);
-    }
-
-    @Override
-    public void setLearnsets(ArrayList<Learnset> learnsets) {
-        super.setLearnsets(learnsets);
-    }
 }

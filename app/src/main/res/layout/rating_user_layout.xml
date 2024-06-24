@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/vRatingUserUpperSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brightGray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="10">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="10dp">
+
+            <ImageView
+                android:id="@+id/ivRatingUserPicture"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="2dp"
+                android:background="@drawable/profilepic_background" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tvRatingGamesPlayed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Games played: "
+                    android:textSize="18sp"
+                    android:textColor="@color/brightGray" />
+
+                <TextView
+                    android:id="@+id/tvRatingCardsLearned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0sp"
+                    android:layout_weight="1"
+                    android:text="Cards learned: "
+                    android:textSize="18sp"
+                    android:textColor="@color/brightGray" />
+
+                <TextView
+                    android:id="@+id/tvRatingPointsEarned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Points earned: "
+                    android:textSize="18sp"
+                    android:textColor="@color/brightGray" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvRatingNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/brightGray"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRatingUserPlace"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:text="#1"
+        android:textSize="40sp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/brightGray"
+        android:gravity="center"
+        />
+
+</LinearLayout>
+
+    <View
+        android:id="@+id/vRatingUserLowerSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brightGray" />
+
+</LinearLayout>

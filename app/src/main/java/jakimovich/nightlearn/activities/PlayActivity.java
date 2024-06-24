@@ -16,7 +16,7 @@ import jakimovich.nightlearn.fragments.game.GameManualTypingFragment;
 import jakimovich.nightlearn.fragments.game.GameMatchCardsFragment;
 import jakimovich.nightlearn.fragments.game.GamePreviewFragment;
 import jakimovich.nightlearn.fragments.game.GameResultsFragment;
-import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.helpers.GeneralHelper;
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -26,6 +26,7 @@ public class PlayActivity extends AppCompatActivity {
     int roundsInTotal;
     int rightAnswersNum;
     int cardsLearnedNum;
+    int pointsEarned;
 
 
     @Override
@@ -33,13 +34,14 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        learnsetToPlay = MethodsHelper.getLearnsetFromIntent(getIntent());
+        learnsetToPlay = GeneralHelper.getLearnsetFromIntent(getIntent());
         roundsInTotal = learnsetToPlay.getQuizSettings().getQuestionsAmount();
 
         currentRound = -1;
 
         rightAnswersNum = 0;
         cardsLearnedNum = 0;
+        pointsEarned = 0;
 
         goNextRound();
 
@@ -54,9 +56,9 @@ public class PlayActivity extends AppCompatActivity {
 
         } else if(currentRound < roundsInTotal) {
 
-            int questionType = learnsetToPlay.getQuizSettings().getQuestionType();
+            int questionFragmentType = learnsetToPlay.getQuizSettings().getQuestionType() / 10;
 
-            switch (questionType){
+            switch (questionFragmentType){
                 case 1:
                     fragment = new GameMatchCardsFragment();
                     break;
@@ -69,11 +71,21 @@ public class PlayActivity extends AppCompatActivity {
                     } else {
                         fragment = new GameManualTypingFragment();
                     }
+                    break;
+                default:
+                    fragment = new GameMatchCardsFragment();
+                    break;
 
             }
         } else {
             fragment = new GameResultsFragment();
-            UserService.updateLearnset(learnsetToPlay, getIntent().getExtras().getInt("positionInArray"));
+            learnsetToPlay.gamePlayed();
+
+                UserService.updateLearnset(learnsetToPlay, getIntent().getExtras().getInt("positionInArray"));
+                UserService.updatePoints(pointsEarned);
+                UserService.updateGamesPlayed();
+                UserService.updateCardsLearned();
+
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -103,6 +115,18 @@ public class PlayActivity extends AppCompatActivity {
         return cardsLearnedNum;
     }
 
+    public int getPointsEarned() {
+        return pointsEarned;
+    }
+
+    public void addPoints(int points) {
+        pointsEarned += points;
+    }
+
+    public void removePoints(int points) {
+        pointsEarned -= points;
+    }
+
     public void answeredRight(){
         rightAnswersNum++;
     }
@@ -117,8 +141,6 @@ public class PlayActivity extends AppCompatActivity {
         if (fragment instanceof GameFragment) {
             ((GameFragment) fragment).resetCountDownTimer();
         }
-        //UserService.myUser.getLearnsets(getIntent().getExtras().getInt("positionInArray")).updateLearnset(learnsetToPlay);
-        setResult(RESULT_OK);
     }
 
     @Override

@@ -1,21 +1,21 @@
 package jakimovich.nightlearn.classes;
 
-public class Quiz {
+public class QuizSettings {
 
     private int questionsAmount, answerTimeSec, rightAnswersNumToBeLearned, questionType;
 
-    public Quiz (int questionsAmount,int answerTimeSec, int rightAnswersNumToBeLearned, int questionType){
+    public QuizSettings(int questionsAmount, int answerTimeSec, int rightAnswersNumToBeLearned, int questionType){
         this.questionsAmount = questionsAmount;
         this.answerTimeSec = answerTimeSec;
         this.rightAnswersNumToBeLearned = rightAnswersNumToBeLearned;
         this.questionType = questionType;
     }
 
-    public Quiz(){
+    public QuizSettings(){
         this.questionsAmount = 5;
-        this.answerTimeSec = 10;
+        this.answerTimeSec = 15;
         this.rightAnswersNumToBeLearned = 4;
-        questionType = 1;
+        questionType = 12;
     }
 
     public int getQuestionsAmount() {

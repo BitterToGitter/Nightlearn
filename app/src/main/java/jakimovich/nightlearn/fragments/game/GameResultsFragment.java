@@ -1,5 +1,6 @@
 package jakimovich.nightlearn.fragments.game;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,10 +46,9 @@ public class GameResultsFragment extends Fragment {
         roundsPlayed.setText("Rounds played: " + (((PlayActivity) getActivity()).getCurrentRound() - 1));
         rightAnswersNum.setText("Right answers given: " + ((PlayActivity) getActivity()).getRightAnswersNum());
         cardsLearnedNum.setText("Cards learned for session: " + ((PlayActivity) getActivity()).getCardsLearnedNum());
-        pointsEarned.setText("Points earned: ");
-        //Todo: to end up with these
+        pointsEarned.setText("Points earned: " + ((PlayActivity) getActivity()).getPointsEarned());
 
-        btnBackHome.setOnClickListener(v -> getActivity().finish());
+        btnBackHome.setOnClickListener(v -> { getActivity().setResult(Activity.RESULT_OK); getActivity().finish(); });
 
     }
 

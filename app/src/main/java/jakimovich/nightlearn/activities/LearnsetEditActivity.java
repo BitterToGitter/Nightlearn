@@ -17,13 +17,15 @@ import android.widget.Toast;
 import jakimovich.nightlearn.R;
 import jakimovich.nightlearn.classes.Learncard;
 import jakimovich.nightlearn.classes.Learnset;
-import jakimovich.nightlearn.classes.Quiz;
+import jakimovich.nightlearn.classes.QuizSettings;
+import jakimovich.nightlearn.helpers.GeneralHelper;
 import jakimovich.nightlearn.helpers.UserService;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 import jakimovich.nightlearn.helpers.LearncardAdapter;
-import jakimovich.nightlearn.helpers.MethodsHelper;
 
 public class LearnsetEditActivity extends AppCompatActivity {
+
+    //Todo: to copy again
 
     TextView tvLearncardName;
     ImageView ivLearncardName, btnAddLearncard, ivEditLearnsetName;
@@ -36,19 +38,19 @@ public class LearnsetEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learnset_edit);
 
-        learnsetToEdit = MethodsHelper.getLearnsetFromIntent(getIntent());
+        learnsetToEdit = GeneralHelper.getLearnsetFromIntent(getIntent());
 
         tvLearncardName = findViewById(R.id.tvEditLearnsetName);
         tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName());
 
         ivLearncardName = findViewById(R.id.ivEditLearnsetName);
-        ivLearncardName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(this,"Update your learnset Name", null, "Update", null, learnsetToEdit.getName(), name -> {learnsetToEdit.setName(name); tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName());}));
+        ivLearncardName.setOnClickListener(v -> AlertDialogHelper.showEditAlertDialog(this,"Update your learnset Name", null, "Update", null, learnsetToEdit.getName(), name -> {learnsetToEdit.setName(name); tvLearncardName.setText("Learnset name: " + learnsetToEdit.getName()); AlertDialogHelper.dismissAlertDialog();}));
 
         btnAddLearncard = findViewById(R.id.ivLearnsetEditBtnAddLearncard);
-        btnAddLearncard.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_btn_add_learncard));
+        btnAddLearncard.setImageDrawable(GeneralHelper.convertSvgToDrawable(this,R.raw.ic_btn_add_learncard));
 
         ivEditLearnsetName = findViewById(R.id.ivEditLearnsetName);
-        ivEditLearnsetName.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_edit));
+        ivEditLearnsetName.setImageDrawable(GeneralHelper.convertSvgToDrawable(this,R.raw.ic_edit));
 
         btnCancel = findViewById(R.id.btnLearnsetEditCancel);
         btnCancel.setOnClickListener(v -> finish());
@@ -96,10 +98,17 @@ public class LearnsetEditActivity extends AppCompatActivity {
     private void quizSettings(){
 
         Intent intent = new Intent(this, QuizSettingsActivity.class);
+
         intent.putExtra("numberOfQuestions", learnsetToEdit.getQuizSettings().getQuestionsAmount());
         intent.putExtra("timeForAnswering", learnsetToEdit.getQuizSettings().getAnswerTimeSec());
         intent.putExtra("numCountedAsLearned", learnsetToEdit.getQuizSettings().getRightAnswersNumToBeLearned());
         intent.putExtra("questionType", learnsetToEdit.getQuizSettings().getQuestionType());
+
+        if (learnsetToEdit.countCardsSeen() > 0){
+            intent.putExtra("learnsetWasPlayedOnce", true);
+        } else {
+            intent.putExtra("learnsetWasPlayedOnce", false);
+        }
 
         startActivityForResult(intent, 1);
 
@@ -111,8 +120,8 @@ public class LearnsetEditActivity extends AppCompatActivity {
 
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
-                Quiz quiz = new Quiz(data.getExtras().getInt("numberOfQuestions"), data.getExtras().getInt("timeForAnswering"), data.getExtras().getInt("numCountedAsLearned"), data.getExtras().getInt("questionType"));
-                learnsetToEdit.setQuizSettings(quiz);
+                QuizSettings quizSettings = new QuizSettings(data.getExtras().getInt("numberOfQuestions"), data.getExtras().getInt("timeForAnswering"), data.getExtras().getInt("numCountedAsLearned"), data.getExtras().getInt("questionType"));
+                learnsetToEdit.setQuizSettings(quizSettings);
             }
         }
 

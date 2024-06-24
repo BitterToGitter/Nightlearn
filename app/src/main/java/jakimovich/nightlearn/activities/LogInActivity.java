@@ -4,6 +4,7 @@ import static jakimovich.nightlearn.helpers.AlertDialogHelper.showOptionsAlertDi
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,13 +25,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import jakimovich.nightlearn.R;
-import jakimovich.nightlearn.helpers.MethodsHelper;
+import jakimovich.nightlearn.helpers.GeneralHelper;
 
 public class LogInActivity extends AppCompatActivity {
 
     ImageView ivOptionsMenuBtn;
     EditText etEmail, etPassword;
-    TextView tvBntContinue, tvGoSignUp;
+    TextView tvGoSignUp;
     LinearLayout btnContinue;
     Button btnContinueGuest;
 
@@ -42,15 +44,15 @@ public class LogInActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etLogInEmail);
         etPassword = findViewById(R.id.etLogInPassword);
 
-        tvBntContinue = findViewById(R.id.tvLogInContinue);
         tvGoSignUp = findViewById(R.id.tvGoSignUp);
 
         btnContinue = findViewById(R.id.LogInLayoutContinue);
+        GeneralHelper.onKeyEnter(etPassword, v -> logIn());
 
         btnContinueGuest = findViewById(R.id.btnLogInGuest);
 
         ivOptionsMenuBtn = findViewById(R.id.logInOptionsMenuBtn);
-        ivOptionsMenuBtn.setImageDrawable(MethodsHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
+        ivOptionsMenuBtn.setImageDrawable(GeneralHelper.convertSvgToDrawable(this,R.raw.ic_auth_options_menu_button));
 
         ivOptionsMenuBtn.setOnClickListener(v -> showPopupWindow(v));
         btnContinue.setOnClickListener(v -> logIn());
@@ -63,6 +65,11 @@ public class LogInActivity extends AppCompatActivity {
 
     private void logIn(){
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
@@ -74,7 +81,6 @@ public class LogInActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(this, "User has been signed in successfully", Toast.LENGTH_SHORT).show();
-                //UserService.getUserById(FirebaseAuth.getInstance().getCurrentUser().getUid(), this);
                 startActivity(new Intent(LogInActivity.this, SplashActivity.class));
                 finishAffinity();
             } else {
@@ -134,7 +140,7 @@ public class LogInActivity extends AppCompatActivity {
         tvExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOptionsAlertDialog(LogInActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finnishAffinity());
+                showOptionsAlertDialog(LogInActivity.this, "Are you sure you want to exit?", "Yeah \n Let's get out", "Nope \n Back to study", v1 -> finnishAffinity(), v2 ->{});
                 popupWindow.dismiss();
             }
             private void finnishAffinity() {
@@ -146,5 +152,5 @@ public class LogInActivity extends AppCompatActivity {
 
         popupWindow.showAsDropDown(view);
     }
-
+//Todo: to copy again
 }

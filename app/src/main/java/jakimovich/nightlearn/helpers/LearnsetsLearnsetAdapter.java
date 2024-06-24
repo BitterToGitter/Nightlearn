@@ -23,12 +23,12 @@ import jakimovich.nightlearn.activities.LearnsetEditActivity;
 import jakimovich.nightlearn.activities.PlayActivity;
 import jakimovich.nightlearn.classes.Learnset;
 
-public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHolder> {
+public class LearnsetsLearnsetAdapter extends RecyclerView.Adapter<LearnsetsLearnsetAdapter.ViewHolder> {
 
     private List<Learnset> learnsetList;
     private Context context;
 
-    public LearnsetAdapter(Context context, List<Learnset> learnsetList) {
+    public LearnsetsLearnsetAdapter(Context context, List<Learnset> learnsetList) {
         this.context = context;
         this.learnsetList = learnsetList;
     }
@@ -36,7 +36,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learnset_layout_for_lernsets_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learnset_layout_for_lernsets_fragment, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,7 +52,7 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
         holder.progressBar.setProgress(learnset.countProgress());
 
         holder.optionsMenu.setOnClickListener(v -> holder.showPopupWindow(v, learnset, position));
-        holder.llLearncardPresentationBase.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class), 0);}));
+        holder.learnsetLayout.setOnClickListener(v -> AlertDialogHelper.showPlayAlertDialog((Activity) context, learnset.getName(), learnset.getQuizSettings().getQuestionsAmount(), learnset.getQuizSettings().getAnswerTimeSec(), v1 -> {((Activity) context).startActivityForResult(GeneralHelper.putLearnsetIntoIntent((Activity) context, learnset, position, PlayActivity.class), 0);}));
 
     }
 
@@ -62,22 +62,23 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout llLearncardPresentationBase;
+        LinearLayout learnsetLayout;
         TextView tvLearnsetTitle, tvCardsNum, tvSeenCards, tvLearnedCards, tvLearnsetProgress;
         ImageView optionsMenu;
         ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvLearnsetTitle = itemView.findViewById(R.id.tvlearnsetTitle);
             tvCardsNum = itemView.findViewById(R.id.tvLearnsetCardsNum);
             tvSeenCards = itemView.findViewById(R.id.tvLearnsetSeenCards);
             tvLearnedCards = itemView.findViewById(R.id.tvLearnsetLearnedCards);
             tvLearnsetProgress = itemView.findViewById(R.id.tvLearnsetProgress);
-            llLearncardPresentationBase = itemView.findViewById(R.id.llLearncardPresentationBase);
+            learnsetLayout = itemView.findViewById(R.id.learnsetsListLearnsetLayout);
             progressBar = itemView.findViewById(R.id.progressBar);
 
             optionsMenu = itemView.findViewById(R.id.ivOptionsMenuButton);
-            optionsMenu.setImageDrawable(MethodsHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
+            optionsMenu.setImageDrawable(GeneralHelper.convertSvgToDrawable(context, R.raw.ic_learnsets_options_menu_button));
 
         }
 
@@ -92,20 +93,20 @@ public class LearnsetAdapter extends RecyclerView.Adapter<LearnsetAdapter.ViewHo
 
             tvEdit.setOnClickListener(v -> {
                 if (UserService.isGuest()){
-                    showWarningAlertDialog((Activity) context, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok");
+                    showWarningAlertDialog((Activity) context, "This option is available for registered users only. \n Sign in to make all kinds of learnsets!", "Ok", vi -> {});
                     popupWindow.dismiss();
                 } else {
-                    ((Activity) context).startActivityForResult(MethodsHelper.putLearnsetIntoIntent((Activity) context, learnset, position, LearnsetEditActivity.class), 0);
+                    ((Activity) context).startActivityForResult(GeneralHelper.putLearnsetIntoIntent((Activity) context, learnset, position, LearnsetEditActivity.class), 0);
                     popupWindow.dismiss();
                 }
             });
 
             tvDelete.setOnClickListener(v -> {
                 if(UserService.isGuest()){
-                    showWarningAlertDialog((Activity) context, "Only registered users can delete the sample learnsets. \n Sign in to manage the learnsets as you wish.", "Ok");
+                    showWarningAlertDialog((Activity) context, "Only registered users can delete the sample learnsets. \n Sign in to manage the learnsets as you wish.", "Ok", vi -> {});
                     popupWindow.dismiss();
                 } else{
-                AlertDialogHelper.showOptionsAlertDialog((Activity) context, "Are you sure you want to delete the learnset? There will be no way to return in.", "Delete","Cancel", v1 -> {UserService.removeLearnset(position); notifyDataSetChanged();});
+                AlertDialogHelper.showOptionsAlertDialog((Activity) context, "Are you sure you want to delete the learnset? There will be no way to return in.", "Delete","Cancel", v1 -> {UserService.removeLearnset(position); notifyDataSetChanged();}, v2 ->{});
                 popupWindow.dismiss();
                 }
             });

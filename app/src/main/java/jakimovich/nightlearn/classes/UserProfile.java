@@ -6,15 +6,18 @@ import java.util.ArrayList;
 
 public abstract class UserProfile  {
 
+    //Todo: To copy again
+
     protected String nickname;
     protected String name;
     protected String lastname;
     protected String eMail;
     protected String password;
-    protected Uri profilePic;
     protected ArrayList<Learnset> learnsets;
 
     protected int points;
+    protected int gamesPlayed;
+    protected int cardsLearned;
 
     public String getNickname() {
         return nickname;
@@ -32,13 +35,16 @@ public abstract class UserProfile  {
         return password;
     }
 
-    public int getPoints() {return points;}
-
-    public Uri getProfilePic() {
-        return profilePic;
+    public int getGamesPlayed() {
+        return gamesPlayed;
     }
-    public ArrayList<Learnset> getLearnsets() {return learnsets;}
 
+    public int getCardsLearned() {
+        return cardsLearned;
+    }
+
+    public int getPoints() {return points;}
+    public ArrayList<Learnset> getLearnsets() {return learnsets;}
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -55,13 +61,18 @@ public abstract class UserProfile  {
         this.password = password;
     }
     public void setPoints(int points) {this.points = points;}
-    public void setProfilePic(Uri profilePic) {
-        this.profilePic = profilePic;
-    }//TODO: Uri isn't a way to upload an image. It wouldn't appear
+
+    public void setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed = gamesPlayed;
+    }
+
+    public void setCardsLearned(int cardsLearned) {
+        this.cardsLearned = cardsLearned;
+    }
 
     public void setLearnsets(ArrayList<Learnset> learnsets) {this.learnsets = learnsets;}
 
-
     public void addPoints(int points) {this.points += points;}
 
+    public void removePoints(int points) {this.points -= points;}
 }

@@ -26,4 +26,232 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvManualTypingSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Type right definition!"
+        android:textSize="30dp"
+        app:layout_constraintVertical_bias="0.05"
+        android:textColor="@color/brightGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llManualTypingTitle" />
+
+    <LinearLayout
+        android:id="@+id/llManualTypingQuestionCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/flashcard_background"
+        android:gravity="center_horizontal"
+        android:minWidth="250dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/llManualTypingTimer"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvManualTypingSubTitle">
+
+        <TextView
+            android:id="@+id/tvManualTypingQuestionCardTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="Explanation/Definition:"
+            android:textStyle="italic|bold"/>
+
+        <TextView
+            android:id="@+id/tvManualTypingQuestionCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:maxWidth="300dp"
+            android:text="Some kind of question randomly taken from the learnset"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llManualTypingAnswerInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/flashcard_background"
+        android:orientation="horizontal"
+        android:paddingVertical="5dp"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintBottom_toTopOf="@id/llManualTypingTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llManualTypingQuestionCard">
+
+        <TextView
+            android:id="@+id/tvManualTypingAnswerInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="Definition: "
+            android:textColor="@color/darkGray"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/etManualTypingAnswerInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:textSize="22dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llManualTypingRightAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/flashcard_background"
+        android:orientation="horizontal"
+        android:paddingVertical="5dp"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintBottom_toTopOf="@id/llManualTypingTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llManualTypingAnswerInput">
+
+        <TextView
+            android:id="@+id/tvManualTypingRightAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:text="Right answer: "
+            android:textColor="@color/green"
+            android:textSize="22dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llManualTypingBtnEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintBottom_toTopOf="@id/llManualTypingTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llManualTypingRightAnswer">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/flashcard_transparent_ripple_background"
+            android:gravity="center"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="10dp"
+            android:text="Enter"
+            android:textColor="@color/darkGray"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llManualTypingTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/llManualTypingLevelButtons">
+
+        <TextView
+            android:id="@+id/tvManualTypingTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="15 sec"
+            android:gravity="center"
+            android:textSize="22dp"
+            android:textColor="@color/brightGray"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/darkGray"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llManualTypingLevelButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="15dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/llManualTypingBtnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/flashcard_transparent_ripple_background"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="5dp"
+                android:text="Pause game"
+                android:textColor="@color/darkGray"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/llManualTypingBtnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background">
+
+            <TextView
+                android:id="@+id/tvManualTypingBtnSkip"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/flashcard_transparent_ripple_background"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="Skip this round"
+                android:textColor="@color/darkGray"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

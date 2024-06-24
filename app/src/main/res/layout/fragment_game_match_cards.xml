@@ -34,115 +34,137 @@
         android:text="Choose right definition!"
         android:textSize="30dp"
         android:textColor="@color/brightGray"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/llMatchCardsQuestionCard"
         app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:id="@+id/llMatchCardsQuestionCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/flashcard_background"
+        android:gravity="center_horizontal"
+        android:minWidth="250dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
         app:layout_constraintBottom_toTopOf="@+id/llMatchCardsButtons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle">
+        app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle"
+        app:layout_constraintVertical_bias="0.664">
 
         <TextView
-            android:id="@+id/tvMatchCardsQuestionExplanation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/tvMatchCardsQuestionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:padding="10dp"
-            android:text="Some kind of explanation randomly taken from the learnset"
+            android:text="Explanation/Definition:"
+            android:textSize="18sp"
+            android:textStyle="italic|bold" />
+
+        <TextView
+            android:id="@+id/tvMatchCardsQuestionCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:maxWidth="300dp"
+            android:text="Some kind of question randomly taken from the learnset"
             android:textSize="20dp" />
 
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/llMatchCardsButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/llMatchCardsButtonsLevelButtons"
-        android:layout_marginBottom="5dp">
-
-        <TextView
-            android:id="@+id/tvMatchCardsTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="15 sec"
-            android:gravity="center"
-            android:textSize="22dp"
-            android:textColor="@color/brightGray"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/darkGray"
-            android:layout_marginBottom="10dp"/>
+        app:layout_constraintBottom_toTopOf="@id/llMatchCardsLevelButtons"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMatchCardsTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="15 sec"
+                android:gravity="center"
+                android:textSize="22dp"
+                android:textColor="@color/brightGray"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/darkGray"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/btnMatchCardsAnswer1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="30dp"
-                        android:paddingVertical="20dp"
-                        android:textSize="20dp"
-                        android:text="Answer 1"
-                        android:textColor="@color/alert_dialog_textcolor_focused"
-                        android:background="@drawable/btn_background"/>
-
+                <TextView
+                    android:id="@+id/btnMatchCardsAnswer1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:textSize="20sp"
+                    android:text="Answer 1"
+                    android:gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:textColor="@color/dark_gray_focused"
+                    android:background="@drawable/btn_background" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/btnMatchCardsAnswer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="30dp"
+                    android:paddingHorizontal="20dp"
                     android:paddingVertical="20dp"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginVertical="5dp"
                     android:background="@drawable/btn_background"
-                    android:textColor="@color/alert_dialog_textcolor_focused"
-                    android:text="Answer 2"/>
+                    android:textColor="@color/dark_gray_focused"
+                    android:text="Answer 2" />
 
             </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:gravity="center">
 
                 <TextView
@@ -150,49 +172,52 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_background"
-                    android:paddingHorizontal="30dp"
+                    android:paddingHorizontal="20dp"
                     android:paddingVertical="20dp"
-                    android:textColor="@color/alert_dialog_textcolor_focused"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray_focused"
                     android:text="Answer 3"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/btnMatchCardsAnswer4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="30dp"
+                    android:paddingHorizontal="20dp"
                     android:paddingVertical="20dp"
-                    android:textSize="20dp"
-                    android:textColor="@color/alert_dialog_textcolor_focused"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray_focused"
                     android:background="@drawable/btn_background"
-                    android:text="Answer 4"/>
+                    android:text="Answer 4" />
 
             </LinearLayout>
 
+        </GridLayout>
 
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/darkGray"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginVertical="5dp"/>
 
     </LinearLayout>
 
 
 
-
     <LinearLayout
-        android:id="@+id/llMatchCardsButtonsLevelButtons"
+        android:id="@+id/llMatchCardsLevelButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
