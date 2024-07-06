@@ -51,7 +51,6 @@ public class ImageFilesManager {
 
             pictureRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
                 {
-                    //File pictureFile = new File(
                     // Create parent directories if they don't exist
                     if (!pictureFile.getParentFile().exists()) {
                         pictureFile.getParentFile().mkdirs();
@@ -163,8 +162,8 @@ public class ImageFilesManager {
 
     }
     
-    public static void setPicIntoImageView(Context context, File file, ImageView imageView){
-        Glide.with(context).load(Uri.fromFile(file)).signature(new ObjectKey(System.currentTimeMillis())).apply(RequestOptions.circleCropTransform()).into(imageView);
+    public static void setPicIntoImageView(Context context, Uri pictureUri, ImageView imageView){
+        Glide.with(context).load(pictureUri).signature(new ObjectKey(System.currentTimeMillis())).apply(RequestOptions.circleCropTransform()).into(imageView);
     }
 
 }

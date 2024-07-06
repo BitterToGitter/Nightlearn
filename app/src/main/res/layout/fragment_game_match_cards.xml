@@ -34,8 +34,8 @@
         android:text="Choose right definition!"
         android:textSize="30dp"
         android:textColor="@color/brightGray"
-        app:layout_constraintBottom_toTopOf="@+id/llMatchCardsQuestionCard"
-        app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle" />
+        app:layout_constraintBottom_toTopOf="@id/llMatchCardsQuestionCard"
+        app:layout_constraintTop_toBottomOf="@id/llMatchCardsTitle" />
 
     <LinearLayout
         android:id="@+id/llMatchCardsQuestionCard"
@@ -46,11 +46,11 @@
         android:minWidth="250dp"
         android:orientation="vertical"
         android:paddingHorizontal="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/llMatchCardsButtons"
+        app:layout_constraintBottom_toTopOf="@id/llMatchCardsButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llMatchCardsTitle"
+        app:layout_constraintTop_toBottomOf="@id/llMatchCardsTitle"
         app:layout_constraintVertical_bias="0.664">
 
         <TextView

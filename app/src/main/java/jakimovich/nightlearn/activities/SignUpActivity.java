@@ -6,6 +6,7 @@ import static jakimovich.nightlearn.helpers.InputChecker.lastnameCheck;
 import static jakimovich.nightlearn.helpers.InputChecker.nameCheck;
 import static jakimovich.nightlearn.helpers.InputChecker.nicknameCheck;
 import static jakimovich.nightlearn.helpers.InputChecker.passwordCheck;
+import static jakimovich.nightlearn.helpers.InputChecker.uniqueNicknameCheck;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -90,31 +91,36 @@ public class SignUpActivity extends AppCompatActivity  {
         String password = etPassword.getText().toString().trim();
         String repeatPassword = etRepeatPassword.getText().toString().trim();
 
-        if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || eMail.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
-            Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        uniqueNicknameCheck(this, nickname, isUnique -> {
 
-        if(!password.equals(repeatPassword)){
-            Toast.makeText(this, "Passwords don't match to each other", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            if (isUnique) {
 
-        if(!(nameCheck(this, name) && lastnameCheck(this, lastname) && nicknameCheck(this, nickname) && gmailCheck(this, eMail) && passwordCheck(this, password))){
-            return;
-        }
+                if(nickname.isEmpty() || name.isEmpty() || lastname.isEmpty() || eMail.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
+                    Toast.makeText(this, "Please enter all the data", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                UserService.setMyUser(new UserVerified(nickname, name, lastname, eMail, password, 0, GeneralHelper.createSampleLearnsets()));
-                Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                if(!password.equals(repeatPassword)){
+                    Toast.makeText(this, "Passwords don't match to each other", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!(nameCheck(this, name) && lastnameCheck(this, lastname) && nicknameCheck(this, nickname) && gmailCheck(this, eMail) && passwordCheck(this, password))){
+                    return;
+                }
+
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        UserService.setMyUser(new UserVerified(nickname, name, lastname, eMail, password, 0, GeneralHelper.createSampleLearnsets()));
+                        Toast.makeText(this, "User has been created successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUpActivity.this, SplashActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-
     }
 
     private void guestEnter(){
@@ -180,5 +186,3 @@ public class SignUpActivity extends AppCompatActivity  {
     }
 
 }
-
-//Todo: to copy again

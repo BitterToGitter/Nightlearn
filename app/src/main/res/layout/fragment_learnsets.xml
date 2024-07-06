@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llLearnsetsFragmentTitle"
+        app:layout_constraintTop_toBottomOf="@id/llLearnsetsFragmentTitle"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llLearnsetsListTitle"
+        app:layout_constraintTop_toBottomOf="@id/llLearnsetsListTitle"
         android:clipToPadding="false"
         android:paddingBottom="75dp"
         android:paddingTop="8dp">

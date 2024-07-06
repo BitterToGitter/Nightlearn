@@ -16,8 +16,6 @@ import jakimovich.nightlearn.activities.PlayActivity;
 import jakimovich.nightlearn.helpers.AlertDialogHelper;
 
 public class GamePreviewFragment extends GameFragment {
-
-    //Todo: to copy again
     TextView tvPreCountDown, tvReadySteadyGo;
     @Override
     public void onCreate(Bundle savedInstanceState) {

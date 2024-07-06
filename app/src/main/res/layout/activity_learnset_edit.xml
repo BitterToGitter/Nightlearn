@@ -36,7 +36,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llEditLearnsetTitle" />
+        app:layout_constraintTop_toBottomOf="@id/llEditLearnsetTitle" />
 
     <LinearLayout
         android:id="@+id/llForETLearnsetName"
@@ -46,7 +46,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/giveYourLearnsetAName">
+        app:layout_constraintTop_toBottomOf="@id/giveYourLearnsetAName">
 
         <LinearLayout
             android:id="@+id/lletEditLearnsetName"
@@ -95,7 +95,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llForETLearnsetName" />
+        app:layout_constraintTop_toBottomOf="@id/llForETLearnsetName" />
 
     <LinearLayout
         android:id="@+id/llAddSomeCards"
@@ -104,7 +104,7 @@
         android:orientation="vertical"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buildIitUp">
+        app:layout_constraintTop_toBottomOf="@id/buildIitUp">
 
 
         <LinearLayout
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llAddSomeCards"
+        app:layout_constraintTop_toBottomOf="@id/llAddSomeCards"
         app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -160,9 +160,9 @@
         android:text="Save"
         android:textSize="20dp"
         android:background="@drawable/btn_background"
-        app:layout_constraintEnd_toStartOf="@+id/btnLearnsetEditCancel"
+        app:layout_constraintEnd_toStartOf="@id/btnLearnsetEditCancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLearnsetEditQuizSettings" />
+        app:layout_constraintTop_toBottomOf="@id/btnLearnsetEditQuizSettings" />
 
     <Button
         android:id="@+id/btnLearnsetEditCancel"
@@ -175,7 +175,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLearnsetEditQuizSettings" />
+        app:layout_constraintTop_toBottomOf="@id/btnLearnsetEditQuizSettings" />
 
     <Button
         android:id="@+id/btnLearnsetEditQuizSettings"
@@ -188,7 +188,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llEditLearnsetTitle" />
+        app:layout_constraintTop_toBottomOf="@id/llEditLearnsetTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

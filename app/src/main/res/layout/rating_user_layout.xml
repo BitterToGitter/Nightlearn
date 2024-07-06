@@ -34,8 +34,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="2dp"
-                android:background="@drawable/profilepic_background" />
-
+                android:background="@drawable/profilepic_background"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

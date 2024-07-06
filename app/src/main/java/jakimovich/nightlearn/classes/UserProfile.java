@@ -5,9 +5,6 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public abstract class UserProfile  {
-
-    //Todo: To copy again
-
     protected String nickname;
     protected String name;
     protected String lastname;

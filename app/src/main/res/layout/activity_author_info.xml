@@ -17,11 +17,11 @@
         android:textColor="@color/brightGray"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
+        app:layout_constraintBottom_toTopOf="@id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.319"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSwichLanguage"
+        app:layout_constraintTop_toBottomOf="@id/tvSwichLanguage"
         app:layout_constraintVertical_bias="0.303" />
 
     <TextView
@@ -35,11 +35,11 @@
         android:textColor="@color/brightGray"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
+        app:layout_constraintBottom_toTopOf="@id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSwichLanguage"
+        app:layout_constraintTop_toBottomOf="@id/tvSwichLanguage"
         app:layout_constraintVertical_bias="0.303" />
 
     <Button
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSwichLanguage"
+        app:layout_constraintTop_toBottomOf="@id/tvSwichLanguage"
         app:layout_constraintVertical_bias="0.807" />
 
     <LinearLayout
@@ -85,11 +85,11 @@ Here you can check for some information about this project and person who made i
         android:textColor="@color/white"
         android:textSize="16dp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
+        app:layout_constraintBottom_toTopOf="@id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llLearnsetsFragmentTitle"
+        app:layout_constraintTop_toBottomOf="@id/llLearnsetsFragmentTitle"
         app:layout_constraintVertical_bias="0.05" />
 
     <androidx.viewpager.widget.ViewPager
@@ -98,11 +98,11 @@ Here you can check for some information about this project and person who made i
         android:layout_height="385dp"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnAuthorGetBack"
+        app:layout_constraintBottom_toTopOf="@id/btnAuthorGetBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPreInfo"
+        app:layout_constraintTop_toBottomOf="@id/tvPreInfo"
         app:layout_constraintVertical_bias="0.158" />
 
     <TextView
@@ -116,7 +116,7 @@ Here you can check for some information about this project and person who made i
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorView_pager"
+        app:layout_constraintTop_toBottomOf="@id/authorView_pager"
         app:layout_constraintVertical_bias="0.203" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

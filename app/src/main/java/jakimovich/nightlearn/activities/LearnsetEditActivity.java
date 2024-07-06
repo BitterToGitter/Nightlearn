@@ -25,8 +25,6 @@ import jakimovich.nightlearn.helpers.LearncardAdapter;
 
 public class LearnsetEditActivity extends AppCompatActivity {
 
-    //Todo: to copy again
-
     TextView tvLearncardName;
     ImageView ivLearncardName, btnAddLearncard, ivEditLearnsetName;
     Learnset learnsetToEdit;

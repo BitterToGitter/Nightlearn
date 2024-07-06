@@ -109,6 +109,13 @@ public class AlertDialogHelper {
         builder.setView(view);
         alertDialog = builder.create();
 
+        GeneralHelper.onKeyEnter(editText, v -> {
+            String output = editText.getText().toString().trim();
+            if (!output.isEmpty()) {
+                listener.onTextEntered(output);
+            }
+        });
+
         alertAccept.setOnClickListener(v -> {
                 String output = editText.getText().toString().trim();
                 if (!output.isEmpty()) {
@@ -195,6 +202,5 @@ public class AlertDialogHelper {
     public static void dismissAlertDialog(){
         alertDialog.dismiss();
     }
-//Todo: to copy again
 }
 

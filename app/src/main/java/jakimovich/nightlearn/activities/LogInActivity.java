@@ -152,5 +152,4 @@ public class LogInActivity extends AppCompatActivity {
 
         popupWindow.showAsDropDown(view);
     }
-//Todo: to copy again
 }

@@ -44,7 +44,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llActivityQuizSettingsTitle" />
+        app:layout_constraintTop_toBottomOf="@id/llActivityQuizSettingsTitle" />
 
 
         <LinearLayout
@@ -59,7 +59,7 @@
             android:background="@drawable/flashcard_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQuestionType">
+            app:layout_constraintTop_toBottomOf="@id/tvQuestionType">
 
             <TextView
                 android:id="@+id/tvEditCardsMatch"
@@ -101,7 +101,7 @@
             android:background="@drawable/flashcard_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llCardsMatch">
+            app:layout_constraintTop_toBottomOf="@id/llCardsMatch">
 
             <TextView
                 android:id="@+id/tvManualTyping"
@@ -188,7 +188,7 @@
         android:layout_height="2dp"
         android:background="@color/brightGray"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/llDefOrExpl"
+        app:layout_constraintTop_toBottomOf="@id/llDefOrExpl"
         />
 
     <TextView
@@ -202,7 +202,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vDivider1" />
+        app:layout_constraintTop_toBottomOf="@id/vDivider1" />
 
     <jakimovich.nightlearn.helpers.CustomSeekBar
         android:id="@+id/sbNumberOfQuestions"
@@ -222,7 +222,7 @@
         android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumberOfQuestions"/>
+        app:layout_constraintTop_toBottomOf="@id/tvNumberOfQuestions"/>
 
     <TextView
         android:id="@+id/tvTimeForAnswering"
@@ -235,7 +235,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbNumberOfQuestions" />
+        app:layout_constraintTop_toBottomOf="@id/sbNumberOfQuestions" />
 
     <jakimovich.nightlearn.helpers.CustomSeekBarSec
         android:id="@+id/sbTimeForAnswering"
@@ -255,7 +255,7 @@
         android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeForAnswering"/>
+        app:layout_constraintTop_toBottomOf="@id/tvTimeForAnswering"/>
 
     <View
         android:id="@+id/vDivider2"
@@ -263,7 +263,7 @@
         android:layout_height="2dp"
         android:background="@color/brightGray"
         android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/sbTimeForAnswering"
+        app:layout_constraintTop_toBottomOf="@id/sbTimeForAnswering"
         />
 
     <TextView
@@ -279,7 +279,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vDivider2" />
+        app:layout_constraintTop_toBottomOf="@id/vDivider2" />
 
         <LinearLayout
             android:id="@+id/llSbNumCountedAsLearned"
@@ -288,7 +288,7 @@
             android:layout_marginHorizontal="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNumCountedAsLearned">
+            app:layout_constraintTop_toBottomOf="@id/tvNumCountedAsLearned">
 
             <jakimovich.nightlearn.helpers.CustomSeekBar
                 android:id="@+id/sbNumCountedAsLearned"
@@ -320,7 +320,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.232"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llSbNumCountedAsLearned" />
+            app:layout_constraintTop_toBottomOf="@id/llSbNumCountedAsLearned" />
 
         <Button
             android:id="@+id/btnQuizSettingsCancel"
@@ -333,7 +333,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.797"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llSbNumCountedAsLearned" />
+            app:layout_constraintTop_toBottomOf="@id/llSbNumCountedAsLearned" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

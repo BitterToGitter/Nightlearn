@@ -180,7 +180,6 @@ public class QuizSettingsActivity extends AppCompatActivity {
             return;
         }
 
-        //Todo: to copy again
         Intent intent = new Intent();
         intent.putExtra("numberOfQuestions", sbNumberOfQuestions.getProgress());
         intent.putExtra("numCountedAsLearned", sbNumCountedAsLearned.getProgress());

@@ -1,6 +1,7 @@
 package jakimovich.nightlearn.helpers;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.tvCardsLearned.setText("Cards learned: " + user.getCardsLearned());
         holder.tvPointsEarned.setText("Points in total: " + user.getPoints());
         holder.tvPlace.setText("#" + (position + 1));
+        holder.ivUserPicture.setImageDrawable(GeneralHelper.convertSvgToDrawable(context, R.raw.profile));
 
         setRatingUserProfilePicture(context, user, holder.ivUserPicture);
 
@@ -82,7 +84,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvNickname, tvGamesPlayed, tvCardsLearned, tvPointsEarned, tvPlace;
-        ImageView ivUserPicture; //Todo: Add user picture
+        ImageView ivUserPicture;
         View upperSeparator, lowerSeparator;
 
         public ViewHolder(@NonNull View itemView) {
@@ -101,19 +103,10 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     }
     private void setRatingUserProfilePicture(Context context, UserRatingInfo user, ImageView ivUserPicture) {
 
-        File ratingProfilePic = new File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM) +"/ratingProfiles/", user.getNickname() + ".jpg");
         StorageReference ratingProfilePicRef = FirebaseStorage.getInstance().getReference("users/" + user.getUserId() + "/profilePic.jpg");
 
-        if (ratingProfilePic.exists()){
-            ImageFilesManager.setPicIntoImageView(context, ratingProfilePic, ivUserPicture);
-        } else {
-            ImageFilesManager.downloadPictureFromStorage(context, ratingProfilePicRef, ratingProfilePic, () -> {
-                if(ratingProfilePic.exists()) {
-                    ImageFilesManager.setPicIntoImageView(context, ratingProfilePic, ivUserPicture);
-                } else {
-                    ivUserPicture.setImageDrawable(GeneralHelper.convertSvgToDrawable(context, R.raw.profile));
-                }
-            });
-        }
+        ratingProfilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            ImageFilesManager.setPicIntoImageView(context, uri, ivUserPicture);
+        });
     }
 }

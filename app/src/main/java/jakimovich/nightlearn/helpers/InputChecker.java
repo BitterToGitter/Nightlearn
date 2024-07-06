@@ -3,7 +3,17 @@ package jakimovich.nightlearn.helpers;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.regex.Pattern;
+
+import jakimovich.nightlearn.interfaces.onUniqueNicknameChecked;
 
 public class InputChecker {
 
@@ -56,6 +66,30 @@ public class InputChecker {
             Toast.makeText(context, "Invalid input: Password must contain minimum 8 characters: latin letters in both cases, numbers and symbols", Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    public static void uniqueNicknameCheck(Context context, String nickname, onUniqueNicknameChecked nicknameChecked){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot nicknameSnapshot : dataSnapshot.getChildren()) {
+                    if (nicknameSnapshot.child("nickname").getValue().toString().equals(nickname)) {
+                        Toast.makeText(context, "This nickname is already taken, try another one!", Toast.LENGTH_SHORT).show();
+                        nicknameChecked.onChecked(false);
+                        return;
+                    }
+                }
+                nicknameChecked.onChecked(true);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+
+        });
+
+
     }
 
 }

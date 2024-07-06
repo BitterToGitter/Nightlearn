@@ -16,24 +16,24 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rulesScrollView"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/rulesScrollView"
         android:layout_width="338dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="185dp"
+        android:layout_marginBottom="150dp"
         android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRulesPreInfo">
+        app:layout_constraintTop_toBottomOf="@id/tvRulesPreInfo">
 
         <TextView
             android:id="@+id/tvRulesInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text='Start the application and you will be greeted with a preview screen that provides some introductory information about the game. \n\n The game consists of several rounds. Each round is either a "Match Cards" round or a "Manual Typing" round. \n In a "Match Cards" round, you will be presented with a question and four possible answers. One of these answers is correct, and the others are incorrect. Your task is to select the correct answer. \n\n In a "Manual Typing" round, you will be presented with a question and you must manually type in the correct answer. \n\n You gain points for correct answers and lose points for incorrect answers. You gain 50 points for a correct answer in "Match Cards" round and 70 points in "Manual Typing" round. \n\n You lose 15 points for an incorrect answer in "Match Cards" round and 10 points in "Manual Typing" round. \n\n The game continues in this loop of rounds until all rounds are completed. \n The total number of rounds is determined by the settings of the game. \n\n After all rounds are completed, the game ends with a results screen, which shows some summary information about the game. \n\n The game also has a countdown timer for each round. If you dont answer the question before the timer runs out, you are considered to have missed the answer and lose points accordingly. \n\n You also have the option to skip a question. If you do so, you lose points and the game moves on to the next round. \n\n The game can be paused at any time. If the game is paused, the countdown timer is stopped. You can then choose to either stop and exit the game or continue playing. \n\n Remember, the goal is to answer as many questions correctly as possible to earn the highest score. Good luck!'
+            android:text='Start the application and you will be greeted with a preview screen that provides some introductory information about the game. \n\nThe game consists of several rounds. Each round is either a "Match Cards" round or a "Manual Typing" round. \n\nIn a "Match Cards" round, you will be presented with a question and four possible answers. One of these answers is correct, and the others are incorrect. Your task is to select the correct answer. \n\nIn a "Manual Typing" round, you will be presented with a question and you must manually type in the correct answer. \n\nYou gain points for correct answers and lose points for incorrect answers. You gain 50 points for a correct answer in "Match Cards" round and 70 points in "Manual Typing" round. \n\nYou lose 15 points for an incorrect answer in "Match Cards" round and 10 points in "Manual Typing" round. \n\nThe game continues in this loop of rounds until all rounds are completed. \nThe total number of rounds is determined by the settings of the game. \n\nAfter all rounds are completed, the game ends with a results screen, which shows some summary information about the game. \n\nThe game also has a countdown timer for each round. If you dont answer the question before the timer runs out, you are considered to have missed the answer and lose points accordingly. \n\nYou also have the option to skip a question. If you do so, you lose points and the game moves on to the next round. \n\nThe game can be paused at any time. If the game is paused, the countdown timer is stopped. You can then choose to either stop and exit the game or continue playing. \n\nRemember, the goal is to answer as many questions correctly as possible to earn the highest score. Good luck!'
             android:textSize="20dp"
             android:textColor="@color/white"
             android:paddingVertical="5dp"
@@ -46,7 +46,7 @@
         android:layout_width="338dp"
         android:layout_height="56dp"
         android:gravity="center"
-        android:text="Check the rules so you'll understand how to gaim the best score!"
+        android:text="Check the rules so you'll understand how to gain the best score!"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="italic"
@@ -55,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.116" />
 
     <LinearLayout
         android:id="@+id/llRulesInfoTitle"

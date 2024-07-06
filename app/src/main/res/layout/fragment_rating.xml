@@ -6,6 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.main.RatingFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ratingRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="76dp"
+        android:paddingBottom="75dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <LinearLayout
         android:id="@+id/llRatingFragmentTitle"
         android:layout_width="match_parent"
@@ -15,7 +24,7 @@
         android:background="@drawable/background_top"
         app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
+        <TextView
         android:id="@+id/tvRatingFragmentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,13 +35,5 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ratingRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="76dp"
-        android:paddingBottom="75dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

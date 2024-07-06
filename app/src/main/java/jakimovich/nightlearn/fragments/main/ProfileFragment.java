@@ -43,9 +43,6 @@ import jakimovich.nightlearn.helpers.ImageFilesManager;
 import jakimovich.nightlearn.interfaces.OnMethodCompleted;
 
 public class ProfileFragment extends Fragment {
-//Todo: to copy again
-
-
     boolean resultFromGallery = false;
     boolean passwordHidden = true;
     ImageView ivProfilePicture;
@@ -99,7 +96,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
-        //Todo: to copy again
     }
 
     @Override
@@ -217,7 +213,7 @@ public class ProfileFragment extends Fragment {
             imageView.setLongClickable(false);
         }
         else {
-            ImageFilesManager.setPicIntoImageView(getContext(), ImageFilesManager.getProfilePicFile(getContext()) ,ivProfilePicture);
+            ImageFilesManager.setPicIntoImageView(getContext(), Uri.fromFile(ImageFilesManager.getProfilePicFile(getContext())) ,ivProfilePicture);
             imageView.setLongClickable(true);
             imageView.setOnLongClickListener(v -> {showPopupDeleteWindow(v); return true;});
         }
@@ -303,11 +299,13 @@ public class ProfileFragment extends Fragment {
             AlertDialogHelper.dismissAlertDialog();
             return;
         }
-        if (InputChecker.nicknameCheck(getContext(), nickname)) {
-        UserService.updateUserNickname(getContext(), nickname);
-        ((MainActivity) getActivity()).updateCurrentFragment();
-        AlertDialogHelper.dismissAlertDialog();
-        }
+        InputChecker.uniqueNicknameCheck(getContext(), nickname, isUnique -> {
+            if (InputChecker.nicknameCheck(getContext(), nickname) && isUnique) {
+                UserService.updateUserNickname(getContext(), nickname);
+                ((MainActivity) getActivity()).updateCurrentFragment();
+                AlertDialogHelper.dismissAlertDialog();
+            }
+        });
     }
 
     private void updateUserGmail(String gmail){
